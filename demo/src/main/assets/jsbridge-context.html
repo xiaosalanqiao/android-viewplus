@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>本地h5调试界面</title>
+</head>
+<style>
+    button {
+        display: block;
+        margin: 10px 0;
+    }
+
+    ul>li {
+        list-style-type: none
+    }
+</style>
+
+<body>
+
+    <p>上下文的交互方式</p>
+    <p>以下是html页面，进行js和客户端的交互测试</p>
+    <p>如果页面点击无效，请看是否出现一下异常："Uncaught TypeError: Cannot set property 'onClick' of null"</p>
+    <p>如果页面点击无效，看是否设备是4.x类型，是否支持ES6语法，尽量不要写ES6语法避免这种问题出现</p>
+
+    <br />
+
+    <a href="./second.html">跳转页面</a>
+
+    <br />
+    <hr>
+
+    <p>调试自身桥接接口列表</p>
+    <ul class="button_box">
+        <li>
+            <button id="toastMessage">调用原生弹出一个Toast</button>
+        </li>
+        <li>
+            <button id="sendOriginalRequest">AjaxEvent::sendOriginalRequest</button>
+        </li>
+    </ul>
+
+    <hr>
+
+    <script type="text/javascript">
+        var CONTEXT_NAME = undefined
+        if (typeof window['ViewPlus'] !== "undefined") {
+            CONTEXT_NAME = 'ViewPlus'
+        } else {
+            alert("没有找到ViewPlus上下文接口");
+        }
+
+        function callClient(command) {
+            if (CONTEXT_NAME) {
+                var context = window[CONTEXT_NAME]
+                if (typeof context !== "undefined" && context.event) {
+                    try {
+                        var res = context.event(JSON.stringify(command))
+                        var data = JSON.parse(res)
+                        if (!data || !data.ReturnCode || data.ReturnCode !== '000000') {
+                            alert('请求出错：' + JSON.stringify(res))
+                        }
+                        return data
+                    } catch (e) {
+                        alert('客户端抛出异常：' + e.message)
+                    }
+                } else {
+                    alert('没有找到上下文接口' + contextName)
+                }
+            }
+        }
+
+        function toastMessage(message) {
+            window.toastMessageListener = function (res) {
+                alert('前端收到的客户端toast listener回调参数：' + JSON.stringify(res))
+            }
+            callClient({
+                event: 'UIEvent',
+                action: 'toast',
+                listener: 'toastMessageListener',
+                params: {
+                    msg: message,
+                    duration: 1,
+                    test: 2
+                }
+            })
+        }
+
+        document.getElementById("toastMessage").addEventListener("click", function () {
+            toastMessage('前端需要一个toast')
+        })
+
+        document.getElementById("sendOriginalRequest").addEventListener("click", function () {
+            window.sendOriginalRequestListener = function (res) {
+                alert('接收到的返回数据：' + JSON.stringify(res))
+            }
+
+            callClient({
+                event: 'AjaxEvent',
+                action: 'sendOriginalRequest',
+                listener: 'sendOriginalRequestListener',
+                params: {
+                    // transcode: 'http://192.168.0.118:8080/hello/post/form/',
+                    transcode: 'HuiMinCardLoanLend.do',
+                    params: {
+                        "AcNo": "6231900023402220055",
+                        "Amount": "3300",
+                        "BaseYRate": "4.350000"
+                    }
+                }
+            })
+        });
+
+        alert(1)
+    </script>
+
+</body>
+
+</html>

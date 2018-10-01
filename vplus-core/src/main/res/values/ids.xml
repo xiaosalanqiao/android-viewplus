@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="delegate_container" type="id" />
+    <item name="progress_bar" type="id"/>
+    <item name="title_bar" type="id"/>
+    <item name="tv_empty_page_refresh_txt" type="id"/>
+</resources>

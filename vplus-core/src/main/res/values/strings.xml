@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Vplus</string>
+    <string name="err_dialog_title">错误提示</string>
+    <string name="confirm">确认</string>
+    <string name="dialog_title">提示</string>
+    <string name="confirm_dialog_title">请确认</string>
+    <string name="input">请录入</string>
+    <string name="cancel">取消</string>
+    <string name="press_again_exit">再按一次退出</string>
+    <string name="set_gesture_content_dialog">您也可以在我的>安全中心设置手势密码,登录更加方便快捷</string>
+    <string name="set_finger_content_dialog">您也可以在我的>安全中心开启指纹,登录更加方便快捷</string>
+    <string name="set_gesture_positive_dialog">去设置</string>
+    <string name="set_gesture_negative_dialog">我知道了</string>
+    <string name="tap_refresh">点击刷新</string>
+    <string name="refresh">刷新</string>
+    <string name="back">返回</string>
+    <string name="network_err">网络异常，请稍后尝试</string>
+    <string name="h5_load_timeout_err">加载超时，请稍后尝试</string>
+    <string name="login">登录</string>
+    <string name="logout">退出登录</string>
+    <string name="exit_app">安全退出应用</string>
+    <string name="reload">重新加载</string>
+    <string name="no_data_hint_msg">没有找到相关记录</string>
+    <string name="no_send_success_req_action_txt">尝试获取记录</string>
+    <string name="no_send_success_req_hint_msg">发送请求失败，请稍后尝试</string>
+    <string name="send_err_req_hint_msg">发送请求出错，请稍后尝试</string>
+</resources>

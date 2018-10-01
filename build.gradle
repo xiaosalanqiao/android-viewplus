@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url "https://jitpack.io" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        jcenter()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        // ButterKnife https://github.com/JakeWharton/butterknife/issues/963
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
+        // https://docs.bugtags.com/zh/start/integrate/android/maven.html
+        classpath 'com.bugtags.library:bugtags-gradle:2.1.1'
+        // https://www.jianshu.com/p/4cdabe4d605a
+        classpath 'com.novoda:bintray-release:0.8.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://maven.google.com' }
+        maven { url "https://jitpack.io" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+    }
+    tasks.withType(Javadoc) {
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/8/docs/api"
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// 查看依赖树 gradle 模块名称:dependencies
+// gradle vplus-core:dependencies > log.log

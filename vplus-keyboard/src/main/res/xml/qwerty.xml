@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+	codes: -101 ==> 字母
+	codes: -102 ==> 数字
+	codes: -103 ==> 符号
+	codes: 8 ==> backspace
+	codes: 13 ==> enter
+	codes: 14 ==> shift
+	codes: 32 ==> 空格
+ -->
+
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="10%p"
+    android:horizontalGap="0px"
+    android:verticalGap="0px"
+    android:keyHeight="50dip"
+    >
+    <Row>
+        <Key android:codes="113"  android:keyEdgeFlags="left"/>
+        <Key android:codes="119" />
+        <Key android:codes="101" />
+        <Key android:codes="114" />
+        <Key android:codes="116" />
+        <Key android:codes="121" />
+        <Key android:codes="117" />
+        <Key android:codes="105" />
+        <Key android:codes="111" />
+        <Key android:codes="112" android:keyEdgeFlags="right"/>
+    </Row>
+    
+    <Row>
+        <Key android:codes="0" android:keyWidth="5%p" android:keyHeight="0dip" android:keyLabel="@null"  
+            android:keyEdgeFlags="left" />
+        <Key android:codes="97" />
+        <Key android:codes="115" />
+        <Key android:codes="100" />
+        <Key android:codes="102" />
+        <Key android:codes="103" />
+        <Key android:codes="104" />
+        <Key android:codes="106" />
+        <Key android:codes="107" />
+        <Key android:codes="108" />
+        <Key android:codes="0" android:keyWidth="5%p" android:keyHeight="0dip"  android:keyLabel="@null" 
+             android:keyEdgeFlags="right" />
+    </Row>
+    
+    <Row>
+        <Key android:codes="14"  
+                android:keyWidth="15%p" android:isModifier="true"
+                android:keyEdgeFlags="left"
+                android:isSticky="true"/>
+        <Key android:codes="122" />
+        <Key android:codes="120" />
+        <Key android:codes="99"  />
+        <Key android:codes="118" />
+        <Key android:codes="98"  />
+        <Key android:codes="110" />
+        <Key android:codes="109" />
+        <Key android:codes="8" android:keyWidth="15%p" android:keyEdgeFlags="right" android:isRepeatable="true"/>
+    </Row>
+    <Row>
+        <Key android:codes="-102"  android:keyEdgeFlags="left" android:keyWidth="18%p"/>
+        <Key android:codes="-103"  android:keyWidth="18%p"/>
+        <Key android:codes="44" />
+        <Key android:codes="32" android:keyWidth="26%p"/>
+        <Key android:codes="46" />
+        <Key android:codes="13" android:keyWidth="18%p"  android:keyEdgeFlags="right"/>
+        
+    </Row>
+</Keyboard>
+    

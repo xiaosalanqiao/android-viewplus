@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+	<style name="password_keyboard_style">
+        <item name="android:keyBackground">@android:color/black</item>
+        <item name="android:keyTextColor">#24B2E7</item>
+        <item name="android:background">@android:color/white</item>
+	</style>
+</resources>

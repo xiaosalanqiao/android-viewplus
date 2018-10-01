@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llc_root_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_h5_toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/h5_placeholder_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fragment_bgc">
+
+        <TextView
+            android:id="@+id/h5_placeholder_container_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:text="由第三方提供技术支持"
+            android:textColor="#6a737d"
+            android:textSize="@dimen/_12sp"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fragment_bgc"
+        app:srlEnableHeaderTranslationContent="false"
+        app:srlEnableLoadMore="false"
+        android:visibility="gone"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:id="@+id/material_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--webview容器 android:visibility="gone"-->
+        <android.support.v7.widget.ContentFrameLayout
+            android:id="@+id/h5_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <!--webview容器 android:visibility="gone"-->
+    <!--<android.support.v7.widget.ContentFrameLayout-->
+        <!--android:id="@+id/h5_container"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+    <include layout="@layout/network_fial_error_view"
+        android:visibility="gone"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

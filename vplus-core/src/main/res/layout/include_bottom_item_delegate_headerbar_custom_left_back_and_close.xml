@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:ignore="RtlHardcoded">
+
+    <RelativeLayout
+        android:id="@+id/toolbar_back"
+        android:layout_width="@dimen/include_comm_title_bar_icon_width"
+        android:layout_height="match_parent">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="{icon-back}"
+            android:textColor="@color/link_color"
+            android:textSize="@dimen/title_bar_itvsize"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/toolbar_close"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:gravity="center"
+            android:text="关闭"
+            android:textColor="@color/link_color"
+            android:textSize="@dimen/title_bar_tvsize"
+            tools:ignore="HardcodedText" />
+    </RelativeLayout>
+</android.support.v7.widget.LinearLayoutCompat>

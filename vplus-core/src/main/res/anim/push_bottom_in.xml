@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--设置从下往上弹出样式-->
+    <translate
+        android:duration="300"
+        android:fromYDelta="100%p"
+        android:toYDelta="0" />
+
+    <alpha
+        android:duration="300"
+        android:fromYDelta="0.0"
+        android:toYDelta="1.0" />
+</set>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>本地测试2</title>
+</head>
+<style>
+    button {
+        display: block;
+        margin: 20px 0;
+    }
+</style>
+
+<body>
+
+<p>这是本地页面2</p>
+
+<br/>
+<hr>
+
+<p>调试自身桥接接口列表</p>
+<ul class="button_box">
+<ul>
+    <li>
+        <button id="popWebView">调用 popWebView</button>
+    </li>
+    <li>
+        <button id="popToRoot">调用 popToRoot</button>
+    </li>
+</ul>
+
+<script type="text/javascript">
+    // alert('hello')
+    //
+    let CONTEXT_NAME = undefined
+    if (typeof window['ViewPlus'] !== "undefined") {
+        CONTEXT_NAME = 'ViewPlus'
+        alert('准备调试自己的桥接')
+    } else if (typeof window['YnrccJSBridge'] !== "undefined") {
+        CONTEXT_NAME = 'YnrccJSBridge'
+        alert('准备调试第三方的桥接')
+    } else {
+        alert("没有找到ViewPlus上下文接口");
+    }
+
+    function callClient(command) {
+        if (CONTEXT_NAME) {
+            const context = window[CONTEXT_NAME]
+            if (typeof context !== "undefined" && context.event) {
+                try {
+                    const res = context.event(JSON.stringify(command))
+                    const data = JSON.parse(res)
+                    if (!data || !data.ReturnCode || data.ReturnCode !== '000000') {
+                        alert(`请求出错： ${JSON.stringify(res)}`)
+                    }
+                    return data
+                } catch (e) {
+                    alert(`getUserInfo 客户端抛出异常：${e.message}`)
+                }
+            } else {
+                alert(`没有找到上下文接口${contextName}`);
+            }
+        }
+    }
+
+    window.onload = function () {
+        alert(1)
+        callClient({
+            event: 'UI',
+            action: 'setHeaderBarConfig',
+            params: {
+                "title": "本地测试页面2",
+                "visible": true,
+                "closeBtnVisible": true,
+                "bckBtnVisible": true
+            }
+        })
+    }
+
+    document.getElementById('popToRoot').onClick = function () {
+        callClient({
+            event: 'NavigationEvent',
+            action: 'popToRoot',
+        })
+    }
+
+    document.getElementById('popWebView').onClick = function () {
+        callClient({
+            event: 'NavigationEvent',
+            action: 'popWebView'
+        })
+    }
+
+
+</script>
+
+</body>
+</html>

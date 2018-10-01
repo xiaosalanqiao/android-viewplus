@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PasswordEditText">
+        <attr name="random" format="boolean" />
+        <attr name="passwordName" format="string" />
+        <attr name="encoding" format="string" />
+        <attr name="modulus" format="string" />
+        <attr name="timestamp" format="string" />
+    </declare-styleable>
+</resources>

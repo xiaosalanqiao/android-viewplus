@@ -1,0 +1,22 @@
+*.iml
+.gradle
+build
+gradle
+.idea
+local.properties
+/src/androidTest
+/src/test
+/mobilebank/src/main/assets/.idea/
+/mobilexlib/*
+mobilebank/release/
+
+# 本地写的一些测试目前暂时不需要提交
+/mobilebank/src/test/java/com/csii/mobilebank/*.java
+mobilebank/mobilebank-release.apk
+/mobilebank/release/
+ynrcc.key
+signinfo.properties
+jiaku-debug-printout-log.sh
+log.log
+mobilebank/.bugtags.log
+bugtags.log

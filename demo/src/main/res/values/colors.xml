@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@android:color/white</color>
+    <color name="colorPrimaryLight">#EF6262</color>
+    <color name="colorPrimaryDark">#D3484A</color>
+    <color name="colorAccent">#EF6262</color>
+    <color name="app_theme">#D3484A</color>
+    <color name="windowBackground">@color/fragment_bgc</color>
+
+    <!-- common -->
+    <color name="app_color_blue">#00A8E1</color>
+    <color name="app_color_blue_disabled">#8000A8E1</color>
+    <color name="app_color_blue_pressed">#c000A8E1</color>
+
+    <color name="app_color_blue_2">#31BDF3</color>
+    <color name="app_color_blue_2_disabled">#7F31BDF3</color>
+    <color name="app_color_blue_2_pressed">#7F31BDF3</color>
+
+    <color name="app_color_description">@color/qmui_config_color_gray_5</color>
+</resources>

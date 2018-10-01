@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.csii.mobilebank">
+
+    <!--https://mp.weixin.qq.com/s/FyxuOuTFyZ_F8D0jQ8w5bg
+    WebView新增了一些非常有用的API，可以使用和chrome浏览器类似的API来实现对恶意网站的检测来保护web浏览的安全性，为此需要在manifest中添加如下meta-data标签-->
+    <meta-data
+        android:name="android.webkit.WebView.EnableSafeBrowing"
+        android:value="true" />
+
+    <!--硬件加速: https://mp.weixin.qq.com/s/FyxuOuTFyZ_F8D0jQ8w5bg-->
+    <!--android:networkSecurityConfig="@xml/network_security_config" https://www.jianshu.com/p/e1ffb66e459c-->
+    <application
+        android:name=".MainApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:name">
+
+        <!--http://developers.googleblog.cn/2017/04/android.html-->
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
+
+        <!--https://www.jianshu.com/p/16694f619208
+        https://www.diycode.cc/topics/383-->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

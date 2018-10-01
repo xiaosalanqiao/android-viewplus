@@ -1,0 +1,139 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    // lamdba
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    configurations.all {
+        // https://majing.io/posts/10000007891219
+        resolutionStrategy {
+            force 'com.android.support:support-compat:27.1.1'
+            force 'com.android.support:support-v4:27.1.1'
+        }
+    }
+}
+
+ext.BUTTERKNIFE_VERSION = "9.0.0-SNAPSHOT"
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation 'junit:junit:4.12'
+
+    api project(':vplus-core')
+
+    // ButterKnife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+
+    // http://qmuiteam.com/android/get-started/
+    api 'com.qmuiteam:qmui:1.1.3'
+
+    // switch开关
+    // https://github.com/iielse/SwitchButton
+    api 'ch.ielse:switchbutton:1.0.1'
+
+    // https://github.com/Bigkoo/Android-ConvenientBanner
+    api 'com.xhb:xbanner:1.3.9'
+
+    // TODO 待替换
+    // https://github.com/Jiiiiiin/ahoy-onboarding
+    // https://github.com/ronaldsmartin/Material-ViewPagerIndicator
+    // https://github.com/Ramotion/paper-onboarding-android
+    // https://github.com/stephentuso/welcome-android
+    // 引导页 轮播图
+    // https://github.com/bingoogolapple/BGABanner-Android
+    // api 'cn.bingoogolapple:bga-banner:2.2.4@aar'
+    api 'com.codemybrainsout.onboarding:onboarder:1.0.4'
+
+    // 指纹验证库
+    // https://github.com/uccmawei/FingerprintIdentify
+    api 'com.wei.android.lib:fingerprintidentify:1.2.1'
+
+    // 手势验证库
+    // https://github.com/Jiiiiiin/PatternLocker
+    api 'com.github.ihsg:PatternLocker:2.1.0'
+
+    // RecyclerView依赖:CymChad/BaseRecyclerViewAdapterHelper
+    // https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
+
+    // RecyclerView 分割线:ChoicesWang/RecyclerView_Divider
+    // https://github.com/ChoicesWang/RecyclerView_Divider
+    api 'com.choices.divider:RecyclerView_Divider:1.0.0'
+
+    // https://github.com/scwang90/MultiWaveHeader/blob/master/README_CN.md
+    api 'com.scwang.wave:MultiWaveHeader:1.0.0-alpha-1'
+
+    // https://github.com/Jiiiiiin/Skeleton
+    api 'com.ethanhua:skeleton:1.1.1'
+    api 'io.supercharge:shimmerlayout:2.1.0'
+
+    // https://github.com/ragunathjawahar/android-saripaar
+    api 'com.mobsandgeeks:android-saripaar:2.0.3'
+
+    // https://github.com/HITGIF/TextFieldBoxes/blob/master/README_CN.md
+    api 'com.github.HITGIF:TextFieldBoxes:1.4.4'
+
+    // https://github.com/gongwen/MarqueeViewLibrary
+    api 'com.gongwen:marqueelibrary:1.1.3'
+
+    // https://github.com/stephentuso/welcome-android
+    api 'com.stephentuso:welcome:1.4.1'
+
+    // TODO 可以尝试
+    // https://github.com/shaohui10086/AdvancedLuban/blob/master/README_ZH.md
+    // https://github.com/Curzibn/Luban
+    api 'top.zibin:Luban:1.1.7'
+
+    // louisgeek/ClassicLinesEditView https://github.com/louisgeek/ClassicLinesEditView
+    api 'com.github.louisgeek:ClassicLinesEditView:1.0.2'
+
+    // 创建广告活动dialog https://github.com/yipianfengye/android-adDialog
+    // TODO 改造重要公告
+    // api 'cn.yipianfengye.android:ad-library:1.0'
+
+    // https://github.com/KeepSafe/TapTargetView
+    api 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
+
+}
+
+publish {
+    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
+    repoName="android-viewplus"
+    userOrg="vplus"
+    // jcenter上的路径 一般是自己公司域名反转
+    groupId="cn.jiiiiiin"
+    //项目名称 我们的pakgename
+    artifactId="vplus-ui"
+    //版本号
+    publishVersion="1.0.0"
+    //项目的描述
+    desc="android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
+    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
+    website=""
+}

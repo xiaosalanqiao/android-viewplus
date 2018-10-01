@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <h1>以下是html页面，进行js和客户端的交互测试</h1>
+  <p>测试协议交互的交互方式</p>
+
+  <br>
+
+  <a href="./second.html">跳转页面</a>
+
+  <br>
+
+  <button id="toastMessage">toastMessage：调用原生弹出一个Toast</button>
+
+  <br>
+
+  <button id="testCallBack">调用原生传递一个消息，之后原生执行一个指定的回调</button>
+
+  <script type="text/javascript">
+    // Java调用JS
+    function testNoParams() {
+      alert("Hello")
+    }
+
+    function testHasParams(message) {
+      alert(message)
+    }
+
+    function testHasRes() {
+      return "Car";
+    }
+
+    // ==== js调用Java
+    // 传递参数无回调方式
+    function toastMessage(message) {
+      const command = {
+        event: 'test',
+        action: 'TestToast',
+        params: {
+          msg: '打印一个Toast试试'
+        }
+      }
+      document.location = `bs://event?command=${JSON.stringify(command)}`;
+    }
+
+    document.getElementById('toastMessage').onClick = function() {
+      if (typeof VPlus !== "undefined") {
+        toastMessage(`这是一个js传递过来的消息`)
+      } else {
+        alert("没有找到VPlus上下文接口");
+      }
+    }
+
+    // 注册给客户端的一个回调函数
+    function callback1(resData) {
+      try {
+        const res = JSON.parse(resData)
+        console.debug(`callback1客户端返回的信息: ${typeof res} --> ${res}`)
+        alert(`验证客户返回的code： ${typeof res.code}  ${res.code}`)
+        if (res.code === '000000') {
+          alert(`callback1客户端返回给回调函数的消息：${res.dataMap.sumRes}`)
+        } else {
+          alert(`callback1客户端返回给回调函数的错误消息：${JSON.stringify(res)}`)
+        }
+      } catch (e) {
+        alert(`callback1客户端返回的不是一个正确的json字符串: ${e.message}`)
+      } finally {
+        // 进行一些其他操作
+      }
+
+    }
+
+    function testCallBack(number1, number2) {
+      const command = {
+        event: 'test',
+        action: 'TestCallBack',
+        params: {
+          number1,
+          number2
+        },
+        callback: callback1.name
+      }
+
+      document.location = `bs://event?command=${JSON.stringify(command)}`;
+    }
+
+    document.getElementById('testCallBack').onClick = function() {
+      if (typeof VPlus !== "undefined") {
+        testCallBack(1, 1)
+      } else {
+        alert("没有找到VPlus上下文接口");
+      }
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:titlebar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/h5_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.wuhenzhizao.titlebar.widget.CommonTitleBar
+        style="@style/vp_commtitlebar"
+        android:paddingLeft="0dp"
+        titlebar:fillStatusBar="false"
+        titlebar:showBottomLine="false"
+        titlebar:titleBarColor="@android:color/white"
+        titlebar:titleBarHeight="@dimen/include_comm_title_bar_height"
+        titlebar:centerText="@string/app_name"
+        titlebar:centerTextColor="@color/title_bar"
+        titlebar:centerTextSize="@dimen/title_bar_tilte_size"
+        titlebar:centerType="textView"
+        titlebar:leftCustomView="@layout/include_bottom_item_delegate_headerbar_custom_left_back_and_close"
+        titlebar:leftType="customView"
+        titlebar:rightCustomView="@layout/include_h5_toolbar_custom_right"
+        titlebar:rightType="customView" />
+
+    <include layout="@layout/include_comm_devider_line" />
+
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2dp"
+        android:maxHeight="@dimen/_2dp"
+        android:minHeight="@dimen/_2dp"
+        android:progress="0"
+        android:secondaryProgress="0"
+        android:visibility="gone"
+        app:mpb_progressStyle="horizontal"
+        app:mpb_showProgressBackground="false"
+        app:mpb_useIntrinsicPadding="false" />
+
+</android.support.v7.widget.LinearLayoutCompat>
+

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <style name="vp_commtitlebar">
+        <item name="android:id">@id/title_bar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/include_comm_title_bar_height</item>
+        <item name="android:paddingLeft">@dimen/include_bottom_item_delegate_headerbar_padding_left</item>
+        <item name="android:paddingRight">@dimen/include_bottom_item_delegate_headerbar_padding_left</item>
+        <!--<item name="com.wuhenzhizao.titlebar:fillStatusBar">false</item>-->
+        <!--<item name="com.wuhenzhizao.titlebar:showBottomLine">false</item>-->
+        <!--<item name="com.wuhenzhizao.titlebar:titleBarColor">@android:color/white</item>-->
+        <!--<item name="com.wuhenzhizao.titlebar:titleBarHeight">@dimen/include_comm_title_bar_height</item>-->
+    </style>
+
+    <style name="vp_sigle_line">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="vp_empty_img">
+        <item name="android:id">@id/civ_empty_page_err_img</item>
+        <item name="android:layout_width">@dimen/empty_page_image_wh</item>
+        <item name="android:layout_height">@dimen/empty_page_image_wh</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+
+
+</resources>
