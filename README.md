@@ -3,11 +3,11 @@
 一个安卓混合客户端开发库
 
 # 模块
-    ├── demo 实例
-    ├── vplus-core android-viewplus核心库，包含jsbridge、单activity相关类
-    ├── vplus-keyboard android-viewplus keyboard库
-    ├── vplus-security android-viewplus安全库，包含scprov-jdk15on对RSA相关功能支持
-    └── vplus-ui android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
+```cmd
+├── demo 示例
+├── vplus-core android-viewplus核心库，包含jsbridge、单activity相关类
+└── vplus-ui android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
+```
 
 # 案例
 

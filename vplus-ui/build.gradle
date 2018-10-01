@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 27
@@ -122,18 +122,18 @@ dependencies {
 
 }
 
-publish {
-    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
-    repoName="android-viewplus"
-    userOrg="vplus"
-    // jcenter上的路径 一般是自己公司域名反转
-    groupId="cn.jiiiiiin"
-    //项目名称 我们的pakgename
-    artifactId="vplus-ui"
-    //版本号
-    publishVersion="1.0.0"
-    //项目的描述
-    desc="android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
-    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
-    website=""
-}
+//publish {
+//    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
+//    repoName="android-viewplus"
+//    userOrg="vplus"
+//    // jcenter上的路径 一般是自己公司域名反转
+//    groupId="cn.jiiiiiin"
+//    //项目名称 我们的pakgename
+//    artifactId="vplus-ui"
+//    //版本号
+//    publishVersion="1.0.0"
+//    //项目的描述
+//    desc="android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
+//    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
+//    website="https://github.com/Jiiiiiin/android-viewplus"
+//}
