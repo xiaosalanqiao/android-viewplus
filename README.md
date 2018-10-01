@@ -40,15 +40,20 @@ public class MainApplication extends Application {
         final String passwordModule = MainApplicationInitUtil.getPasswordModule(MODE);
         final HttpsCheckUtils.SSLParams sslParams = MainApplicationInitUtil.getSSLParams(this, BaseConfig.SERVER_SERVER_CERTIFICATE_FILE_NAME, IS_DEBUG);
         ViewPlus.init(this)
+                .withMode(BaseConfig.MODE)
             	// 配置是否是debug模式
                 .withDebug(true)
             	// 应用主题色
 	            .withThemeColor(getResources().getColor(R.color.colorPrimaryLight)))
             	// 应用webview的UserAgent
                 .withWebUserAgent("Custom-WebUserAgent")
+                .withIsDeviceRooted(DeviceUtils.isDeviceRooted())
             	// 关于http模块:
             	// 服务端url，如：http://emobile.jiiiiiin.cn/pweb/
                 .withApiHost(serverUrl)
+                .withServerStatusCodeKey(BaseConfig.SERVER_STATUS_CODE_KEY)
+                .withServerStatusCodeSuccessFlag(BaseConfig.SERVER_STATUS_CODE)
+                .withServerStatusMsgKey(BaseConfig.SERVER_STATUS_MSG_KEY)
             	// 请求链接超时配置(秒)
                 .withApiConnectTimeout(60)
             	// 请求读取数据超时配置(秒)
