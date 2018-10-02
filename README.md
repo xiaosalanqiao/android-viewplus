@@ -67,6 +67,21 @@ dependencies {
 
 ![云南农信手机银行](http://a.app.qq.com/o/image/microQr.png?pkgName=com.csii.mobilebank)
 
+|                                                              |                                                              |
+| ------------------------------------------------------------ | :----------------------------------------------------------: |
+| ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7rnokp1j30pi13mguh.jpg) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7s5hg1uj30pi13maki.jpg) |
+
+虽然是Hybrid开发库，但是也集成了：
+
++ [YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation) A powerful library that manage Fragment for Android!
+
++ [CymChad/BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper) BRVAH:Powerful and flexible RecyclerAdapter <http://www.recyclerview.org/>
++ [QMUI/QMUI_Android](https://github.com/QMUI/QMUI_Android) 提高 Android UI 开发效率的 UI 库 <http://qmuiteam.com/android>
+
+ 等，故开发原生应用也是很ok的 ：）
+
+
+
 # 示例
 
 ```java
