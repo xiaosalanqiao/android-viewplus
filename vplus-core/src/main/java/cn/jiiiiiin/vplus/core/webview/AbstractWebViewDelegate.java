@@ -111,35 +111,19 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
         if (initializer != null) {
             WeakReference<WebView> webViewWeakReference = null;
             // 直接 new WebView 并传入 application context 代替在 XML 里面声明以防止 activity 引用被滥用，能解决90+%的 WebView 内存泄漏。
-//            if (mIsUseCacheWebViewImpl) {
-//                if (mOnScrollChangeListener != null) {
-//                    webViewWeakReference = new WeakReference<>(new CacheWebView(getContext()) {
-//                        @Override
-//                        public void onScrollChanged(int l, int t, int oldl, int oldt) {
-//                            super.onScrollChanged(l, t, oldl, oldt);
-//                            mOnScrollChangeListener.onScrollChanged(l, t, oldl, oldt);
-//                        }
-//                    }, WEB_VIEW_QUEUE);
-//                } else {
-//                    webViewWeakReference = new WeakReference<>(new CacheWebView(getContext()), WEB_VIEW_QUEUE);
-//                }
-//                LoggerProxy.dd("初始化CacheWebView");
-//            } else {
-                if (mOnScrollChangeListener != null) {
-                    webViewWeakReference = new WeakReference<>(new WebView(getContext()) {
-                        @Override
-                        public void onScrollChanged(int l, int t, int oldl, int oldt) {
-                            super.onScrollChanged(l, t, oldl, oldt);
-                            if (mOnScrollChangeListener != null) {
-                                mOnScrollChangeListener.onScrollChanged(l, t, oldl, oldt);
-                            }
+            if (mOnScrollChangeListener != null) {
+                webViewWeakReference = new WeakReference<>(new WebView(getContext()) {
+                    @Override
+                    public void onScrollChanged(int l, int t, int oldl, int oldt) {
+                        super.onScrollChanged(l, t, oldl, oldt);
+                        if (mOnScrollChangeListener != null) {
+                            mOnScrollChangeListener.onScrollChanged(l, t, oldl, oldt);
                         }
-                    }, WEB_VIEW_QUEUE);
-                } else {
-                    webViewWeakReference = new WeakReference<>(new WebView(getContext()));
-                }
-//                LoggerProxy.dd("初始化原生WebView");
-//            }
+                    }
+                }, WEB_VIEW_QUEUE);
+            } else {
+                webViewWeakReference = new WeakReference<>(new WebView(getContext()));
+            }
             mWebView = webViewWeakReference.get();
             // 初始化
             mWebView = initializer.initWebView(mWebView);
@@ -194,6 +178,7 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
 
     /**
      * 预制event和动态event必须区分，以防止注册到event中的listener“被破坏”
+     *
      * @param eventName
      * @param event
      */

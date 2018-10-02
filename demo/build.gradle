@@ -52,8 +52,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             // https://blog.csdn.net/qq_27258799/article/details/77259129
@@ -83,9 +83,9 @@ dependencies {
 
     api 'com.android.support:multidex:1.0.3'
     // 源码测试
-     api project(':vplus-ui')
+//     api project(':vplus-ui')
     // 依赖测试
-//    api 'cn.jiiiiiin:vplus-core:1.0.0'
+    api 'cn.jiiiiiin:vplus-ui:1.0.1'
 
     api 'com.jakewharton:butterknife:'  + BUTTERKNIFE_VERSION
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION

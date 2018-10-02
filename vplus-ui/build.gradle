@@ -16,7 +16,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -25,11 +25,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     productFlavors {
     }
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
+
+//    lintOptions {
+//        abortOnError false
+//    }
+
     configurations.all {
         // https://majing.io/posts/10000007891219
         resolutionStrategy {
@@ -46,7 +49,7 @@ dependencies {
     androidTestImplementation 'junit:junit:4.12'
 
 //     api project(':vplus-core')
-    api 'cn.jiiiiiin:vplus-core:1.0.1'
+    api 'cn.jiiiiiin:vplus-core:1.0.2'
 
     // ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION

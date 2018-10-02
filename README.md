@@ -54,7 +54,7 @@ allprojects {
 ```gr
 dependencies {
 	//...
-    api 'cn.jiiiiiin:vplus-core:1.0.1'
+    api 'cn.jiiiiiin:vplus-core:1.0.2'
     api 'cn.jiiiiiin:vplus-ui:1.0.1'
 }
 ```
@@ -436,6 +436,21 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
       public String onRespH5(EventResData eventResData, EventParams eventParams) {
           // 前端调用客户端参数后处理器
           return eventResData.toJson();
+      }
+      
+      /**
+       * 举例注册 {@link android.webkit.WebChromeClient#onProgressChanged(WebView, int)} 到100监听事件
+       * 
+       * @param isMainUiThreadCall
+       */
+      @Override
+      public void onLoadEnd(boolean isMainUiThreadCall) {
+          super.onLoadEnd(isMainUiThreadCall);
+          try {
+              WebViewUtil.clearWebViewCache(getWebDelegate().getWebView());
+          } catch (ViewPlusException e) {
+              LoggerProxy.e("清理webview缓存失败");
+          }
       }
   }
   

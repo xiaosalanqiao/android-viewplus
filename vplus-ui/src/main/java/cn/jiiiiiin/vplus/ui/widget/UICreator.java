@@ -8,8 +8,6 @@ import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 
 import ch.ielse.view.SwitchView;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;

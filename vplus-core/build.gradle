@@ -16,7 +16,7 @@ android {
     buildTypes {
         release {
             // https://developer.android.com/studio/build/shrink-code.html?hl=zh-cn
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,9 +29,9 @@ android {
     productFlavors {
     }
 
-//    lintOptions {
-//        abortOnError false
-//    }
+    lintOptions {
+        abortOnError false
+    }
 
     configurations.all {
         // https://majing.io/posts/10000007891219
@@ -164,7 +164,7 @@ dependencies {
 //    //项目名称 我们的pakgename
 //    artifactId="vplus-core"
 //    //版本号
-//    publishVersion="1.0.1"
+//    publishVersion="1.0.2"
 //    //项目的描述
 //    desc="android-viewplus核心库，包含jsbridge、单activity相关类"
 //    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址

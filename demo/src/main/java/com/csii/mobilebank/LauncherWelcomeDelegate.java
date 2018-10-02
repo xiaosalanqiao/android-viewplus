@@ -1,10 +1,15 @@
 package com.csii.mobilebank;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.webkit.WebView;
 
 import com.csii.mobilebank.jsbridge.UIEvent;
 
 import cn.jiiiiiin.vplus.core.delegates.BaseDelegate;
+import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
+import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;
 import cn.jiiiiiin.vplus.core.webview.WebViewDelegateImpl;
 import cn.jiiiiiin.vplus.core.webview.event.IEventManager;
@@ -13,6 +18,7 @@ import cn.jiiiiiin.vplus.core.webview.event.model.EventParams;
 import cn.jiiiiiin.vplus.core.webview.event.model.EventResData;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.context.ViewPlusContextWebInterface;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.exception.JSBridgeException;
+import cn.jiiiiiin.vplus.core.webview.util.WebViewUtil;
 
 /**
  * 1.继承{@link AbstractWebViewWrapperCommUIDelegate}提供的layout，需要有一个`android:id="@+id/llc_root_container"`的根android.support.v7.widget.LinearLayoutCompat容器
@@ -30,6 +36,11 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
     @Override
     public Object setLayout() {
         return R.layout.delegate_comm_h5_wrapper_layout;
+    }
+
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
+        super.onBindView(savedInstanceState, rootView);
     }
 
     public static LauncherWelcomeDelegate newInstance() {
@@ -71,6 +82,21 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
                 // 指定暴露在下面设置的全局上下文（浏览器windows对象下的全局对象）的名称，如这里的"ViewPlus"
                 .setJavascriptInterface(ViewPlusContextWebInterface.newInstance(webDelegate, this), "ViewPlus");
         return webDelegate;
+    }
+
+    /**
+     * 举例注册 {@link android.webkit.WebChromeClient#onProgressChanged(WebView, int)} 到100监听事件
+     *
+     * @param isMainUiThreadCall
+     */
+    @Override
+    public void onLoadEnd(boolean isMainUiThreadCall) {
+        super.onLoadEnd(isMainUiThreadCall);
+        try {
+            WebViewUtil.clearWebViewCache(getWebDelegate().getWebView());
+        } catch (ViewPlusException e) {
+            LoggerProxy.e("清理webview缓存失败");
+        }
     }
 
     @Override
