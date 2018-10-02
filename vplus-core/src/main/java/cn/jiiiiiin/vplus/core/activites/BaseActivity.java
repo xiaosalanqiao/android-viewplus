@@ -2,25 +2,20 @@ package cn.jiiiiiin.vplus.core.activites;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.database.ContentObserver;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ContentFrameLayout;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import com.bugtags.library.Bugtags;
+import com.gyf.barlibrary.ImmersionBar;
+
 import cn.jiiiiiin.vplus.core.R;
 import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;
-import cn.jiiiiiin.vplus.core.delegates.BaseDelegate;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-
-import com.bugtags.library.Bugtags;
-import com.gyf.barlibrary.ImmersionBar;
-import com.gyf.barlibrary.OSUtils;
 
 /**
  * TODO 将这个基类做成集成SwipeBackActivity

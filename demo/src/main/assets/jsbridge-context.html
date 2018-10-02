@@ -45,74 +45,54 @@
     <hr>
 
     <script type="text/javascript">
-        var CONTEXT_NAME = undefined
-        if (typeof window['ViewPlus'] !== "undefined") {
-            CONTEXT_NAME = 'ViewPlus'
-        } else {
-            alert("没有找到ViewPlus上下文接口");
-        }
+       var CONTEXT_NAME = undefined
+          // 1.获取客户端提供的上下文对象，ViewPlus是客户端配置的上下文对象的名称，即：
+          // .setJavascriptInterface(ViewPlusContextWebInterface.newInstance(webDelegate, jsBridgeResHandler), JAVASCRIPT_INTERFACE_NAME)
+          if (typeof window['ViewPlus'] !== "undefined") {
+              CONTEXT_NAME = 'ViewPlus'
+          } else {
+              alert("没有找到ViewPlus上下文接口");
+          }
 
-        function callClient(command) {
-            if (CONTEXT_NAME) {
-                var context = window[CONTEXT_NAME]
-                if (typeof context !== "undefined" && context.event) {
-                    try {
-                        var res = context.event(JSON.stringify(command))
-                        var data = JSON.parse(res)
-                        if (!data || !data.ReturnCode || data.ReturnCode !== '000000') {
-                            alert('请求出错：' + JSON.stringify(res))
-                        }
-                        return data
-                    } catch (e) {
-                        alert('客户端抛出异常：' + e.message)
-                    }
-                } else {
-                    alert('没有找到上下文接口' + contextName)
-                }
-            }
-        }
+          // 2.可以封装一个基础接口，提供其他地方便捷调用
+          function callClient(command) {
+              if (CONTEXT_NAME) {
+                  var context = window[CONTEXT_NAME]
+                  if (typeof context !== "undefined" && context.event) {
+                      try {
+                          // 3.调用vplus-core模块中自定义默认交互接口**event**
+                          var res = context.event(JSON.stringify(command))
+                          // 4.解析客户端同步返回的消息，即`EventResData.success();`的json格式化数据
+                          var data = JSON.parse(res)
+                          // 5.判断是否请求成功
+                          if (!data || !data.ReturnCode || data.ReturnCode !== '000000') {
+                              alert('请求出错：' + JSON.stringify(res))
+                          }
+                          return data
+                      } catch (e) {
+                          alert('客户端抛出异常：' + e.message)
+                      }
+                  } else {
+                      alert('没有找到上下文接口' + contextName)
+                  }
+              }
+          }
 
-        function toastMessage(message) {
-            window.toastMessageListener = function (res) {
-                alert('前端收到的客户端toast listener回调参数：' + JSON.stringify(res))
-            }
-            callClient({
-                event: 'UIEvent',
-                action: 'toast',
-                listener: 'toastMessageListener',
-                params: {
-                    msg: message,
-                    duration: 1,
-                    test: 2
-                }
-            })
-        }
-
-        document.getElementById("toastMessage").addEventListener("click", function () {
-            toastMessage('前端需要一个toast')
-        })
-
-        document.getElementById("sendOriginalRequest").addEventListener("click", function () {
-            window.sendOriginalRequestListener = function (res) {
-                alert('接收到的返回数据：' + JSON.stringify(res))
-            }
-
-            callClient({
-                event: 'AjaxEvent',
-                action: 'sendOriginalRequest',
-                listener: 'sendOriginalRequestListener',
-                params: {
-                    // transcode: 'http://192.168.0.118:8080/hello/post/form/',
-                    transcode: 'HuiMinCardLoanLend.do',
-                    params: {
-                        "AcNo": "6231900023402220055",
-                        "Amount": "3300",
-                        "BaseYRate": "4.350000"
-                    }
-                }
-            })
-        });
-
+             function toastMessage(message) {
+                 // 6.调用封装接口
+              callClient({
+                  // 7.指定调用java的那个event，即上面的`com.csii.mobilebank.ynrcc.event.self.UIEvent`类，建议以类名作为event name，类比模块名
+                  event: 'UIEvent',
+                  // 8.指定调用那个模块的那个接口，如这里就是调用`UIEvent#toast`接口
+                  action: 'toast',
+                  // 9.指定传递的参数，后续会被传递到对应event的`doAction`接口，映射到`eventParams.getParams()`
+                  params: {
+                      msg: message,
+                      duration: 1,
+                      test: 2
+                  }
+              })
+          }
     </script>
 
 </body>

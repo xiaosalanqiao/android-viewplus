@@ -74,7 +74,7 @@ android {
     }
 }
 
-ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.0.2"
+ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
 ext.BUTTERKNIFE_VERSION = "9.0.0-SNAPSHOT"
 
 dependencies {
@@ -82,8 +82,10 @@ dependencies {
     androidTestImplementation 'junit:junit:4.12'
 
     api 'com.android.support:multidex:1.0.3'
-
-    api project(':vplus-ui')
+    // 源码测试
+     api project(':vplus-ui')
+    // 依赖测试
+//    api 'cn.jiiiiiin:vplus-ui:1.0.0'
 
     api 'com.jakewharton:butterknife:'  + BUTTERKNIFE_VERSION
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
