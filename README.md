@@ -15,6 +15,52 @@
 └── vplus-ui android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
 ```
 
+
+
+## 使用
+
+
+
++ project build.gradle添加`maven { url "https://dl.bintray.com/vplus/android-viewplus" }`仓库
+
+```gr
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+       	// ...
+        maven { url "https://dl.bintray.com/vplus/android-viewplus" }
+
+    }
+    dependencies {
+        // ...
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+       	// ...
+        maven { url "https://dl.bintray.com/vplus/android-viewplus" }
+    }
+    
+}
+
+```
+
++ module build.gradle 添加库依赖
+
+```gr
+dependencies {
+	//...
+    api 'cn.jiiiiiin:vplus-core:1.0.1'
+    api 'cn.jiiiiiin:vplus-ui:1.0.1'
+}
+```
+
+
+
 # 案例
 
 + [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank)
