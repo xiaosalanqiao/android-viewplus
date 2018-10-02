@@ -21,22 +21,9 @@
 
 
 
-+ project build.gradle添加`maven { url "https://dl.bintray.com/vplus/android-viewplus" }`仓库
++ project build.gradle添加`maven { url "https://dl.bintray.com/vplus/android-viewplus" }`仓库(可选，已上传至jenter)
 
 ```gr
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-       	// ...
-        maven { url "https://dl.bintray.com/vplus/android-viewplus" }
-
-    }
-    dependencies {
-        // ...
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -44,7 +31,6 @@ allprojects {
        	// ...
         maven { url "https://dl.bintray.com/vplus/android-viewplus" }
     }
-    
 }
 
 ```
