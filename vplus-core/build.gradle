@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 27
@@ -29,9 +29,9 @@ android {
     productFlavors {
     }
 
-    lintOptions {
-        abortOnError false
-    }
+//    lintOptions {
+//        abortOnError false
+//    }
 
     configurations.all {
         // https://majing.io/posts/10000007891219
@@ -122,9 +122,10 @@ dependencies {
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
     // https://docs.bugtags.com/zh/start/integrate/android/maven.html
-    debugApi 'com.bugtags.library:bugtags-lib:3.0.0'
+//    debugApi 'com.bugtags.library:bugtags-lib:3.0.0'
     //线上使用，如果不需要使用手动提交 issue，可以选择 metrics 包
-    releaseApi 'com.bugtags.metrics:bugtags-lib:3.0.0'
+//    releaseApi 'com.bugtags.metrics:bugtags-lib:3.0.0'
+    api 'com.bugtags.metrics:bugtags-lib:3.0.0'
 
     // Fragmentation
     // https://github.com/YoKeyword/Fragmentation/releases
@@ -154,19 +155,19 @@ dependencies {
 //    annotationProcessor 'org.projectlombok:lombok:1.18.2'
 }
 
-//publish {
-//    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
-//    repoName="android-viewplus"
-//    // vplus android-viewplus
-//    userOrg="vplus"
-//    // jcenter上的路径 一般是自己公司域名反转
-//    groupId="cn.jiiiiiin"
-//    //项目名称 我们的pakgename
-//    artifactId="vplus-core"
-//    //版本号
-//    publishVersion="1.0.0"
-//    //项目的描述
-//    desc="android-viewplus核心库，包含jsbridge、单activity相关类"
-//    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
-//    website=""
-//}
+publish {
+    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
+    repoName="android-viewplus"
+    // vplus android-viewplus
+    userOrg="vplus"
+    // jcenter上的路径 一般是自己公司域名反转
+    groupId="cn.jiiiiiin"
+    //项目名称 我们的pakgename
+    artifactId="vplus-core"
+    //版本号
+    publishVersion="1.0.1"
+    //项目的描述
+    desc="android-viewplus核心库，包含jsbridge、单activity相关类"
+    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
+    website=""
+}

@@ -45,7 +45,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation 'junit:junit:4.12'
 
-    api project(':vplus-core')
+     api project(':vplus-core')
+//    api 'cn.jiiiiiin:vplus-core:1.0.0'
 
     // ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
@@ -131,7 +132,7 @@ dependencies {
 //    //项目名称 我们的pakgename
 //    artifactId="vplus-ui"
 //    //版本号
-//    publishVersion="1.0.0"
+//    publishVersion="1.0.1"
 //    //项目的描述
 //    desc="android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
 //    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
