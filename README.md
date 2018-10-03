@@ -12,7 +12,7 @@
 ```cmd
 ├── demo 示例
 ├── vplus-core android-viewplus核心库，包含jsbridge、单activity相关类
-└── vplus-ui android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
+└── vplus-ui android-viewplus 可选、可选、可选！！！ UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
 ```
 
 
@@ -57,7 +57,7 @@ dependencies {
 | ------------------------------------------------------------ | :----------------------------------------------------------: |
 | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7rnokp1j30pi13mguh.jpg) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7s5hg1uj30pi13maki.jpg) |
 
-虽然是Hybrid开发库，但是也集成了：
+虽然是Hybrid开发库，但是**vplus-ui android-viewplus 可选、可选、可选！！！** 也集成了：
 
 + [YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation) A powerful library that manage Fragment for Android!
 
