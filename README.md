@@ -11,7 +11,7 @@
 # 模块
 ```cmd
 ├── demo 示例
-├── vplus-core android-viewplus核心库，包含jsbridge、单activity相关类
+├── vplus-core android-viewplus核心库，包含自定义jsbridge、单activity快速开发相关类
 └── vplus-ui android-viewplus 可选、可选、可选！！！ UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
 ```
 
