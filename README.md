@@ -53,8 +53,6 @@ dependencies {
 }
 ```
 
-
-
 # 案例
 
 + [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank)
@@ -790,3 +788,5 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
 + 修复为把`gradle`目录添加导致直接download项目无法编译的问题
 
 + 更新`butterknife`依赖版本到最新**9.0.0-rc1**
+
++ 剔除`signinfo.properties`文件的配置，让demo项目顺利运行
