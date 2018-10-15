@@ -8,6 +8,14 @@
 + 提供了一个开发单Activity应用的模块，底层基于了[YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation)实现下面所要说的**Delegate视图**
 + 提供了一个自定义JSBridge模块，客户端只用实现自己的Action实例，并注入类库的管理方法，就可以简单的完成js和java的交互（建议使用上下文模式4.4以上，也支持协议模式）
 
+
+
+# 参考：
+
+> [Android通用框架设计与完整电商APP开发](https://coding.imooc.com/class/116.html)
+
+主要参考了**傅猿猿**老师的上诉课程，感谢感谢！
+
 # 模块
 ```cmd
 ├── demo 示例
@@ -774,3 +782,11 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
   }
   
   ```
+
+# 更新
+
+#### 20181015
+
++ 修复为把`gradle`目录添加导致直接download项目无法编译的问题
+
++ 更新`butterknife`依赖版本到最新**9.0.0-rc1**

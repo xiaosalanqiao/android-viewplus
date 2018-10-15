@@ -42,7 +42,7 @@ android {
     }
 }
 
-ext.BUTTERKNIFE_VERSION = "9.0.0-SNAPSHOT"
+ext.BUTTERKNIFE_VERSION = "9.0.0-rc1"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
         // ButterKnife https://github.com/JakeWharton/butterknife/issues/963
-        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc1'
         // https://docs.bugtags.com/zh/start/integrate/android/maven.html
         classpath 'com.bugtags.library:bugtags-gradle:2.1.1'
         // https://www.jianshu.com/p/4cdabe4d605a

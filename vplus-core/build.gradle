@@ -44,7 +44,7 @@ android {
 }
 
 ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
-ext.BUTTERKNIFE_VERSION = "9.0.0-SNAPSHOT"
+ext.BUTTERKNIFE_VERSION = "9.0.0-rc1"
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
