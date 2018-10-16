@@ -1,1 +1,1 @@
-include ':demo', ':vplus-core', ':vplus-ui', ':vplus-security', ':vplus-keyboard', ':ynrcc-pmobilebank', ':ynrcc-biometricsandocrlib', ':ynrcc-yztlib', ':ynrcc-up-quickpass-hce'
+include ':demo', ':vplus-core', ':vplus-ui'

@@ -175,20 +175,6 @@
 
 ##### PictureSelector 2.0 #####
 
-
-# ProGuard configurations for Bugtags
-# 符号位：https://docs.bugtags.com/zh/symbols/android/find.html
-# https://docs.bugtags.com/zh/symbols/android/autoupload.html
-  -keepattributes LineNumberTable,SourceFile
-
-  -keep class com.bugtags.library.** {*;}
-  -dontwarn com.bugtags.library.**
-  -keep class io.bugtags.** {*;}
-  -dontwarn io.bugtags.**
-  -dontwarn org.apache.http.**
-  -dontwarn android.net.http.AndroidHttpClient
-# End Bugtags
-
 ##### vplus-core #####
 
 ##### vplus-ui #####
@@ -212,32 +198,6 @@
 
 ##### vplus-ui #####
 
-##### vplus-security #####
--keep class org.spongycastle.**
--dontwarn org.spongycastle.**
-##### vplus-security #####
-
-##### ynrcc-biometricsandocrlib #####
-##### cloudwalk #####
--keep class cn.cloudwalk.**{*;}
-##### cloudwalk #####
-
-##### ynrcc-biometricsandocrlib #####
-
-##### ynrcc-yztlib #####
--keep class cn.com.cfca.sdk.hke.** { *; }
--keep class com.cfca.mobile.hke.** { *; }
-##### ynrcc-yztlib #####
-
-##### ynrcc-up-quickpass-hce #####
--keep class com.gieseckedevrient.**
--dontwarn com.gieseckedevrient.**
--keep class com.unionpay.**
--dontwarn com.unionpay.**
-##### ynrcc-up-quickpass-hce #####
-
-##### ynrcc-pmobilebank #####
-
 #---------------------------------1.实体类---------------------------------
 #-------------------------------------------------------------------------
 
@@ -247,14 +207,6 @@
 ##### event #####
 #-------------------------------------------------------------------------
 
-##### baidu map #####
-# http://lbsyun.baidu.com/index.php?title=androidsdk/guide/create-project/androidstudio
--keep class com.baidu.** {*;}
-#-keep class com.baidu.mapapi.model.** {*;}
--keep class vi.com.** {*;}
--dontwarn com.baidu.**
-##### baidu map #####
-
 ##### uccmawei/FingerprintIdentify #####
 # MeiZuFingerprint
 -keep class com.fingerprints.service.** { *; }
@@ -262,18 +214,6 @@
 # SmsungFingerprint
 -keep class com.samsung.android.sdk.** { *; }
 ##### uccmawei/FingerprintIdentify #####
-
-##### jshare #####
--dontwarn cn.jiguang.**
--keep class cn.jiguang.** { *; }
--dontwarn cn.jpush.**
--keep class cn.jpush.** { *; }
--keep public class com.sina.** {
-    *;
-}
-##### jshare #####
-
-##### ynrcc-pmobilebank #####
 
 #-------------------------------------------------------------------------
 
