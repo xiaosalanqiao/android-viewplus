@@ -1,13 +1,16 @@
 package com.csii.mobilebank;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 
+import com.csii.mobilebank.jsbridge.AjaxEvent;
 import com.csii.mobilebank.jsbridge.UIEvent;
 
 import cn.jiiiiiin.vplus.core.delegates.BaseDelegate;
+import cn.jiiiiiin.vplus.core.delegates.bottom.BaseBottomItemDelegate;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;
@@ -19,6 +22,8 @@ import cn.jiiiiiin.vplus.core.webview.event.model.EventResData;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.context.ViewPlusContextWebInterface;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.exception.JSBridgeException;
 import cn.jiiiiiin.vplus.core.webview.util.WebViewUtil;
+
+import static cn.jiiiiiin.vplus.core.delegates.bottom.BaseBottomItemDelegate.finishApp;
 
 /**
  * 1.继承{@link AbstractWebViewWrapperCommUIDelegate}提供的layout，需要有一个`android:id="@+id/llc_root_container"`的根android.support.v7.widget.LinearLayoutCompat容器
@@ -41,18 +46,35 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         super.onBindView(savedInstanceState, rootView);
+        mIsBackContainerVisibleVal = View.GONE;
     }
 
     public static LauncherWelcomeDelegate newInstance() {
         final Bundle args = new Bundle();
         final LauncherWelcomeDelegate fragment = new LauncherWelcomeDelegate();
         // 设置标题，由基类处理
-        args.putString(ARG_TITLE, "JSBridge测试");
+        args.putString(ARG_TITLE, "JSBridge测试示例");
         // 设置待加载的url，可以是本地assets目录下的html，也可以直接是一个类"https://github.com/这样的域名
         // 这里会在jsbridge-context.html中编写js call java action的示例，详见"jsbridge-context.html"
         args.putString(ARG_URL, "jsbridge-context.html");
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /**
+     * 是否可以滑动返回
+     * @return
+     */
+    @Override
+    protected boolean setWebDelegateSwipeBackEnable() {
+        return false;
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        finishApp(null);
+        // return true，标识应用受理该事件，无需系统在进行传递
+        return true;
     }
 
     // 4.因为Fragment或者说Fragmention框架支持嵌套Fragment，基类提供了一个popToRoot（弹出到根Delegate，即如果是单activity应用，则是回到第一个view），
@@ -70,6 +92,7 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
         // 注册Events，这里将提供给前端的调用接口以Event组分类，是便于按业务管理不同的交互接口
         final IEventManager manager = StandAloneEventManager.newInstance()
                 // 防止使用proguard混淆，所以不直接使用`UIEvent.class.getSimpleName()`
+                .addEvent("AjaxEvent", AjaxEvent.newInstance())
                 .addEvent("UIEvent", UIEvent.newInstance());
         webDelegate
                 // 设置PageLoadListener，默认由基类实现，子类可以按需求复写，以便处理WebView相应生命周期钩子

@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
-
 
 import com.blankj.utilcode.util.StringUtils;
 
@@ -22,7 +20,6 @@ import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.event.AbstractEvent;
-import cn.jiiiiiin.vplus.core.webview.event.BaseEvent;
 import cn.jiiiiiin.vplus.core.webview.event.IEventManager;
 import cn.jiiiiiin.vplus.core.webview.route.RouteKeys;
 import cn.jiiiiiin.vplus.core.webview.route.Router;
@@ -178,7 +175,6 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
 
     /**
      * 预制event和动态event必须区分，以防止注册到event中的listener“被破坏”
-     *
      * @param eventName
      * @param event
      */

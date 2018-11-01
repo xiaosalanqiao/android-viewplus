@@ -19,6 +19,7 @@ import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.net.utils.HttpsCheckUtils;
+import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -41,9 +42,12 @@ public class RestOkHttpUtilsCreator {
     public static final class OkHttpHolder {
 
         private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
-
         private static final ArrayList<Interceptor> INTERCEPTORS = ViewPlus.getConfiguration(ConfigKeys.INTERCEPTOR);
         private static final String TAG = "AJAX::";
+        private static final long API_CONNECT_TIME_OUT = ViewPlus.getConfiguration(ConfigKeys.API_CONNECT_TIME_OUT);
+        private static final long API_READ_TIME_OUT = ViewPlus.getConfiguration(ConfigKeys.API_READ_TIME_OUT);
+
+        private static final CookieJarImpl COOKIE_JAR = new CookieJarImpl(new MemoryCookieStore());
 
         private static OkHttpClient.Builder addInterceptor() {
             if (BUILDER.interceptors() != null) {
@@ -61,23 +65,30 @@ public class RestOkHttpUtilsCreator {
                 logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
                 BUILDER.addInterceptor(logging);
             }
+
+            BUILDER
+                    .connectTimeout(API_CONNECT_TIME_OUT, TimeUnit.SECONDS)
+                    .readTimeout(API_READ_TIME_OUT, TimeUnit.SECONDS)
+                    .retryOnConnectionFailure(true)
+                    .cookieJar(COOKIE_JAR);
+
+            try {
+                final SSLSocketFactory SSL_SOCKET_FACTORY = ViewPlus.getConfiguration(ConfigKeys.SSL_SOCKET_FACTORY);
+                final X509TrustManager TRUST_MANAGER = ViewPlus.getConfiguration(ConfigKeys.SSL_TRUST_MANAGER);
+                final HostnameVerifier HOSTNAME_VERIFIER = ViewPlus.getConfiguration(ConfigKeys.SSL_HOSTNAME_VERIFIER);
+                if (SSL_SOCKET_FACTORY != null && TRUST_MANAGER != null) {
+                    BUILDER.sslSocketFactory(SSL_SOCKET_FACTORY, TRUST_MANAGER);
+                }
+                if (HOSTNAME_VERIFIER != null) {
+                    BUILDER.hostnameVerifier(HOSTNAME_VERIFIER);
+                }
+            } catch (Exception e) {
+                LoggerProxy.de(e, "配置OK_HTTP_CLIENT SSL相关设置失败");
+            }
             return BUILDER;
         }
 
-        private static final long API_CONNECT_TIME_OUT = ViewPlus.getConfiguration(ConfigKeys.API_CONNECT_TIME_OUT);
-        private static final long API_READ_TIME_OUT = ViewPlus.getConfiguration(ConfigKeys.API_READ_TIME_OUT);
-        private static final SSLSocketFactory SSL_SOCKET_FACTORY = ViewPlus.getConfiguration(ConfigKeys.SSL_SOCKET_FACTORY);
-        private static final X509TrustManager TRUST_MANAGER = ViewPlus.getConfiguration(ConfigKeys.SSL_TRUST_MANAGER);
-        private static final HostnameVerifier HOSTNAME_VERIFIER = ViewPlus.getConfiguration(ConfigKeys.SSL_HOSTNAME_VERIFIER);
-        private static final CookieJarImpl COOKIE_JAR = new CookieJarImpl(new MemoryCookieStore());
-        static final OkHttpClient OK_HTTP_CLIENT = addInterceptor()
-                .connectTimeout(API_CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(API_READ_TIME_OUT, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .cookieJar(COOKIE_JAR)
-                .sslSocketFactory(SSL_SOCKET_FACTORY, TRUST_MANAGER)
-                .hostnameVerifier(HOSTNAME_VERIFIER)
-                .build();
+        static final OkHttpClient OK_HTTP_CLIENT = addInterceptor().build();
     }
 
     public static OkHttpUtils getOkHttpUtils() {

@@ -25,7 +25,10 @@
 
 主要参考了**傅猿猿**老师的上诉课程，感谢感谢！
 
+
+
 # 模块
+
 ```cmd
 ├── demo 示例
 ├── vplus-core android-viewplus核心库，包含自定义jsbridge、单activity快速开发相关类
@@ -34,7 +37,22 @@
 
 
 
-## 使用
+# 更新
+
+#### 20181101
+
+- 修复主分支的toast接口前端没有调用问题
+- 添加前端通过`AjaxEvent`对应接口发送代理请求，解决跨域问题示例
+
+#### 20181015
+
+- 修复为把`gradle`目录添加导致直接download项目无法编译的问题
+- 更新`butterknife`依赖版本到最新**9.0.0-rc1**
+- 剔除`signinfo.properties`文件的配置，让demo项目顺利运行
+
+
+
+# 使用
 
 
 
@@ -61,6 +79,8 @@ dependencies {
     api 'cn.jiiiiiin:vplus-ui:1.0.1'
 }
 ```
+
+
 
 # 案例
 
@@ -152,6 +172,8 @@ public class MainApplication extends Application {
                 .withIsDeviceRooted(DeviceUtils.isDeviceRooted())
                 // 应用webview的UserAgent
                 .withWebUserAgent("Custom-WebUserAgent")
+                // 设置服务器的Base URL
+                .withApiHost("https://easy-mock.com/mock/5abc903ff5c35b191f472d79/example/")
                 // 类库提供了一个针对server response的“业务封装”，类似https://www.yanzhenjie.com/Kalle/sample/business.html这篇文档的功能
                 // 设置进行http请求时候服务器端响应json中，标识业务响应是否“success”的key值，这里指的是业务的成功
                 .withServerStatusCodeKey(BaseConfig.SERVER_STATUS_CODE_KEY)
@@ -159,8 +181,10 @@ public class MainApplication extends Application {
                 .withServerStatusCodeSuccessFlag(BaseConfig.SERVER_STATUS_CODE)
                 // 设置进行http请求时候服务器端响应json中，标识业务响应是否“非success”的提示信息（一般是错误消息）的key值，这里指的是业务的错误
                 .withServerStatusMsgKey(BaseConfig.SERVER_STATUS_MSG_KEY)
+                // 设置自定义字体图标
                 .withIcon(new YNRCCIconFontModule())
-                .configure();
+                // 设置点击返回退出应用的检测时间
+                .withExitAppWaitTime(2000L)
 
         LoggerProxy.d("全局应用配置完毕 IS_PROD: %s IS_DEBUG: %s", ViewPlus.IS_PROD(), ViewPlus.IS_DEBUG());
     }
@@ -654,23 +678,16 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
   一个获取时间戳示例，这里需要提一下，单Activity在进行“异步”操作时建议使用`ViewUtil.activityIsLivingCanByRun`检测根Activity是否被销毁
 
   ```java
-  public static void getTimestamp(Activity activity, ISuccess success, IFailure failure, IError error) {
-          ViewUtil.activityIsLivingCanByRun(activity, new ViewUtil.AbstractActivityIsLivingCanByRunCallBack() {
-              @Override
-              public void doIt(@NonNull Activity activity) {
-                  KeyboardUtil.hideSystemKeyboard(activity);
-                  // http模块发送请求，很简单可以看RestOkHttpUtilsClient的构建方法
-                  RestOkHttpUtilsClient.builder(activity)
-                          .loader()
-                          .url(BaseConfig.TRANSCODE_TIMESTAMP)
-                          .success(success)
-                          .failure(failure)
-                          .error(error)
-                          .build()
-                          .post();
-              }
-          });
-      }
+  
+  // http模块发送请求，很简单可以看RestOkHttpUtilsClient的构建方法
+  RestOkHttpUtilsClient.builder(activity)
+  .loader()
+  .url("QryMobileClientVerNew.do")
+  //.success(设置成功处理函数)
+  //.failure(设置业务失败处理函数)
+  //.error(设置请求错误处理函数)
+  .build()
+  .post();
   
   ```
 
@@ -790,12 +807,3 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
   
   ```
 
-# 更新
-
-#### 20181015
-
-+ 修复为把`gradle`目录添加导致直接download项目无法编译的问题
-
-+ 更新`butterknife`依赖版本到最新**9.0.0-rc1**
-
-+ 剔除`signinfo.properties`文件的配置，让demo项目顺利运行

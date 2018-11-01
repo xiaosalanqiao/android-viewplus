@@ -45,9 +45,15 @@ public abstract class BaseBottomItemDelegate extends AbstractViewPlusDelegate {
         return true;
     }
 
+    /**
+     * 需要配置`ViewPlus#EXIT_APP_WAIT_TIME`
+     * @param onFinishAppListener
+     */
     public synchronized static void finishApp(OnFinishAppListener onFinishAppListener) {
         if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
-            onFinishAppListener.onFinishApp();
+            if (onFinishAppListener != null) {
+                onFinishAppListener.onFinishApp();
+            }
             ActivityUtils.finishAllActivities();
             ToastUtils.showLong(R.string.exit_app);
         } else {

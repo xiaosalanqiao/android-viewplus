@@ -3,6 +3,7 @@ package com.csii.mobilebank.jsbridge;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -16,6 +17,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
+import cn.jiiiiiin.vplus.core.webview.AbstractWebViewInteractiveDelegate;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;
 import cn.jiiiiiin.vplus.core.webview.event.AbstractEvent;
 import cn.jiiiiiin.vplus.core.webview.event.BaseEvent;
@@ -77,11 +79,16 @@ public class UIEvent extends BaseEvent {
             case Toast.LENGTH_LONG:
                 // 8.打印toast
                 ToastUtils.showLong(msg);
-                // 模拟异步执行其他事情
-                new Thread(() -> {
-                    // 10.异步通知前端，即java调用前端js
-                    safetyCallH5(listener, String.format("{\"toastTask\":\"%s\"}", "模拟异步执行其他事情完成，通知前端"));
-                }).start();
+                if(!StringUtils.isTrimEmpty(listener)) {
+                    // 模拟异步执行其他事情
+                    safetyUseWebView(webView -> {
+                        webView.postDelayed(() -> {
+
+                        }, 2000);
+                        // 10.异步通知前端，即java调用前端js
+                        safetyCallH5(listener, String.format("{\"toastTask\":\"%s\"}", "模拟异步执行其他事情完成，通知前端"));
+                    });
+                }
                 break;
             case Toast.LENGTH_SHORT:
                 ToastUtils.showShort(msg);

@@ -20,7 +20,6 @@ public final class Err {
         PARSE_EVENTPARAMS_ERR("parse_eventparams_err", "解析交互[EventParams]参数出错"),
         EVENTPARAMS_ISNULL_ERR("eventparams_isnull_err", "交互事件参数不能为空"),
         PARAMS_ISNULL_ERR("params_isnull_err", "请求参数不能为空"),
-        GETCONFIGURATION_NOT_FOUND_CONFIG("getconfiguration_not_found_config", "待获取的配置不存在"),
         DEF_ERR("def_err", "默认的错误消息");
 
         private String code;

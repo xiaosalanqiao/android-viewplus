@@ -142,9 +142,16 @@ public class WebViewClientImpl extends WebViewClient {
         handler.cancel();
     }
 
+    /**
+     * > [Android 让WebView完美支持https双向认证(SSL)](https://blog.csdn.net/kpioneer123/article/details/51491739)
+     * @param view
+     * @param handler
+     * @param error
+     */
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         // 接受信任所有网站的证书
+        // https://support.google.com/faqs/answer/7071387?hl=en
         // https://www.cnblogs.com/liyiran/p/7011317.html
         // 安全的方案是当出现了证书问题的时候，读取 asserts 中保存的的根证书，然后与服务器校验，假如通过了，继续执行 handler.proceed()，否则执行 handler.cancel()。
         // https://juejin.im/entry/57b586d35bbb50006303c7e7

@@ -64,6 +64,8 @@ public class MainApplication extends Application {
                 .withIsDeviceRooted(DeviceUtils.isDeviceRooted())
                 // 应用webview的UserAgent
                 .withWebUserAgent("Custom-WebUserAgent")
+                // 设置服务器的Base URL
+                .withApiHost("https://easy-mock.com/mock/5abc903ff5c35b191f472d79/example/")
                 // 类库提供了一个针对server response的“业务封装”，类似https://www.yanzhenjie.com/Kalle/sample/business.html这篇文档的功能
                 // 设置进行http请求时候服务器端响应json中，标识业务响应是否“success”的key值，这里指的是业务的成功
                 .withServerStatusCodeKey(BaseConfig.SERVER_STATUS_CODE_KEY)
@@ -71,7 +73,10 @@ public class MainApplication extends Application {
                 .withServerStatusCodeSuccessFlag(BaseConfig.SERVER_STATUS_CODE)
                 // 设置进行http请求时候服务器端响应json中，标识业务响应是否“非success”的提示信息（一般是错误消息）的key值，这里指的是业务的错误
                 .withServerStatusMsgKey(BaseConfig.SERVER_STATUS_MSG_KEY)
+                // 设置自定义字体图标
                 .withIcon(new YNRCCIconFontModule())
+                // 设置点击返回退出应用的检测时间
+                .withExitAppWaitTime(2000L)
                 .configure();
 
         LoggerProxy.d("全局应用配置完毕 IS_PROD: %s IS_DEBUG: %s", ViewPlus.IS_PROD(), ViewPlus.IS_DEBUG());

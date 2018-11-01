@@ -17,8 +17,31 @@ import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.exception.JSBridgeExceptio
 
 /**
  * 客户端暴露给前端的代理接口
+ * <p>
+ * mWebView.addJavascriptInterface(new Object(){
  *
  * @author Created by jiiiiiin
+ * @JavascriptInterface public String event(String params) {
+ * final JSONObject jsonObj = JSONObject.parseObject(params);
+ * String event = jsonObj.getString("event");
+ * String action = jsonObj.getString("action");
+ * String callback = jsonObj.getString("callback");
+ * String listener = jsonObj.getString("listener");
+ * JSONObject rparams = jsonObj.getJSONObject("params");
+ * switch (action) {
+ * case "toast":
+ * ToastUtils.showLong(rparams.getString("msg"));
+ * // 模拟异步执行其他事情
+ * new Thread(() -> {
+ * // 10.异步通知前端，即java调用前端js
+ * HANDLER.post(() -> mWebView.evaluateJavascript(callback + "('" + params + "');", null));
+ * }).start();
+ * break;
+ * default:
+ * }
+ * return params;
+ * }
+ * }, "ViewPlus");
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public final class ViewPlusContextWebInterface {

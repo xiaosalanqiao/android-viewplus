@@ -26,8 +26,6 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 public abstract class BaseActivity extends SupportActivity {
 
-    public static final String NAVIGATIONBAR_IS_MIN = "navigationbar_is_min";
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
