@@ -1,16 +1,15 @@
-package com.csii.mobilebank;
+package cn.jiiiiiin.viewplus;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.csii.mobilebank.jsbridge.AjaxEvent;
-import com.csii.mobilebank.jsbridge.UIEvent;
+
+import cn.jiiiiiin.viewplus.jsbridge.AjaxEvent;
+import cn.jiiiiiin.viewplus.jsbridge.UIEvent;
 
 import cn.jiiiiiin.vplus.core.delegates.BaseDelegate;
-import cn.jiiiiiin.vplus.core.delegates.bottom.BaseBottomItemDelegate;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;

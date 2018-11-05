@@ -1,4 +1,4 @@
-package com.csii.mobilebank.jsbridge;
+package cn.jiiiiiin.viewplus.jsbridge;
 
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.StringUtils;
@@ -70,8 +70,7 @@ public class AjaxEvent extends BaseEvent {
     private EventResData _doPost(JSONObject params, String transCode, String listener) {
 
         final RestOkHttpUtilsBuilder build = RestOkHttpUtilsClient.builder(getDelegate().getActivity())
-                // loader 由前端控制
-                //.loader()
+                .loader()
                 .url(transCode);
         // 真正需要发送到后端的参数
         final JSONObject reqOriginData = params.getJSONObject(PARAMS);

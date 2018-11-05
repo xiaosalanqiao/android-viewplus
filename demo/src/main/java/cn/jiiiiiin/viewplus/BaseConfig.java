@@ -1,4 +1,4 @@
-package com.csii.mobilebank;
+package cn.jiiiiiin.viewplus;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.Configurator;

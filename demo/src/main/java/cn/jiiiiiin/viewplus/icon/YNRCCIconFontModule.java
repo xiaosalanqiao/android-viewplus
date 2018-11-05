@@ -1,4 +1,4 @@
-package com.csii.mobilebank.icon;
+package cn.jiiiiiin.viewplus.icon;
 
 
 import com.joanzapata.iconify.Icon;

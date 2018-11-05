@@ -1,4 +1,4 @@
-package com.csii.mobilebank;
+package cn.jiiiiiin.viewplus;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,7 +6,9 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.blankj.utilcode.util.DeviceUtils;
-import com.csii.mobilebank.icon.YNRCCIconFontModule;
+
+
+import cn.jiiiiiin.viewplus.icon.YNRCCIconFontModule;
 import com.orhanobut.hawk.Hawk;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -15,8 +17,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.ui.refresh.DynamicTimeFormat;
-
-import static com.csii.mobilebank.BaseConfig.IS_DEBUG;
 
 
 /**
@@ -38,7 +38,7 @@ public class MainApplication extends Application {
         super.onCreate();
         // core模块集成Hawk，用于简化应用本地存储
         // Hawk初始化
-        if (IS_DEBUG) {
+        if (BaseConfig.IS_DEBUG) {
             Hawk.init(this).setLogInterceptor(message -> Log.d("HAWK", message)).build();
         } else {
             Hawk.init(this).build();

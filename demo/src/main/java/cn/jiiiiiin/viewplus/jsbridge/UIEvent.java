@@ -1,24 +1,11 @@
-package com.csii.mobilebank.jsbridge;
+package cn.jiiiiiin.viewplus.jsbridge;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.webkit.WebView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
-import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
-import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
-import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
-import cn.jiiiiiin.vplus.core.webview.AbstractWebViewInteractiveDelegate;
-import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;
 import cn.jiiiiiin.vplus.core.webview.event.AbstractEvent;
 import cn.jiiiiiin.vplus.core.webview.event.BaseEvent;
 import cn.jiiiiiin.vplus.core.webview.event.model.EventParams;

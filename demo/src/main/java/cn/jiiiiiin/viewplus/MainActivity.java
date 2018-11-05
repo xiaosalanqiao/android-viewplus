@@ -1,9 +1,8 @@
-package com.csii.mobilebank;
+package cn.jiiiiiin.viewplus;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import cn.jiiiiiin.vplus.core.activites.AbstractOnTouchMngProxyActivity;
@@ -11,9 +10,6 @@ import cn.jiiiiiin.vplus.core.activites.BaseActivity;
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;
-import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
-import cn.jiiiiiin.vplus.ui.launcher.ILauncherListener;
-import cn.jiiiiiin.vplus.ui.launcher.OnLauncherFinishTag;
 
 /**
  * 1、这里是一个单Activity应用的Demo中的唯一Activity，其实单Activity多Fragment这里依赖[YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation)，

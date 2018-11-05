@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.csii.mobilebank">
+    package="cn.jiiiiiin.viewplus">
 
     <!--https://mp.weixin.qq.com/s/FyxuOuTFyZ_F8D0jQ8w5bg
     WebView新增了一些非常有用的API，可以使用和chrome浏览器类似的API来实现对恶意网站的检测来保护web浏览的安全性，为此需要在manifest中添加如下meta-data标签-->
