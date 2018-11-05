@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
+import android.webkit.ConsoleMessage;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.ValueCallback;
@@ -165,5 +166,13 @@ public class WebChromeClientImpl extends WebChromeClient {
                 .compress(true)
                 .synOrAsy(false)
                 .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    @Override
+    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.w("前端console信息 %s %s %s", consoleMessage.message(), consoleMessage.lineNumber(), consoleMessage.sourceId());
+        }
+        return super.onConsoleMessage(consoleMessage);
     }
 }

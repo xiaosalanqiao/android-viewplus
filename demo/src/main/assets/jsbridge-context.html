@@ -43,12 +43,6 @@
 
     <hr>
 
-    <!-- <p>以下是html页面，内部跳转测试</p>
-
-    <a href="./second.html">跳转页面</a>
-
-    <br /> -->
-    <hr>
 
     <script type="text/javascript">
         var CONTEXT_NAME = undefined
@@ -106,7 +100,8 @@
 
         document.getElementById("sendOriginalRequest").addEventListener("click", function () {
             window.sendOriginalRequestListener = function (res) {
-                alert('接收到的返回数据：\n' + JSON.stringify(res))
+                const data = JSON.parse(res)
+                alert('接收到的返回数据：\n' + JSON.stringify(data.data))
             }
 
             callClient({
@@ -115,7 +110,7 @@
                 listener: 'sendOriginalRequestListener',
                 params: {
                     // 获取easy mock服务器上面的一个测试接口，返回客户端的更新信息
-                    transcode: 'QryMobileClientVerNew.do',
+                    transcode: 'LOGIN',
                 }
             })
         });
