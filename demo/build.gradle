@@ -1,26 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
-//def keystorePropertiesFile = rootProject.file("signinfo.properties")
-//def keystoreProperties = new Properties()
-//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
-    // https://blog.csdn.net/qq_27258799/article/details/77259129
-//    signingConfigs {
-//        debug {
-//            keyAlias keystoreProperties['debugKeyAlias']
-//            keyPassword keystoreProperties['debugKeyPassword']
-//            storeFile file(keystoreProperties['debugStoreFile'])
-//            storePassword keystoreProperties['debugStorePassword']
-//        }
-//        release {
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
-//        }
-//    }
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
@@ -55,14 +36,6 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // signingConfig signingConfigs.release
-            // https://blog.csdn.net/qq_27258799/article/details/77259129
-            // ！！下面这个不能设置，会导致第三方配置需要包名的地方出错
-//            applicationIdSuffix ".release"
-        }
-        debug {
-            // signingConfig signingConfigs.debug
-//            applicationIdSuffix ".debug"
         }
     }
 
