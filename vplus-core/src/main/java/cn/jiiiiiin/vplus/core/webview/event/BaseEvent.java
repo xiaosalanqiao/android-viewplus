@@ -104,6 +104,11 @@ public abstract class BaseEvent extends AbstractEvent {
         return res == null ? def : res;
     }
 
+    protected Integer parseInteger(JSONObject params, String key, Integer def) {
+        final Integer res = params.getInteger(key);
+        return res == null ? def : res;
+    }
+
     protected String parseStr(JSONObject params, String key, String def) {
         final String res = params.getString(key);
         return StringUtils.isEmpty(res) ? def : res;

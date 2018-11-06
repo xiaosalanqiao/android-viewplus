@@ -23,7 +23,9 @@
         titlebar:rightCustomView="@layout/include_h5_toolbar_custom_right"
         titlebar:rightType="customView" />
 
-    <include layout="@layout/include_comm_devider_line" />
+    <include
+        android:id="@+id/title_bar_bottom_line"
+        layout="@layout/include_comm_devider_line" />
 
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/progress_bar"

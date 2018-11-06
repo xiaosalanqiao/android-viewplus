@@ -70,6 +70,8 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     protected CommonTitleBar mCommonTitleBar;
     protected boolean mIsToolbarInitialised = false;
     protected int mTitleBarVisibleVal = View.VISIBLE;
+    @BindView(R2.id.title_bar_bottom_line)
+    protected View bottomLine;
     private TextView centerTextView;
     @BindView(R2.id.toolbar_close)
     View mToolBarCloseContainer;
@@ -216,6 +218,7 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
 
     protected void _initToolbar() {
         this.mCommonTitleBar.setVisibility(mTitleBarVisibleVal);
+        bottomLine.setVisibility(mTitleBarVisibleVal);
         centerTextView = this.mCommonTitleBar.getCenterTextView();
         centerTextView.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(mTitle)) {

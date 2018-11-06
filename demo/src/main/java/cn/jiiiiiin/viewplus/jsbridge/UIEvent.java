@@ -60,7 +60,7 @@ public class UIEvent extends BaseEvent {
 
     private EventResData _toast(final JSONObject params, final String listener) {
         // 7.获取特定参数(前端传递)
-        final int duration = params.getInteger("duration");
+        final int duration = parseInteger(params, "duration", Toast.LENGTH_LONG);
         final String msg = params.getString("msg");
         switch (duration) {
             case Toast.LENGTH_LONG:
