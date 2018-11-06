@@ -3,12 +3,17 @@ package cn.jiiiiiin.viewplus;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 
+
+import com.gyf.barlibrary.ImmersionBar;
 
 import cn.jiiiiiin.viewplus.jsbridge.AjaxEvent;
 import cn.jiiiiiin.viewplus.jsbridge.UIEvent;
 
+import cn.jiiiiiin.vplus.core.app.ConfigKeys;
+import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.delegates.BaseDelegate;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
@@ -46,6 +51,7 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         super.onBindView(savedInstanceState, rootView);
         mIsBackContainerVisibleVal = View.GONE;
+        setTitleBarVisible(false);
     }
 
     public static LauncherWelcomeDelegate newInstance() {
@@ -55,7 +61,8 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
         args.putString(ARG_TITLE, "JSBridge测试示例");
         // 设置待加载的url，可以是本地assets目录下的html，也可以直接是一个类"https://github.com/这样的域名
         // 这里会在jsbridge-context.html中编写js call java action的示例，详见"jsbridge-context.html"
-        args.putString(ARG_URL, "jsbridge-context.html");
+//        args.putString(ARG_URL, "jsbridge-context.html");
+        args.putString(ARG_URL, ViewPlus.getConfiguration(ConfigKeys.WEB_HOST));
         fragment.setArguments(args);
         return fragment;
     }
@@ -131,5 +138,23 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
     public String onRespH5(EventResData eventResData, EventParams eventParams) {
         // 前端调用客户端参数后处理器
         return eventResData.toJson();
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        try {
+            mImmersionBar = ImmersionBar.with(_mActivity, this);
+            mImmersionBar
+                    .fitsSystemWindows(true)
+                    .statusBarColor(android.R.color.black)
+                    .statusBarDarkFont(false)
+                    //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
+                    .keyboardEnable(true)
+                    //单独指定软键盘模式
+                    .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    .init();
+        } catch (Exception e) {
+            LoggerProxy.e(e, "初始化沉浸式状态栏出错");
+        }
     }
 }
