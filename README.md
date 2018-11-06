@@ -565,7 +565,7 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
 
   示例：
 
-  ![](https://ws2.sinaimg.cn/large/006tNc79gy1fvt3ncma2pj30z01md7b6.jpg)
+  ![image-20181106100639322](https://ws3.sinaimg.cn/large/006tNbRwgy1fwy485lsqij30lu12v43v.jpg)
 
 
 
