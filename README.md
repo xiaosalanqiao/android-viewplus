@@ -81,9 +81,8 @@ allprojects {
 
 ```gr
 dependencies {
-	//...
-    api 'cn.jiiiiiin:vplus-core:1.0.2'
-    api 'cn.jiiiiiin:vplus-ui:1.0.1'
+    api 'cn.jiiiiiin:vplus-core:1.0.3'
+    api 'cn.jiiiiiin:vplus-ui:1.0.2'
 }
 ```
 
