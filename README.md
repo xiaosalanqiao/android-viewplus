@@ -95,21 +95,6 @@ dependencies {
 
  等，故开发原生应用也是很ok的 ：）
 
-
-
-# 案例
-
-| 名称 | 渠道 | 简介 |
-| ------ | ------ | ------ |
-| [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank) | 移动端 | [2018区域性商业银行“最佳手机银行奖”](https://mp.weixin.qq.com/s/n0QMYGBSdatmkXTfS9p6HA)，整个手机银行80%的界面都基于Vue开发，完整使用了当前插件 |
-
-案例截图
-|                                                              | |                                                              |                                                              |
-| ------------------------------------------------------------ | | ------------------------------------------------------------ | ---------------------------------------------------------- |
-| ![云南农信手机银行](http://a.app.qq.com/o/image/microQr.png?pkgName=com.csii.mobilebank) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7rnokp1j30pi13mguh.jpg) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7s5hg1uj30pi13maki.jpg) |
-
-
-
 # 示例
 
 ```java
