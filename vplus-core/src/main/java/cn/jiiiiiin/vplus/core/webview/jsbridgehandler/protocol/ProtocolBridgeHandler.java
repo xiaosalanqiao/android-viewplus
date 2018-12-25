@@ -27,7 +27,6 @@ public class ProtocolBridgeHandler {
      *
      * @param webDelegate
      * @param infos
-     * @return
      */
     public static void event(AbstractWebViewDelegate webDelegate, UriInfo infos, IEventManager eventManager, ViewPlusContextWebInterface.IJsBridgeHandler jsBridgeResHandler) {
         if (ViewPlus.IS_DEBUG()) {

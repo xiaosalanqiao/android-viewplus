@@ -3,17 +3,16 @@ package cn.jiiiiiin.viewplus;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.blankj.utilcode.util.DeviceUtils;
-
-
-import cn.jiiiiiin.viewplus.icon.YNRCCIconFontModule;
 import com.orhanobut.hawk.Hawk;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import cn.jiiiiiin.viewplus.icon.YNRCCIconFontModule;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.ui.refresh.DynamicTimeFormat;
@@ -21,7 +20,6 @@ import cn.jiiiiiin.vplus.ui.refresh.DynamicTimeFormat;
 
 /**
  * @author jiiiiiin
- * @date 2017/8/4
  */
 
 public class MainApplication extends Application {
@@ -32,7 +30,6 @@ public class MainApplication extends Application {
         MultiDex.install(base);
     }
 
-    @SuppressWarnings("AlibabaRemoveCommentedCode")
     @Override
     public void onCreate() {
         super.onCreate();

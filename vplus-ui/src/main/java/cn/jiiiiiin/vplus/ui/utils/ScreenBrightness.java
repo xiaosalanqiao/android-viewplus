@@ -9,23 +9,6 @@ import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 /**
  * 屏幕亮度控制 工具类
  * https://developer.android.com/training/scheduling/wakelock#java
- * <p>
- * <uses-permission android:name="android.permission.WRITE_SETTINGS" />
- * <p>
- * try {
- * ScreenBrightness.getInstance().widthActivity(_mActivity).setLight(255);
- * ViewPlus.getHandler().postDelayed(()->{
- * try {
- * ScreenBrightness.getInstance().widthActivity(_mActivity).setLight(-1);
- * } catch (ViewPlusException e) {
- * e.printStackTrace();
- * }
- * }, 2000);
- * LoggerProxy.e("acquire acquire");
- * } catch (ViewPlusException e) {
- * e.printStackTrace();
- * }
- *
  * @author jiiiiiin
  * @version 1.0
  */

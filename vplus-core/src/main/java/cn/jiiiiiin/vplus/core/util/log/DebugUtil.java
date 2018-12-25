@@ -3,7 +3,6 @@ package cn.jiiiiiin.vplus.core.util.log;
 import com.blankj.utilcode.util.ToastUtils;
 
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 
 /**

@@ -10,7 +10,6 @@ import www.znq.com.myapplication.proxy.FragmentOnTouchMng;
 
 /**
  * @author jiiiiiin
- * @date 2017/8/4
  */
 
 public abstract class AbstractOnTouchMngProxyActivity extends BaseActivity implements FragmentOnTouchMng.ITouchMngProxy {

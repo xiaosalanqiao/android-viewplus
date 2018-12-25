@@ -28,13 +28,13 @@ public final class ApkSignatureUtils {
                 final String currentSignature = Base64.encodeToString(md.digest(), Base64.DEFAULT);
                 // 上面得到的会多一个/n，故要做截取
                 final boolean res = realSignature.equals(currentSignature.substring(0, currentSignature.length()-1));
-                LoggerProxy.dd("Include this string as a value for SIGNATURE:%s %s %s", currentSignature, realSignature, res);
+                LoggerProxy.d("Include this string as a value for SIGNATURE:%s %s %s", currentSignature, realSignature, res);
                 // compare signatures
                 return res;
             }
         } catch (Exception e) {
             //assumes an issue in checking signature., but we let the caller decide on what to do.
-            LoggerProxy.de(e, "cas err");
+            LoggerProxy.e(e, "cas err");
         }
         return false;
     }

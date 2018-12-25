@@ -108,7 +108,7 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
         try {
             return JSON.parseObject(response);
         } catch (Exception e) {
-            LoggerProxy.de(e, "JSON.parseObject(response)格式化服务端返回的数据出错");
+            LoggerProxy.e(e, "JSON.parseObject(response)格式化服务端返回的数据出错");
             throw new ViewPlusException("格式化服务端返回的数据出错[非JSON格式]");
         }
     }

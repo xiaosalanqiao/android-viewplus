@@ -201,7 +201,6 @@ public class DeviceUtil {
      *
      * @param activity
      * @param generateDeviceIdCallBack
-     * @throws ViewPlusException
      */
     @SuppressLint({"MissingPermission", "CheckResult"})
     public static void generateDeviceId(Activity activity, IGenerateDeviceIdCallBack generateDeviceIdCallBack) {

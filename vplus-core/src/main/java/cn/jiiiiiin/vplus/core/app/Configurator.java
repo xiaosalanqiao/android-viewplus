@@ -25,8 +25,6 @@ import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;
 import cn.jiiiiiin.vplus.core.dict.Err;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
-import cn.jiiiiiin.vplus.core.net.interceptors.CommonParamsInterceptor;
-import cn.jiiiiiin.vplus.core.net.interceptors.ReqHeadersSetInterceptor;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import me.yokeyword.fragmentation.Fragmentation;
 import okhttp3.Interceptor;
@@ -47,22 +45,10 @@ public class Configurator {
     public static final String DEV_MODE = "DEV";
     public static final String TEST_MODE = "TEST";
     public static final String PROD_MODE = "PROD";
-    /**
-     * 默认连接超时时间（秒）
-     */
-    private static final long DEF_CONNECT_TIMEOUT = 60;
-    /**
-     * 默认读取数据超时时间（秒）
-     */
-    private static final long DEF_READ_TIMEOUT = 60;
 
     private Configurator() {
         VP_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
         VP_CONFIGS.put(ConfigKeys.HANDLER, HANDLER);
-        withInterceptor(new CommonParamsInterceptor());
-        withInterceptor(new ReqHeadersSetInterceptor());
-        withApiConnectTimeout(DEF_CONNECT_TIMEOUT);
-        withApiReadTimeout(DEF_READ_TIMEOUT);
     }
 
     public Configurator withWebViewCurrentLoadUrl(String url) {
@@ -389,7 +375,7 @@ public class Configurator {
         checkConfiguration();
         final Object value = VP_CONFIGS.get(key);
         if (value == null) {
-            LoggerProxy.e("待获取的[%s]配置不存在！", key);
+            LoggerProxy.w("待获取的[%s]配置不存在！", key);
             if (ViewPlus.IS_DEBUG()) {
                 throw new ViewPlusRuntimeException("待获取的配置不存在");
             }

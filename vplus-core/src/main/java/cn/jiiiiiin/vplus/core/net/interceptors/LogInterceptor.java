@@ -11,9 +11,7 @@ import okhttp3.Response;
 /**
  *
  * @author jiiiiiin
- * @date 2017/9/25
  */
-
 public class LogInterceptor implements Interceptor {
 
     @Override

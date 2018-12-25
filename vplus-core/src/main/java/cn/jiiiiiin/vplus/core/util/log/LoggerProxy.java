@@ -2,13 +2,7 @@ package cn.jiiiiiin.vplus.core.util.log;
 
 import android.util.Log;
 
-import com.bugtags.library.Bugtags;
 import com.orhanobut.logger.Logger;
-
-import java.util.Arrays;
-
-import cn.jiiiiiin.vplus.core.app.Configurator;
-import cn.jiiiiiin.vplus.core.app.ViewPlus;
 
 /**
  * @author jiiiiiin
@@ -119,7 +113,6 @@ public final class LoggerProxy {
     public static void e(String message) {
         if (LEVEL <= ERROR) {
             try {
-                Bugtags.log("发送LoggerProxy的e日志 0-->".concat(message));
                 Logger.e(message);
             } catch (Exception e) {
                 Log.e(TAG, "打印日志出错", e);
@@ -151,8 +144,6 @@ public final class LoggerProxy {
     public static void e(Throwable exception, String message, Object... args) {
         if (LEVEL <= ERROR) {
             try {
-//                Bugtags.log("发送LoggerProxy的e日志 2-->".concat(message).concat(":::").concat(Arrays.toString(args)).concat(":::").concat(exception.getMessage()));
-                Bugtags.sendException(exception);
                 Logger.e(exception, message, args);
             } catch (Exception e) {
                 Log.e(TAG, "打印日志出错", e);
@@ -160,27 +151,4 @@ public final class LoggerProxy {
         }
     }
 
-    public static void de(Throwable exception, String message, Object... args) {
-        if (LEVEL <= ERROR) {
-            try {
-                Logger.e(exception, message, args);
-            } catch (Exception e) {
-                Log.e(TAG, "打印日志出错", e);
-            }
-        }
-    }
-
-    /**
-     * 用完记得注释掉
-     *
-     * @param message
-     * @param args
-     */
-    public static void dd(String message, Object... args) {
-        try {
-            Logger.e(message, args);
-        } catch (Exception e) {
-            Log.e(TAG, "打印日志出错", e);
-        }
-    }
 }

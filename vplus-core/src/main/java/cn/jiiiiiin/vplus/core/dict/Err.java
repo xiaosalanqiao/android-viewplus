@@ -2,7 +2,6 @@ package cn.jiiiiiin.vplus.core.dict;
 
 /**
  * @author jiiiiiin
- * @date 2017/8/4
  */
 @Deprecated
 public final class Err {

@@ -26,6 +26,7 @@ import cn.jiiiiiin.vplus.core.webview.event.model.EventResData;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.context.ViewPlusContextWebInterface;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.exception.JSBridgeException;
 import cn.jiiiiiin.vplus.core.webview.util.WebViewUtil;
+import lombok.val;
 
 import static cn.jiiiiiin.vplus.core.delegates.bottom.BaseBottomItemDelegate.finishApp;
 
@@ -69,6 +70,7 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
 
     /**
      * 是否可以滑动返回
+     *
      * @return
      */
     @Override
@@ -78,7 +80,18 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
 
     @Override
     public boolean onBackPressedSupport() {
-        finishApp(null);
+        try {
+            val webview = getWebDelegate().getWebView();
+            // TODO 因为演示demo加载的是一个spa应用，路由在其内部，需要进行相互桥接才能正确的控制
+            if (webview.canGoBack()) {
+                webview.goBack();
+            } else {
+                finishApp(null);
+            }
+        } catch (ViewPlusException e) {
+            e.printStackTrace();
+            finishApp(null);
+        }
         // return true，标识应用受理该事件，无需系统在进行传递
         return true;
     }

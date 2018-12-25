@@ -8,7 +8,6 @@ import android.support.v7.widget.ContentFrameLayout;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import com.bugtags.library.Bugtags;
 import com.gyf.barlibrary.ImmersionBar;
 
 import cn.jiiiiiin.vplus.core.R;
@@ -70,28 +69,8 @@ public abstract class BaseActivity extends SupportActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Bugtags.onResume(this);
         // ! 解决应用重启之后，PartnerWebViewWrapperDelegate这样设置的ImmersionBar失效的问题
         initImmersionBar();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Bugtags.onPause(this);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        Bugtags.onDispatchTouchEvent(this, event);
-        return super.dispatchTouchEvent(event);
-    }
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        // 记录按键操作步骤
-        Bugtags.onDispatchKeyEvent(this, event);
-        return super.dispatchKeyEvent(event);
     }
 
     @Override

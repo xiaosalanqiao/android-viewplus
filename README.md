@@ -13,11 +13,15 @@
 
 # 特性
 
-+ 提供了一个简单实用的Http模块，支持**业务封装**，类[Kalle业务封装](https://www.yanzhenjie.com/Kalle/sample/business.html)
-+ 提供了一个开发单Activity应用的模块，底层基于了[YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation)实现下面所要说的**Delegate视图**
 + 提供了一个自定义JSBridge模块，客户端只用实现自己的Action实例，并注入类库的管理方法，就可以简单的完成js和java的交互（建议使用上下文模式4.4以上，也支持协议模式）
++ 提供了一个简单实用的Http模块，支持**业务封装**，类[util-http.js 针对axios进行了二次封装的ajax模块](http://jiiiiiin.cn/vue-viewplus/#/util-http)
++ 提供了一个开发单Activity应用的模块，底层基于了[YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation)实现下面所要说的**Delegate视图**
 
+# DEMO
 
+![](https://ws4.sinaimg.cn/large/006tNbRwgy1fyiue799vej30aa0a9jrb.jpg)
+
+[点击下载](https://fim.im/app.php/70)
 
 # 参考：
 
@@ -39,6 +43,11 @@
 
 # 更新
 
+#### 20181225
+
+- 更新项目依赖
+- 删除一些不是必须的依赖
+
 #### 20181101
 
 - 修复主分支的toast接口前端没有调用问题
@@ -53,8 +62,6 @@
 
 
 # 使用
-
-
 
 + project build.gradle添加`maven { url "https://dl.bintray.com/vplus/android-viewplus" }`仓库(可选，已上传至jenter)
 
@@ -80,18 +87,6 @@ dependencies {
 }
 ```
 
-
-
-# 案例
-
-+ [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank)
-
-![云南农信手机银行](http://a.app.qq.com/o/image/microQr.png?pkgName=com.csii.mobilebank)
-
-|                                                              |                                                              |
-| ------------------------------------------------------------ | :----------------------------------------------------------: |
-| ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7rnokp1j30pi13mguh.jpg) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7s5hg1uj30pi13maki.jpg) |
-
 虽然是Hybrid开发库，但是**vplus-ui android-viewplus 可选、可选、可选！！！** 也集成了：
 
 + [YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation) A powerful library that manage Fragment for Android!
@@ -100,6 +95,19 @@ dependencies {
 + [QMUI/QMUI_Android](https://github.com/QMUI/QMUI_Android) 提高 Android UI 开发效率的 UI 库 <http://qmuiteam.com/android>
 
  等，故开发原生应用也是很ok的 ：）
+
+
+
+# 案例
+
+| 名称 | 渠道 | 简介 |
+| ------ | ------ | ------ |
+| [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank) | 移动端 | [2018区域性商业银行“最佳手机银行奖”](https://mp.weixin.qq.com/s/n0QMYGBSdatmkXTfS9p6HA)，整个手机银行80%的界面都基于Vue开发，完整使用了当前插件 |
+
+案例截图
+|                                                              | |                                                              |                                                              |
+| ------------------------------------------------------------ | | ------------------------------------------------------------ | ---------------------------------------------------------- |
+| ![云南农信手机银行](http://a.app.qq.com/o/image/microQr.png?pkgName=com.csii.mobilebank) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7rnokp1j30pi13mguh.jpg) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7s5hg1uj30pi13maki.jpg) |
 
 
 
@@ -277,6 +285,8 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
 ```
 
 ## 混合客户端快速开发示例
+
++ [前端开发示例](http://jiiiiiin.cn/vue-viewplus/#/js-bridge-context)
 
 + 客户端：
 
@@ -563,9 +573,6 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
 
   如何关联Event模块，想看demo实例；
 
-  示例：
-
-  ![image-20181106100639322](https://ws3.sinaimg.cn/large/006tNbRwgy1fwy485lsqij30lu12v43v.jpg)
 
 
 

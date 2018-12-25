@@ -23,9 +23,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:text="由第三方提供技术支持"
+            android:text="viewplus 1.0.4"
             android:textColor="#6a737d"
-            android:textSize="@dimen/_12sp"
+            android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>

@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.core.util.ui;
 
-import android.graphics.Rect;
+//import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -82,9 +82,10 @@ public class AndroidBug5497Workaround {
 
     private int computeUsableHeight() {
         //计算视图可视高度
-        Rect r = new Rect();
-        mChildOfContent.getWindowVisibleDisplayFrame(r);
-        return r.bottom;
+//        Rect r = new Rect();
+//        mChildOfContent.getWindowVisibleDisplayFrame(r);
+//        return r.bottom;
+        return 0;
     }
 
 }

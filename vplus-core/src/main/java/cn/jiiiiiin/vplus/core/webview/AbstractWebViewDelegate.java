@@ -153,7 +153,7 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
     }
 
     /**
-     * @see WebView#addJavascriptInterface(Object, String)
+     * 参考 `WebView#addJavascriptInterface(Object, String)`
      */
     public AbstractWebViewDelegate setJavascriptInterface(@NonNull Object object, @NonNull String name) {
         if (JS_BRIDGE_MAP.isEmpty()) {

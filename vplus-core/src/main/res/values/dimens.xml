@@ -1,32 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- dp begin -->
-    <dimen name="_2dp">2dp</dimen>
     <dimen name="divider_size">1dp</dimen>
     <!-- dp end -->
-    <!-- sp begin -->
-    <dimen name="_40sp">40sp</dimen>
-    <dimen name="_35sp">35sp</dimen>
-    <dimen name="_26sp">26sp</dimen>
-    <dimen name="_24sp">24sp</dimen>
-    <dimen name="_22sp">22sp</dimen>
-    <dimen name="_20sp">20sp</dimen>
-    <dimen name="_18sp">18sp</dimen>
-    <dimen name="_16sp">16sp</dimen>
-    <dimen name="_14sp">14sp</dimen>
-    <dimen name="_12sp">12sp</dimen>
-    <dimen name="_10sp">10sp</dimen>
-    <dimen name="_8sp">8sp</dimen>
-    <dimen name="_12dp">12dp</dimen>
-    <dimen name="_8dp">8dp</dimen>
-    <dimen name="_6dp">6dp</dimen>
-    <dimen name="_4dp">4dp</dimen>
-    <dimen name="_16dp">16dp</dimen>
-    <dimen name="_20dp">20dp</dimen>
-    <dimen name="_60dp">60dp</dimen>
-    <dimen name="_80dp">80dp</dimen>
-    <dimen name="_1dp">1dp</dimen>
-    <dimen name="_40dp">40dp</dimen>
     <dimen name="title_bar_tvsize">14sp</dimen>
     <dimen name="title_bar_itvsize">17sp</dimen>
     <dimen name="title_bar_tilte_size">20sp</dimen>
@@ -41,6 +17,5 @@
     <dimen name="empty_page_link_txt">12sp</dimen>
     <dimen name="tv_empty_page_err_txt_margin_top_2_img">20dp</dimen>
 
-    <dimen name="_250dp">250dp</dimen>
     <!-- sp end -->
 </resources>

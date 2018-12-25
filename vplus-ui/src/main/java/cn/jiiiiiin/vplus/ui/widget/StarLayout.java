@@ -61,7 +61,6 @@ public class StarLayout extends LinearLayoutCompat implements View.OnClickListen
 
     /**
      * 获取评星级
-     * @return
      */
     public int getStarCount() {
         int count = 0;

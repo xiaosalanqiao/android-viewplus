@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android-viewplus测试demo</string>
+    <string name="app_name">viewplus</string>
     <string name="err_dialog_title">错误提示</string>
     <string name="confirm">确认</string>
     <string name="apk_sc_msg">请确认您当前的应用是官方最新版本，请致电客服进行详细咨询</string>

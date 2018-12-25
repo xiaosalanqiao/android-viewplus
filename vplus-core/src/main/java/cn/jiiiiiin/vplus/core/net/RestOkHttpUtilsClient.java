@@ -37,7 +37,6 @@ import static cn.jiiiiiin.vplus.core.net.HttpMethod.DOWNLOAD;
  * <p>参数为一次构建完毕，后期不允许更改</p>
  *
  * @author jiiiiiin
- * @date 2017/8/4
  */
 
 public final class RestOkHttpUtilsClient {

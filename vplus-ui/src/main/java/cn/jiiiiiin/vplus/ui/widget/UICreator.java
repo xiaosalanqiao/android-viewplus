@@ -1,7 +1,6 @@
 package cn.jiiiiiin.vplus.ui.widget;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,7 +8,6 @@ import android.widget.RelativeLayout;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 
-import ch.ielse.view.SwitchView;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 
 /**
@@ -19,13 +17,6 @@ import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 public final class UICreator {
 
     private static final ViewGroup.LayoutParams DEF_LAYOUTPARAMS_SWITCHVIEW = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 80);
-
-    public static SwitchView getSwitchViewInstance(FragmentActivity activity, boolean isOpened) {
-        final SwitchView switchView = new SwitchView(activity);
-        switchView.setOpened(isOpened);
-        switchView.setLayoutParams(DEF_LAYOUTPARAMS_SWITCHVIEW);
-        return switchView;
-    }
 
     // icons size
     public static final int QMUI_COMMON_LIST_ITEM_VIEW_ICON_SIZE = 55;

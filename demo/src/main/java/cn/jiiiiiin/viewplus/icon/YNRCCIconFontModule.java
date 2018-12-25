@@ -7,7 +7,6 @@ import com.joanzapata.iconify.IconFontDescriptor;
 /**
  * "iconfont.ttf"; -> MobileBank/ynrcc-pmobilebank/src/main/assets/iconfont.ttf
  * @author jiiiiiin
- * @date 2017/8/4
  */
 
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")

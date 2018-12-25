@@ -76,9 +76,9 @@ public class HttpsCheckUtils {
     /**
      * https双向认证
      * <p>
-     * bksFile 和 password -> 客户端使用bks证书校验服务端证书
+     * bksFile 和 password: 客户端使用bks证书校验服务端证书
      * <p>
-     * certificates -> 用含有服务端公钥的证书校验服务端证书
+     * certificates: 用含有服务端公钥的证书校验服务端证书
      *
      * @param bksFile
      * @param password
@@ -92,9 +92,9 @@ public class HttpsCheckUtils {
     /**
      * https双向认证
      * <p>
-     * bksFile 和 password -> 客户端使用bks证书校验服务端证书
+     * bksFile 和 password: 客户端使用bks证书校验服务端证书
      * <p>
-     * X509TrustManager -> 如果需要自己校验，那么可以自己实现相关校验，如果不需要自己校验，那么传null即可
+     * X509TrustManager: 如果需要自己校验，那么可以自己实现相关校验，如果不需要自己校验，那么传null即可
      *
      * @param bksFile
      * @param password

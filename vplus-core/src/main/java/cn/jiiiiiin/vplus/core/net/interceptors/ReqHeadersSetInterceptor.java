@@ -35,7 +35,7 @@ public final class ReqHeadersSetInterceptor implements Interceptor {
                 }
             }
         } catch (Exception e) {
-            LoggerProxy.de(e, "设置通用请求头配置设备");
+            LoggerProxy.e(e, "设置后端通用请求头出错");
         }
         Request request = builder
                 .method(original.method(), original.body())

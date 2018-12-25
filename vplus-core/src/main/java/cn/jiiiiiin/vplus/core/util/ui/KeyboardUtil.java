@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 
-import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
-
 /**
  * @author jiiiiiin
  */
@@ -41,6 +39,5 @@ public class KeyboardUtil {
 //            getDelegate().getSupportDelegate().hideSoftInput();
 //        }
     }
-
 
 }

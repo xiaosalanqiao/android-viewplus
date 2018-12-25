@@ -34,7 +34,6 @@ public class CircleTextView extends AppCompatTextView {
 
     /**
      * 设置颜色
-     * @param color
      */
     public final void setCircleBackground(@ColorInt int color) {
         PAINT.setColor(color);

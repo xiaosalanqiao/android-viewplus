@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,21 +26,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    productFlavors {
-    }
-
-    lintOptions {
-        abortOnError false
-    }
-
-    configurations.all {
-        // https://majing.io/posts/10000007891219
-        resolutionStrategy {
-            force 'com.android.support:support-compat:27.1.1'
-            force 'com.android.support:support-v4:27.1.1'
-        }
-    }
-
 }
 
 ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
@@ -48,12 +33,6 @@ ext.BUTTERKNIFE_VERSION = "9.0.0-rc1"
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Android Support包
     api 'com.android.support:support-v4:' + ANDROID_SUPPORT_LIBRARY_VERSION
@@ -63,12 +42,22 @@ dependencies {
     api 'com.android.support:preference-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
     api 'com.android.support:animated-vector-drawable:' + ANDROID_SUPPORT_LIBRARY_VERSION
 
-    // https://github.com/orhanobut/dialogplus
-    api 'com.orhanobut:dialogplus:1.11@aar'
+    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.2'
 
-    // https://github.com/ReactiveX/RxAndroid
-    api 'io.reactivex.rxjava2:rxjava:2.1.7'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // ButterKnife
+    api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+
+    // https://docs.bugtags.com/zh/start/integrate/android/maven.html
+//    debugApi 'com.bugtags.library:bugtags-lib:3.0.0'
+    //线上使用，如果不需要使用手动提交 issue，可以选择 metrics 包
+//    releaseApi 'com.bugtags.metrics:bugtags-lib:3.0.0'
+//    api 'com.bugtags.metrics:bugtags-lib:3.0.0'
+
+    // https://github.com/orhanobut/hawk
+    api "com.orhanobut:hawk:2.0.1"
 
     // RxPermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
@@ -79,16 +68,9 @@ dependencies {
     // https://github.com/orhanobut/logger
     implementation 'com.orhanobut:logger:2.1.1'
 
-    // 字体图标 JoanZapata/android-iconify
-    api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
-
-    // ButterKnife
-    api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
-
     // Util工具类使用这个,里面没有的再考虑自己建
     // https://github.com/Blankj/AndroidUtilCode
-    api 'com.blankj:utilcode:1.16.4'
+    api 'com.blankj:utilcode:1.22.7'
 
     // 网络请求依赖
     // https://github.com/square/okhttp
@@ -96,13 +78,16 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
     // https://github.com/hongyangAndroid/okhttputils
-    api 'com.zhy:okhttputils:2.6.2'
+    api 'com.zhy:okhttputils:2.6.2', {
+        exclude group: 'com.squareup.okio', module: 'okio'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
 
     // ui: loading dialog Kaopiz/KProgressHUD
     api 'com.kaopiz:kprogresshud:1.1.0'
 
     // https://github.com/wuhenzhizao/android-titlebar
-    api 'com.wuhenzhizao:titlebar:1.0.7'
+    api 'com.wuhenzhizao:titlebar:1.1.3'
 
     // https://github.com/DreaminginCodeZH/MaterialProgressBar
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
@@ -110,60 +95,56 @@ dependencies {
     // 图片处理
     api 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    api 'com.github.bumptech.glide:okhttp3-integration:4.6.1'
+    api 'com.github.bumptech.glide:okhttp3-integration:4.6.1', {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
 
     // https://github.com/WVector/AppUpdate
     api 'com.qianwen:update-app:3.5.2'
 
-    // https://github.com/LuckSiege/PictureSelector
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
-
-    // https://docs.bugtags.com/zh/start/integrate/android/maven.html
-//    debugApi 'com.bugtags.library:bugtags-lib:3.0.0'
-    //线上使用，如果不需要使用手动提交 issue，可以选择 metrics 包
-//    releaseApi 'com.bugtags.metrics:bugtags-lib:3.0.0'
-    api 'com.bugtags.metrics:bugtags-lib:3.0.0'
-
     // Fragmentation
     // https://github.com/YoKeyword/Fragmentation/releases
-    api 'me.yokeyword:fragmentation:1.3.5'
-    api 'me.yokeyword:fragmentation-swipeback:1.3.5'
+    api 'me.yokeyword:fragmentation:1.3.6'
+    api 'me.yokeyword:fragmentation-swipeback:1.3.6'
 
     // https://github.com/gyf-dev/ImmersionBar
     api 'com.gyf.barlibrary:barlibrary:2.3.0'
 
-    // https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'
-    //没有使用特殊Header，可以不加这行
-    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-6'
+    // 字体图标 JoanZapata/android-iconify
+    api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
 
-    // https://github.com/orhanobut/hawk
-    api "com.orhanobut:hawk:2.0.1"
+    // https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-18'
+    //没有使用特殊Header，可以不加这行
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-18'
 
     // afollestad/material-dialogs
     // https://github.com/afollestad/material-dialogs#proguard
     api 'com.afollestad.material-dialogs:core:0.9.6.0'
 
-    // 圆形图片
-    api 'de.hdodenhof:circleimageview:2.1.0'
+    // https://github.com/LuckSiege/PictureSelector
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
-    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-    compileOnly 'org.projectlombok:lombok:1.18.2'
-    annotationProcessor 'org.projectlombok:lombok:1.18.2'
+    // 圆形图片
+    api 'de.hdodenhof:circleimageview:2.2.0'
+
+    // https://github.com/orhanobut/dialogplus
+    api 'com.orhanobut:dialogplus:1.11@aar'
+
 }
 
 publish {
     //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
-    repoName="android-viewplus"
-    userOrg="vplus"
+    repoName = "android-viewplus"
+    userOrg = "vplus"
     // jcenter上的路径 一般是自己公司域名反转
-    groupId="cn.jiiiiiin"
+    groupId = "cn.jiiiiiin"
     //项目名称 我们的pakgename
-    artifactId="vplus-core"
+    artifactId = "vplus-core"
     //版本号
-    publishVersion="1.0.3"
+    publishVersion = "1.0.5"
     //项目的描述
-    desc="android-viewplus核心库，包含jsbridge、单activity相关类"
+    desc = "android-viewplus核心库，包含jsbridge、单activity相关类"
     //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
-    website="https://github.com/Jiiiiiin/android-viewplus"
+    website = "https://github.com/Jiiiiiin/android-viewplus"
 }

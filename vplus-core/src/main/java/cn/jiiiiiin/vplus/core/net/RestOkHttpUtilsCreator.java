@@ -83,7 +83,7 @@ public class RestOkHttpUtilsCreator {
                     BUILDER.hostnameVerifier(HOSTNAME_VERIFIER);
                 }
             } catch (Exception e) {
-                LoggerProxy.de(e, "配置OK_HTTP_CLIENT SSL相关设置失败");
+                LoggerProxy.e(e, "配置OK_HTTP_CLIENT SSL相关设置失败");
             }
             return BUILDER;
         }

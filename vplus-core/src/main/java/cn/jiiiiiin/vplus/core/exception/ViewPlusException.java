@@ -5,9 +5,7 @@ import cn.jiiiiiin.vplus.core.dict.Err;
 /**
  *
  * @author jiiiiiin
- * @date 2017/9/25
  */
-
 public class ViewPlusException extends Exception {
 
     // TODO 设置为配置项目 @zhaojin

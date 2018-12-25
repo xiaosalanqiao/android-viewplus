@@ -2,11 +2,9 @@ package cn.jiiiiiin.vplus.ui.image;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 
 import com.luck.picture.lib.PictureSelectionModel;
 import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 
 import cn.jiiiiiin.vplus.ui.R;
@@ -18,7 +16,7 @@ import cn.jiiiiiin.vplus.ui.R;
 public final class PictureSelectorUtil {
 
     /**
-     * 相册&拍照基础配置
+     * 相册、拍照基础配置
      *
      * @param activity
      * @return
@@ -33,7 +31,7 @@ public final class PictureSelectorUtil {
     }
 
     /**
-     * 相册&拍照 + 裁切基础配置
+     * 相册、拍照 、裁切基础配置
      * 示例：
      * PictureSelectorUtil.initCropPictureSelector(_mActivity, 1, 1, 120, 120, 50)
      * .selectionMode(PictureConfig.SINGLE)

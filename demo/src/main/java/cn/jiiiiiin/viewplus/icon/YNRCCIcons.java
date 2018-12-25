@@ -6,7 +6,6 @@ import com.joanzapata.iconify.Icon;
  * &#xe61d; -》 \ue61d
  *
  * @author jiiiiiin
- * @date 2017/8/4
  */
 
 @SuppressWarnings("AlibabaEnumConstantsMustHaveComment")

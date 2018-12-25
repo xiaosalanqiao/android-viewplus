@@ -1,31 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "com.csii.mobilebank"
+        applicationId "cn.jiiiiiin.viewplus"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "3.062"
+        versionName "1.04"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // https://developer.android.com/studio/build/multidex.html?hl=zh-cn#keep
         // 由于存在 Dalvik linearAlloc 限制（问题 78035），因此，如果使用 Dalvik 可执行文件分包配置的应用发出非常庞大的内存分配请求，则可能会在运行期间发生崩溃。尽管 Android 4.0（API 级别 14）提高了分配限制，但在 Android 5.0（API 级别 21）之前的 Android 版本上，应用仍有可能遭遇这一限制。
         multiDexEnabled true
-
-        ndk {
-            //选择要添加的对应 cpu 类型的.so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
-        }
-
-    }
-    productFlavors {
-    }
-    dexOptions {
-        additionalParameters = ["--set-max-idx-number=62000"]
-        jumboMode true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,17 +21,22 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
-    configurations.all {
-        resolutionStrategy {
-            force 'com.android.support:support-compat:27.1.1'
-            force 'com.android.support:support-v4:27.1.1'
-        }
+    dexOptions {
+        additionalParameters = ["--set-max-idx-number=62000"]
+        jumboMode true
+        javaMaxHeapSize "4g"
     }
+//    configurations.all {
+//        resolutionStrategy {
+//            force 'com.android.support:appcompat-v7:27.1.1'
+//            force 'com.android.support:support-compat:27.1.1'
+//            force 'com.android.support:support-v4:27.1.1'
+//            force 'com.android.support:support-annotations:27.1.1'
+//        }
+//    }
 }
 
 ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
@@ -52,18 +44,22 @@ ext.BUTTERKNIFE_VERSION = "9.0.0-rc1"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation 'junit:junit:4.12'
 
-    api 'com.android.support:multidex:1.0.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     // 源码测试
-     api project(':vplus-ui')
+    api project(':vplus-ui')
     // 依赖测试
 //    api 'cn.jiiiiiin:vplus-ui:1.0.1'
 
-    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-//    compileOnly 'org.projectlombok:lombok:1.18.2'
-//    annotationProcessor 'org.projectlombok:lombok:1.18.2'
-
-    api 'com.jakewharton:butterknife:'  + BUTTERKNIFE_VERSION
+    api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+
+    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    annotationProcessor 'org.projectlombok:lombok:1.18.2'
+
+    implementation 'com.android.support:multidex:1.0.3'
 }

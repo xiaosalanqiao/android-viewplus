@@ -26,9 +26,9 @@ public interface IPageLoadListener {
     void onProgressChanged(WebView view, int progress);
 
     /**
+     * 参考：android.webkit.WebViewClient#shouldOverrideUrlLoading(WebView, WebResourceRequest)
      * @param url
-     * @return 返回true，则表示自己处理了该事件 {@link android.webkit.WebViewClient#shouldOverrideUrlLoading(WebView, WebResourceRequest)
-     *             shouldOverrideUrlLoading(WebView, WebResourceRequest)}
+     * @return 返回true，则表示自己处理了该事件
      */
     boolean onShouldOverrideUrlLoading(String url);
 
