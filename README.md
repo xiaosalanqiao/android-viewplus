@@ -2,33 +2,11 @@
 
 一个安卓混合客户端开发库
 
-# 目录
-
-+ [特性](#特性)
-+ [参考](#参考)
-+ [模块](#模块)
-+ [案例](#案例)
-+ [示例](#示例)
-+ [更新](#更新)
-
 # 特性
 
 + 提供了一个自定义JSBridge模块，客户端只用实现自己的Action实例，并注入类库的管理方法，就可以简单的完成js和java的交互（建议使用上下文模式4.4以上，也支持协议模式）
 + 提供了一个简单实用的Http模块，支持**业务封装**，类[util-http.js 针对axios进行了二次封装的ajax模块](http://jiiiiiin.cn/vue-viewplus/#/util-http)
 + 提供了一个开发单Activity应用的模块，底层基于了[YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation)实现下面所要说的**Delegate视图**
-
-# DEMO
-
-![](https://ws4.sinaimg.cn/large/006tNbRwgy1fyiue799vej30aa0a9jrb.jpg)
-
-[点击下载](https://fim.im/app.php/70)
-
-# 参考：
-
-> [Android通用框架设计与完整电商APP开发](https://coding.imooc.com/class/116.html)
-
-主要参考了**傅猿猿**老师的上诉课程，感谢感谢！
-
 
 
 # 模块
@@ -39,6 +17,23 @@
 └── vplus-ui android-viewplus 可选、可选、可选！！！ UI库，包含Recycler View、九宫格手势、指纹等控件的支持库
 ```
 
+# DEMO
+
+![](https://ws4.sinaimg.cn/large/006tNbRwgy1fyiue799vej30aa0a9jrb.jpg)
+
+[点击下载](https://fim.im/app.php/70)
+
+# 案例
+
+| 名称 | 渠道 | 简介 |
+| ------ | ------ | ------ |
+| [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank) | 移动端 | [2018区域性商业银行“最佳手机银行奖”](https://mp.weixin.qq.com/s/n0QMYGBSdatmkXTfS9p6HA)，整个手机银行80%的界面都基于Vue开发，完整使用了当前插件 |
+
+# 参考：
+
+> [Android通用框架设计与完整电商APP开发](https://coding.imooc.com/class/116.html)
+
+主要参考了**傅猿猿**老师的上诉课程，感谢感谢！
 
 
 # 更新
@@ -81,8 +76,8 @@ allprojects {
 
 ```gr
 dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.0.3'
-    api 'cn.jiiiiiin:vplus-ui:1.0.2'
+    api 'cn.jiiiiiin:vplus-core:1.0.5'
+    api 'cn.jiiiiiin:vplus-ui:1.0.3'
 }
 ```
 
@@ -94,21 +89,6 @@ dependencies {
 + [QMUI/QMUI_Android](https://github.com/QMUI/QMUI_Android) 提高 Android UI 开发效率的 UI 库 <http://qmuiteam.com/android>
 
  等，故开发原生应用也是很ok的 ：）
-
-
-
-# 案例
-
-| 名称 | 渠道 | 简介 |
-| ------ | ------ | ------ |
-| [云南农信手机银行](http://sj.qq.com/myapp/detail.htm?apkName=com.csii.mobilebank) | 移动端 | [2018区域性商业银行“最佳手机银行奖”](https://mp.weixin.qq.com/s/n0QMYGBSdatmkXTfS9p6HA)，整个手机银行80%的界面都基于Vue开发，完整使用了当前插件 |
-
-案例截图
-|                                                              | |                                                              |                                                              |
-| ------------------------------------------------------------ | | ------------------------------------------------------------ | ---------------------------------------------------------- |
-| ![云南农信手机银行](http://a.app.qq.com/o/image/microQr.png?pkgName=com.csii.mobilebank) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7rnokp1j30pi13mguh.jpg) | ![](https://ws2.sinaimg.cn/large/006tNbRwgy1fvu7s5hg1uj30pi13maki.jpg) |
-
-
 
 # 示例
 
