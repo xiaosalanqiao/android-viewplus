@@ -75,9 +75,8 @@ public abstract class BaseActivity extends SupportActivity {
 
     @Override
     protected void onDestroy() {
-        // TODO 在BaseActivity、BaseFragment的onDestory()里把当前Activity所发的所有请求取消掉。
-        destroyImmersionBar();
         super.onDestroy();
+        destroyImmersionBar();
         // 关注：https://github.com/YoKeyword/Fragmentation/issues/877#event-1665429707
         // 单Activity架构，故做以下优化
         // System.gc();
@@ -89,7 +88,11 @@ public abstract class BaseActivity extends SupportActivity {
      */
     protected void destroyImmersionBar() {
         //必须调用该方法，防止内存泄漏
-        ImmersionBar.with(this).destroy();
+        try {
+            ImmersionBar.with(this).destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -64,12 +64,12 @@ dependencies {
     // https://github.com/Curzibn/Luban
     api 'top.zibin:Luban:1.1.8'
 
+    // https://github.com/ragunathjawahar/android-saripaar
+    api 'com.mobsandgeeks:android-saripaar:2.0.3'
+
     // RecyclerView 分割线:ChoicesWang/RecyclerView_Divider
     // https://github.com/ChoicesWang/RecyclerView_Divider
 //    api 'com.choices.divider:RecyclerView_Divider:1.0.0'
-
-    // https://github.com/scwang90/MultiWaveHeader/blob/master/README_CN.md
-//    api 'com.scwang.wave:MultiWaveHeader:1.0.0-alpha-1'
 
 }
 

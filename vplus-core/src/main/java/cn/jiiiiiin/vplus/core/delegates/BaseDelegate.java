@@ -95,6 +95,9 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     }
 
     protected View titleBar() {
+        if (isImmersionBarEnabled()) {
+            LoggerProxy.w("如果需要使用沉浸式，默认是使用，则必须要重写当前方法[titleBar]，返回当前的titleBar组件");
+        }
         return null;
     }
 
@@ -128,14 +131,15 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     protected void initImmersionBar() {
         if (isImmersionBarEnabled()) {
             try {
-                mImmersionBar = ImmersionBar.with(_mActivity, this);
+                mImmersionBar = ImmersionBar.with(this);
                 mImmersionBar
-                        // .fitsSystemWindows(true)
-                        // 当白色背景状态栏遇到不能改变状态栏字体为深色的设备时，解决方案 https://github.com/Jiiiiiin/ImmersionBar
-                        // 原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-                        .statusBarColor(android.R.color.white, 1f)
-                        .statusBarDarkFont(true, 0.2f)
-                        .transparentStatusBar()
+                        // 字体状态栏颜色由应用自己控制
+//                        // .fitsSystemWindows(true)
+//                        // 当白色背景状态栏遇到不能改变状态栏字体为深色的设备时，解决方案 https://github.com/Jiiiiiin/ImmersionBar
+//                        // 原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
+//                        .statusBarColor(android.R.color.white, 1f)
+//                        .statusBarDarkFont(true, 0.2f)
+//                        .transparentStatusBar()
                         //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
                         .keyboardEnable(true)
                         //单独指定软键盘模式
@@ -147,13 +151,13 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden && mImmersionBar != null) {
-            mImmersionBar.init();
-        }
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden && mImmersionBar != null) {
+//            mImmersionBar.init();
+//        }
+//    }
 
     @Override
     public void hideSoftInput() {
@@ -182,14 +186,17 @@ public abstract class BaseDelegate extends SwipeBackFragment {
 
     @Override
     public void onDestroy() {
-        // TODO 在BaseActivity、BaseFragment的onDestory()里把当前Activity所发的所有请求取消掉。
-        _destroyImmersionBar();
         super.onDestroy();
+        _destroyImmersionBar();
     }
 
     private void _destroyImmersionBar() {
         if (mImmersionBar != null) {
-            mImmersionBar.destroy();
+            try {
+                mImmersionBar.destroy();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

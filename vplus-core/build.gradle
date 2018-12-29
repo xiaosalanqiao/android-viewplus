@@ -108,7 +108,8 @@ dependencies {
     api 'me.yokeyword:fragmentation-swipeback:1.3.6'
 
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.barlibrary:barlibrary:2.3.0'
+//    api 'com.gyf.barlibrary:barlibrary:2.3.0'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
 
     // 字体图标 JoanZapata/android-iconify
     api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
