@@ -38,6 +38,12 @@
 
 # 更新
 
+#### 20181229
+
+- 更新项目依赖
+    + 升级[gyf-dev/ImmersionBar](https://github.com/gyf-dev/ImmersionBar)，以支持全面屏与刘海
+    + 添加[ragunathjawahar/android-saripaar](https://github.com/ragunathjawahar/android-saripaar)，以支持表单验证
+
 #### 20181225
 
 - 更新项目依赖
@@ -76,8 +82,8 @@ allprojects {
 
 ```gr
 dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.0.5'
-    api 'cn.jiiiiiin:vplus-ui:1.0.3'
+    api 'cn.jiiiiiin:vplus-core:1.0.6'
+    api 'cn.jiiiiiin:vplus-ui:1.0.4'
 }
 ```
 
