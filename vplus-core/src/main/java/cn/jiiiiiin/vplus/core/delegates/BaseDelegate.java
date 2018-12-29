@@ -34,10 +34,6 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     protected ImmersionBar mImmersionBar = null;
     @SuppressWarnings("SpellCheckingInspection")
     private Unbinder mUnbinder = null;
-    /**
-     * Handler 尽力声明为static类型，以避免内存泄露
-     */
-    protected static final Handler HANDLER = ViewPlus.getHandler();
 
     @Override
     public void onAttach(Context context) {

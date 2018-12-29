@@ -63,7 +63,8 @@ public class MainApplication extends Application {
                 .withWebUserAgent("Custom-WebUserAgent")
                 // 设置服务器的Base URL
                 .withApiHost("https://easy-mock.com/mock/5abc903ff5c35b191f472d79/example/")
-                .withWebHost("http://vue_viewplus_demo.jiiiiiin.cn/")
+//                .withWebHost("http://vue_viewplus_demo.jiiiiiin.cn/")
+                .withWebHost("https://github.com/Jiiiiiin/android-viewplus")
                 // 类库提供了一个针对server response的“业务封装”，类似https://www.yanzhenjie.com/Kalle/sample/business.html这篇文档的功能
                 // 设置进行http请求时候服务器端响应json中，标识业务响应是否“success”的key值，这里指的是业务的成功
                 .withServerStatusCodeKey(BaseConfig.SERVER_STATUS_CODE_KEY)

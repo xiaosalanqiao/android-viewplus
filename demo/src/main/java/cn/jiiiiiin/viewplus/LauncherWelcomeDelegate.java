@@ -155,19 +155,7 @@ public class LauncherWelcomeDelegate extends AbstractWebViewWrapperCommUIDelegat
 
     @Override
     protected void initImmersionBar() {
-        try {
-            mImmersionBar = ImmersionBar.with(_mActivity, this);
-            mImmersionBar
-                    .fitsSystemWindows(true)
-                    .statusBarColor(android.R.color.black)
-                    .statusBarDarkFont(false)
-                    //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
-                    .keyboardEnable(true)
-                    //单独指定软键盘模式
-                    .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-                    .init();
-        } catch (Exception e) {
-            LoggerProxy.e(e, "初始化沉浸式状态栏出错");
-        }
+        super.initImmersionBar();
+        ImmersionBar.with(this).fitsSystemWindows(true).init();
     }
 }
