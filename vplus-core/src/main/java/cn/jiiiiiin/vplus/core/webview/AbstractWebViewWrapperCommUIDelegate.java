@@ -62,8 +62,8 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
      */
     private String mInitUrl;
     protected String mTitle;
-    private MaterialProgressBar progressBar;
     private ITitleBarEventListener mTitleBarEventListener;
+    protected MaterialProgressBar progressBar;
     @BindView(R2.id.llc_root_container)
     protected ViewGroup mLLRootContainer;
     @BindView(R2.id.title_bar)
@@ -72,33 +72,33 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     protected int mTitleBarVisibleVal = View.VISIBLE;
     @BindView(R2.id.title_bar_bottom_line)
     protected View bottomLine;
-    private TextView centerTextView;
+    protected TextView centerTextView;
     @BindView(R2.id.toolbar_close)
-    View mToolBarCloseContainer;
+    protected View mToolBarCloseContainer;
     protected int mIsCloseContainerVisibleVal = View.GONE;
     @BindView(R2.id.toolbar_back)
-    View mToolbarBackContainer;
+    protected View mToolbarBackContainer;
     protected int mIsBackContainerVisibleVal = View.VISIBLE;
     @BindView(R2.id.h5_placeholder_container)
-    ViewGroup mPlaceholderContainer;
+    protected ViewGroup mPlaceholderContainer;
     @BindView(R2.id.rl_empty_page_container)
-    ViewGroup mErrContainer;
+    protected ViewGroup mErrContainer;
     private boolean isShowErrorLocalPage = false;
     @BindView(R2.id.srl_refresh_layout)
-    SmartRefreshLayout mSmartRefreshLayout;
+    protected SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R2.id.h5_toolbar_right_menu_box)
-    ViewGroup mTitleBarRightContainer;
+    protected ViewGroup mTitleBarRightContainer;
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_TV_LAYOUT_PARAMS = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_ICON_LAYOUT_PARAMS = new LinearLayout.LayoutParams(45, 45);
     private int mTitleBarBtnColor = Color.BLUE;
 
     @OnClick(R2.id.toolbar_back)
-    void onToolBarBackContainerClick() {
+    public void onToolBarBackContainerClick() {
         onBackPressedSupport();
     }
 
     @OnClick(R2.id.toolbar_close)
-    void onToolBarCloseContainerClick() {
+    public void onToolBarCloseContainerClick() {
         // 解决用户点击了【解决EditText和软键盘的问题】导致的返回首页底部菜单会被拉伸的问题
         hideSoftInput();
         ViewPlus.getHandler().postDelayed(() -> {

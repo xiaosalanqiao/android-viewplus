@@ -28,7 +28,7 @@ public class JSBridgeException extends ViewPlusException {
         super(message, code);
     }
 
-    public JSBridgeException(Err.CodeAndErrMsg codeAndErrMsg) {
-        super(codeAndErrMsg);
-    }
+//    public JSBridgeException(Err.CodeAndErrMsg codeAndErrMsg) {
+//        super(codeAndErrMsg);
+//    }
 }

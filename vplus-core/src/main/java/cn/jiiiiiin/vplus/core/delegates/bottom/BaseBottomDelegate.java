@@ -56,7 +56,13 @@ public abstract class BaseBottomDelegate extends AbstractViewPlusDelegate implem
      * 底部menu容器
      */
     @BindView(R2.id.bottom_bar)
-    LinearLayoutCompat mBottomBar = null;
+    protected LinearLayoutCompat mBottomBar;
+
+    /**
+     * 底部menu容器
+     */
+    @BindView(R2.id.bottom_bar_line)
+    protected View mBottomBarLine;
 
     /**
      * 设置tabs关联对象

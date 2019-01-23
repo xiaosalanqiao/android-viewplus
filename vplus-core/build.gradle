@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.6"
+        versionName "1.0.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -143,7 +143,7 @@ publish {
     //项目名称 我们的pakgename
     artifactId = "vplus-core"
     //版本号
-    publishVersion = "1.0.6"
+    publishVersion = "1.0.7"
     //项目的描述
     desc = "android-viewplus核心库，包含jsbridge、单activity相关类"
     //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址

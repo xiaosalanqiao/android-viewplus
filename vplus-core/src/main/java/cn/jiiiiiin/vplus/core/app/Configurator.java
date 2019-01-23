@@ -363,7 +363,7 @@ public class Configurator {
     private void checkConfiguration() {
         final boolean isReady = (boolean) VP_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
-            throw new RuntimeException(Err.VPLUS_NOT_CONFIG_READY);
+            throw new RuntimeException("viewplus库尚未初始化");
         }
     }
 

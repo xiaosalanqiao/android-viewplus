@@ -37,6 +37,9 @@
 
 
 # 更新
+#### 20190123
+- 暴露`BaseBottomDelegate.java`和`AbstractWebViewWrapperCommUIDelegate.java`持有的页面UI
+- 清理不必要的代码
 
 #### 20181229
 
@@ -82,8 +85,8 @@ allprojects {
 
 ```gr
 dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.0.6'
-    api 'cn.jiiiiiin:vplus-ui:1.0.4'
+    api 'cn.jiiiiiin:vplus-core:1.0.7'
+    api 'cn.jiiiiiin:vplus-ui:1.0.5'
 }
 ```
 

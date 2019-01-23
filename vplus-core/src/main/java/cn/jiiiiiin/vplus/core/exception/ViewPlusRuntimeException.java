@@ -35,9 +35,9 @@ public class ViewPlusRuntimeException extends RuntimeException {
         this.code = code;
     }
 
-    public ViewPlusRuntimeException(Err.CodeAndErrMsg codeAndErrMsg) {
-        this(codeAndErrMsg.getMsg(), codeAndErrMsg.getCode());
-    }
+//    public ViewPlusRuntimeException(Err.CodeAndErrMsg codeAndErrMsg) {
+//        this(codeAndErrMsg.getMsg(), codeAndErrMsg.getCode());
+//    }
 
     // TODO
 //    @TargetApi(Build.VERSION_CODES.N)

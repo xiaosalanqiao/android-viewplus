@@ -36,9 +36,9 @@ public class ViewPlusException extends Exception {
         this.code = code;
     }
 
-    public ViewPlusException(Err.CodeAndErrMsg codeAndErrMsg) {
-        this(codeAndErrMsg.getMsg(), codeAndErrMsg.getCode());
-    }
+//    public ViewPlusException(Err.CodeAndErrMsg codeAndErrMsg) {
+//        this(codeAndErrMsg.getMsg(), codeAndErrMsg.getCode());
+//    }
 
     // TODO
 //    @TargetApi(Build.VERSION_CODES.N)

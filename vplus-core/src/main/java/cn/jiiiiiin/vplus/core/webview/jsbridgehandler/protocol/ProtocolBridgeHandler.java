@@ -40,7 +40,7 @@ public class ProtocolBridgeHandler {
             resData = jsBridgeResHandler.onRespH5(eventResData, eventParams);
         } catch (JSBridgeException e) {
             LoggerProxy.e(e, "ProtocolBridgeHandler处理js请求出错");
-            resData = jsBridgeResHandler.onRespH5(EventResData.error(Err.PROTOCAL_HANDLE_JS_CALL, String.format(Err.PROTOCAL_HANDLE_JS_CALL_MSG, e.getMessage())), eventParams);
+            resData = jsBridgeResHandler.onRespH5(EventResData.error("protocal_handle_js_call", String.format("处理前端请求出错，协议方式[%s]", e.getMessage())), eventParams);
         }
         // 通知
         if (callBack != null && !StringUtils.isEmpty(callBack)) {
