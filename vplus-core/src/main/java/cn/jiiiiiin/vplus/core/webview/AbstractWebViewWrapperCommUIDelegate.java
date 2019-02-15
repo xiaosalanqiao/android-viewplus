@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,12 +37,11 @@ import cn.jiiiiiin.vplus.core.R;
 import cn.jiiiiiin.vplus.core.R2;
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 import cn.jiiiiiin.vplus.core.webview.util.BackProcessHandler;
+import lombok.val;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
@@ -81,16 +81,18 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     protected int mIsBackContainerVisibleVal = View.VISIBLE;
     @BindView(R2.id.h5_placeholder_container)
     protected ViewGroup mPlaceholderContainer;
+    @BindView(R2.id.tv_empty_page_err_txt)
+    protected TextView mErrTextView;
     @BindView(R2.id.rl_empty_page_container)
     protected ViewGroup mErrContainer;
-    private boolean isShowErrorLocalPage = false;
+    protected boolean isShowErrorLocalPage = false;
     @BindView(R2.id.srl_refresh_layout)
     protected SmartRefreshLayout mSmartRefreshLayout;
     @BindView(R2.id.h5_toolbar_right_menu_box)
     protected ViewGroup mTitleBarRightContainer;
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_TV_LAYOUT_PARAMS = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_ICON_LAYOUT_PARAMS = new LinearLayout.LayoutParams(45, 45);
-    private int mTitleBarBtnColor = Color.BLUE;
+    protected int mTitleBarBtnColor = Color.BLUE;
 
     @OnClick(R2.id.toolbar_back)
     public void onToolBarBackContainerClick() {
@@ -189,11 +191,12 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
      *
      * @param canPullRefresh
      */
-    public void setPullRefresh(boolean canPullRefresh) {
+    public AbstractWebViewWrapperCommUIDelegate setPullRefresh(boolean canPullRefresh) {
         mSmartRefreshLayout.setEnableRefresh(canPullRefresh);
         if (canPullRefresh) {
             _registerSmartRefreshLayoutListener();
         }
+        return this;
     }
 
     @Override
@@ -213,7 +216,11 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
 
     @Override
     public boolean onBackPressedSupport() {
-        return BackProcessHandler.onBack(this, this);
+        val res = BackProcessHandler.onBack(this, this);
+        if (res) {
+            ViewPlus.getConfigurator().withWebViewCurrentLoadUrl(null);
+        }
+        return res;
     }
 
     protected void _initToolbar() {
@@ -354,16 +361,34 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     @Override
     public void onReceivedError(WebView webView, int errorCode, String description, String failingUrl) {
         super.onReceivedError(webView, errorCode, description, failingUrl);
-        LoggerProxy.d("webview代理被调用 onReceivedError %s", mURL);
+        LoggerProxy.d("webview代理被调用 onReceivedError %s %s %s", mURL, errorCode, failingUrl);
         // TODO 根据不同errorCode 渲染不同的错误UI
-        onLoadPageErr(webView);
-    }
 
-    @Override
-    public void onReceivedHttpError(WebView webView, WebResourceRequest request, int stautsCode) {
-        super.onReceivedHttpError(webView, request, stautsCode);
-        LoggerProxy.d("webview代理被调用 onReceivedError %s", mURL);
-        onLoadPageErr(webView);
+        String hintTxt = String.format("网络异常，请稍后尝试访问 %s [%s]", failingUrl, errorCode);
+        // WebViewClient.ERROR_BAD_URL & ERROR_BAD_URL 在代理类已经被明确排除
+        if (errorCode == WebViewClient.ERROR_HOST_LOOKUP
+                || errorCode == WebViewClient.ERROR_UNSUPPORTED_AUTH_SCHEME
+                || errorCode == WebViewClient.ERROR_CONNECT
+                || errorCode == WebViewClient.ERROR_IO
+                || errorCode == WebViewClient.ERROR_BAD_URL
+                ) {
+            hintTxt = String.format("与服务器连接发生异常，请稍后再试 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == WebViewClient.ERROR_AUTHENTICATION || errorCode == WebViewClient.ERROR_PROXY_AUTHENTICATION) {
+            hintTxt = String.format("你没有权限访问 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == WebViewClient.ERROR_TIMEOUT) {
+            hintTxt = String.format("访问超时，请稍后再试 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == WebViewClient.ERROR_REDIRECT_LOOP || errorCode == WebViewClient.ERROR_TOO_MANY_REQUESTS) {
+            hintTxt = String.format("访问资源出现重复多次重定向或太多请求发送错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == WebViewClient.ERROR_UNSUPPORTED_SCHEME) {
+            hintTxt = String.format("访问不安全的协议资源错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == WebViewClient.ERROR_FAILED_SSL_HANDSHAKE || errorCode == WebViewClient.ERROR_UNSAFE_RESOURCE) {
+            hintTxt = String.format("访问不安全的SSL协议资源错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == 404) {
+            hintTxt = String.format("待访问的资源不存在 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        } else if (errorCode == 500) {
+            hintTxt = String.format("待访问的资源发送服务器端错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+        }
+        onLoadPageErr(webView, hintTxt);
     }
 
     @Override
@@ -374,10 +399,9 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     /**
      * 检查webview是否加载超时，如果子类觉得超时了，可以自行处理
      */
-    protected void onLoadPageErr(WebView view) {
-        ToastUtils.showLong("加载超时，请稍后尝试");
+    protected void onLoadPageErr(WebView view, String hintTxt) {
+        ToastUtils.showLong(hintTxt);
         // 子类如果需要自定义响应逻辑，可以直接覆写
-        LoggerProxy.d("webview加载页面超时 %s %s", view, mURL);
         isShowErrorLocalPage = true;
         if (mWebViewDelegate.isWebViewAvailable()) {
             KeyboardUtils.hideSoftInput(Objects.requireNonNull(_mActivity));
@@ -385,6 +409,7 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
             hideProgressBar();
             mSmartRefreshLayout.finishRefresh();
             isErrContainerVisible(true);
+            mErrTextView.setText(hintTxt);
         } else {
             LoggerProxy.w("网页代理对象已经被销毁，但是还调用了handlerWebViewLoadingTimeout %s", mURL);
         }
@@ -426,16 +451,6 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
 
     public void setShowErrorLocalPage(boolean isShowErrorLocalPage) {
         this.isShowErrorLocalPage = isShowErrorLocalPage;
-    }
-
-    @Override
-    public boolean isHandlerOnReceivedErrorRes(Uri uri) {
-        return false;
-    }
-
-    @Override
-    public boolean onShouldOverrideUrlLoading(String url) {
-        return false;
     }
 
     public MaterialProgressBar hideProgressBar() {

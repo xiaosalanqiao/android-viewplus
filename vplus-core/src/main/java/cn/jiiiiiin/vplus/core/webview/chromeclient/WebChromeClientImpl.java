@@ -29,7 +29,8 @@ import cn.jiiiiiin.vplus.core.webview.loader.IPageLoadListener;
 
 public class WebChromeClientImpl extends WebChromeClient {
 
-    private static final int WEBVIEW_PROGRESS_OK = 100;
+    // TODO 这个配置最好做成动态
+    private static final int WEBVIEW_PROGRESS_OK = 80;
     private final Activity mActivity;
     private IPageLoadListener mPageLoadListener;
     private boolean mIsNotifyOnprogresschangedI00 = false;
@@ -42,16 +43,20 @@ public class WebChromeClientImpl extends WebChromeClient {
     }
 
     /**
+     * WebChromeClient.onProgressChanged(webview, progress)，根据这个回调，可以控制进度条的进度（包括显示与隐藏）。一般情况下，想要达到100%的进度需要的时间较长（特别是首次加载），用户长时间等待进度条不消失必定会感到焦虑，影响体验。其实当progress达到80的时候，加载出来的页面已经基本可用了。事实上，国内厂商大部分都会提前隐藏进度条，让用户以为网页加载很快。
+     *
+     * 作者：网易考拉移动端团队
+     * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
      * @param newProgress 表示当前页面加载的进度，为1至100的整数
      */
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
-        if (newProgress != WEBVIEW_PROGRESS_OK) {
+        if (newProgress < WEBVIEW_PROGRESS_OK) {
             mIsNotifyOnprogresschangedI00 = false;
         }
         if (mPageLoadListener != null && !mIsNotifyOnprogresschangedI00) {
-            mIsNotifyOnprogresschangedI00 = newProgress == WEBVIEW_PROGRESS_OK;
+            mIsNotifyOnprogresschangedI00 = newProgress >= WEBVIEW_PROGRESS_OK;
             mPageLoadListener.onProgressChanged(view, newProgress);
             if (mIsNotifyOnprogresschangedI00) {
                 if (!view.getSettings().getLoadsImagesAutomatically()) {
@@ -102,12 +107,12 @@ public class WebChromeClientImpl extends WebChromeClient {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             // !一下这种做法依赖的是html的title被设置为下面的集中判断情况
             if (!TextUtils.isEmpty(title)) {
-                if (title.contains("404")) {
-                    LoggerProxy.e("待调试情况出现");
-                    this.mPageLoadListener.onReceivedHttpError(view, null, 404);
+                if (title.contains("404") || title.contains("找不到网页") || title.contains("网页无法打开")) {
+                    LoggerProxy.e("TTTTT 待调试情况出现 %s %s", view.getUrl(), view.getOriginalUrl());
+                    this.mPageLoadListener.onReceivedError(view, 404, "404", view.getUrl());
                 } else if (title.contains("500") || title.contains("Error")) {
-                    LoggerProxy.e("待调试情况出现");
-                    this.mPageLoadListener.onReceivedHttpError(view, null, 500);
+                    LoggerProxy.e("TTTTT 待调试情况出现 %s %s", view.getUrl(), view.getOriginalUrl());
+                    this.mPageLoadListener.onReceivedError(view, 500, "404", view.getUrl());
                 }
             }
         }

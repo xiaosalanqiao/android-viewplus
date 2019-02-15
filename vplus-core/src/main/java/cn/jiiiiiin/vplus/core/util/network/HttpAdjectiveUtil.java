@@ -145,6 +145,21 @@ public final class HttpAdjectiveUtil {
         return !StringUtils.isTrimEmpty(url) && (URLUtil.isHttpsUrl(url) || URLUtil.isHttpUrl(url));
     }
 
+    public static boolean isCSSRes(Uri url) {
+        if (url != null) {
+            final String path = url.getPath();
+            if (!StringUtils.isTrimEmpty(path) && path.contains(".")) {
+                // 获得后缀
+                final String temp = path.substring(path.lastIndexOf(".") + 1);
+                return "JS".equals(temp.toUpperCase());
+            } else {
+                return url.toString().toUpperCase().endsWith(".CSS");
+            }
+        } else {
+            return false;
+        }
+    }
+
     public interface DownloadImageListener {
 
         void success(Bitmap bitmap);

@@ -15,6 +15,7 @@ import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;
 import cn.jiiiiiin.vplus.core.webview.WebViewDelegateImpl;
+import lombok.val;
 
 /**
  * 处理webview的返回
@@ -27,7 +28,7 @@ public class BackProcessHandler {
 
     public static boolean onBack(@NonNull AbstractWebViewWrapperCommUIDelegate wrapperDelegate, AbstractWebViewDelegate.ILifeCycleListener lifeCycleListener) {
         wrapperDelegate.hideSoftInput();
-        final Activity activity = wrapperDelegate.getActivity();
+        val activity = wrapperDelegate.getActivity();
         // 解决#205 java.lang.NullPointerException
         if (ViewUtil.activityIsLiving(activity)) {
             final WebViewDelegateImpl webDelegate = wrapperDelegate.getWebDelegate();

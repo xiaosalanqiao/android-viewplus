@@ -143,13 +143,13 @@ public class Router {
             LoggerProxy.d("准备加载h5: %s \n请求头:%s \n通用参数:%s", url, additionalHttpHeaders, commParams);
         }
         if (commParams != null && !commParams.isEmpty()) {
-            url += updateCommParams(commParams);
+            url += updateCommParams(commParams, url.indexOf("?")!=-1);
         }
         loadPage(webView, url, additionalHttpHeaders);
     }
 
-    private static String updateCommParams(Map<String, String> params) {
-        StringBuffer res = new StringBuffer("?");
+    private static String updateCommParams(Map<String, String> params, boolean hasUrlParams) {
+        StringBuffer res = hasUrlParams ? new StringBuffer("&") : new StringBuffer("?");
         for (Map.Entry<String, String> entry : params.entrySet()) {
             res.append(entry.getKey())
                     .append("=")

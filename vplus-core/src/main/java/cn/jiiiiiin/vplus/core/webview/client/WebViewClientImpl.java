@@ -8,6 +8,7 @@ import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.ClientCertRequest;
 import android.webkit.HttpAuthHandler;
@@ -36,6 +37,15 @@ import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 
 /**
  * WebViewClient可以拿到WebView在访问网络各个阶段的回调，包括加载前后，失败等
+ *
+ * https://juejin.im/post/5a94fb046fb9a0635865a2d6
+ *
+ * TODO WebViewClient.shouldInterceptRequest(webview, request)，无论是普通的页面请求(使用GET/POST)，还是页面中的异步请求，或者页面中的资源请求，都会回调这个方法，给开发一次拦截请求的机会。在这个方法中，我们可以进行静态资源的拦截并使用缓存数据代替，也可以拦截页面，使用自己的网络框架来请求数据。包括后面介绍的WebView免流方案，也和此方法有关。
+ *
+ * 作者：网易考拉移动端团队
+ * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
+ * 来源：掘金
+ *
  *
  * @author Created by jiiiiiin
  */
@@ -109,32 +119,83 @@ public class WebViewClientImpl extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         super.onReceivedError(view, errorCode, description, failingUrl);
-        if (mIPageLoadListener != null && mIPageLoadListener.isHandlerOnReceivedErrorRes(Uri.parse(failingUrl))) {
-            // TODO 如果是第三方应用或者说这里必须要清空，只是考虑怎么刷新的问题 @zhaojin
-            mIPageLoadListener.onReceivedError(view, errorCode, description, failingUrl);
+        LoggerProxy.d("onReceivedError %s %s", errorCode, failingUrl);
+        if(!_isUnHandler(view, errorCode, failingUrl) && !TextUtils.isEmpty(failingUrl) && failingUrl.equals(view.getUrl())) {
+            if (mIPageLoadListener != null && mIPageLoadListener.isHandlerOnReceivedErrorRes(Uri.parse(failingUrl))) {
+                LoggerProxy.e("onReceivedError handler %s %s", errorCode, failingUrl);
+                // TODO 如果是第三方应用或者说这里必须要清空，只是考虑怎么刷新的问题 @zhaojin
+                mIPageLoadListener.onReceivedError(view, errorCode, description, failingUrl);
+            }
         }
     }
 
     /**
-     * WebView 访问 url 出错
+     * 作者：网易考拉移动端团队
+     * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
+     *
+     * @param view
+     * @param errorCode
+     * @param failingUrl
+     * @return
      */
-    @Override
-    @TargetApi(Build.VERSION_CODES.M)
-    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        if (mIPageLoadListener != null && mIPageLoadListener.isHandlerOnReceivedErrorRes(request.getUrl())) {
-            mIPageLoadListener.onReceivedError(view, error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString());
+    private boolean _isUnHandler(WebView view, int errorCode, String failingUrl) {
+        // -12 == EventHandle.ERROR_BAD_URL, a hide return code inside android.net.http package
+        if ((failingUrl != null && !failingUrl.equals(view.getUrl()) && !failingUrl.equals(view.getOriginalUrl())) /* not subresource error*/
+                || (failingUrl == null && errorCode != -12) /*not bad url*/
+                || errorCode == -1) { //当 errorCode = -1 且错误信息为 net::ERR_CACHE_MISS
+            return true;
         }
+        return false;
     }
 
-    @Override
-    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (mIPageLoadListener != null && request.isForMainFrame() && mIPageLoadListener.isHandlerOnReceivedErrorRes(request.getUrl())) {
-                view.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
-                mIPageLoadListener.onReceivedHttpError(view, request, errorResponse.getStatusCode());
-            }
-        }
-    }
+    /**
+     * WebViewClient.onReceivedError(webView, webResourceRequest, webResourceError)
+     *
+     * 只有在主页面加载出现错误时，才会回调这个方法。这正是展示加载错误页面最合适的方法。然鹅，如果不管三七二十一直接展示错误页面的话，那很有可能会误判，给用户造成经常加载页面失败的错觉。由于不同的WebView实现可能不一样，所以我们首先需要排除几种误判的例子：
+     *
+     * 1.加载失败的url跟WebView里的url不是同一个url，排除；
+     * 2.errorCode=-1，表明是ERROR_UNKNOWN的错误，为了保证不误判，排除
+     * 3.failingUrl=null&errorCode=-12，由于错误的url是空而不是ERROR_BAD_URL，排除
+     *
+     * 作者：网易考拉移动端团队
+     * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
+     *
+     * https://jiandanxinli.github.io/2016-08-31.html
+     * 1.这个方法只在与服务器无法正常连接时调用，类似于服务器返回错误码的那种错误（即HTTP ERROR），该方法是不会回调的，因为你已经和服务器正常连接上了（全怪官方文档(︶^︶)）；
+     * 2.这个方法是新版本的onReceivedError()方法，从API23开始引进，与旧方法onReceivedError(WebView view,int errorCode,String description,String failingUrl)不同的是，新方法在页面局部加载发生错误时也会被调用（比如页面里两个子Tab或者一张图片）。这就意味着该方法的调用频率可能会更加频繁，所以我们应该在该方法里执行尽量少的操作。
+     */
+//    @Override
+//    @TargetApi(Build.VERSION_CODES.M)
+//    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//        if(!_isUnHandler(view, error.getErrorCode(), failingUrl) && !TextUtils.isEmpty(failingUrl) && failingUrl.equals(view.getUrl())) {
+//            if (mIPageLoadListener != null && request.isForMainFrame() && mIPageLoadListener.isHandlerOnReceivedErrorRes(request.getUrl())) {
+//                mIPageLoadListener.onReceivedError(view, error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString());
+//            }
+//        }
+//    }
+
+//    /**
+//    WebViewClient.onReceivedHttpError(webView, webResourceRequest, webResourceResponse)
+//
+//    任何HTTP请求产生的错误都会回调这个方法，包括主页面的html文档请求，iframe、图片等资源请求。在这个回调中，由于混杂了很多请求，不适合用来展示加载错误的页面，而适合做监控报警。当某个URL，或者某个资源收到大量报警时，说明页面或资源可能存在问题，这时候可以让相关运营及时响应修改。
+//
+//    作者：网易考拉移动端团队
+//    链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
+//    来源：掘金
+//     * https://jiandanxinli.github.io/2016-08-31.html
+//     *
+//     * API23便引入了该方法。当服务器返回一个HTTP ERROR并且它的status code>=400时，该方法便会回调。
+//     * 这个方法的作用域并不局限于Main Frame，任何资源的加载引发HTTP ERROR都会引起该方法的回调，所以我们也应该在该方法里执行尽量少的操作，只进行非常必要的错误处理等。
+//     */
+//    @Override
+//    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            if (mIPageLoadListener != null && request.isForMainFrame() && mIPageLoadListener.isHandlerOnReceivedErrorRes(request.getUrl())) {
+//                view.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+//                mIPageLoadListener.onReceivedHttpError(view, request, errorResponse.getStatusCode());
+//            }
+//        }
+//    }
 
     // 处理HTTP认证请求，默认行为是取消请求
     @Override
@@ -143,7 +204,13 @@ public class WebViewClientImpl extends WebViewClient {
     }
 
     /**
-     * 参考：[Android 让WebView完美支持https双向认证(SSL)](https://blog.csdn.net/kpioneer123/article/details/51491739)
+     * [Android 让WebView完美支持https双向认证(SSL)](https://blog.csdn.net/kpioneer123/article/details/51491739)
+     * WebViewClient.onReceivedSslError(webview, sslErrorHandler, sslError)
+     *
+     * 任何HTTPS请求，遇到SSL错误时都会回调这个方法。比较正确的做法是让用户选择是否信任这个网站，这时候可以弹出信任选择框供用户选择（大部分正规浏览器是这么做的）。但人都是有私心的，何况是遇到自家的网站时。我们可以让一些特定的网站，不管其证书是否存在问题，都让用户信任它。在这一点上，分享一个小坑。考拉的SSL证书使用的是GeoTrust的GeoTrust SSL CA - G3，但是在某些机型上，打开考拉的页面都会提示证书错误。这时候就不得不使用“绝招”——让考拉的所有二级域都是可信任的。
+     *
+     * 作者：网易考拉移动端团队
+     * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
      * @param view
      * @param handler
      * @param error
@@ -153,34 +220,40 @@ public class WebViewClientImpl extends WebViewClient {
         // 接受信任所有网站的证书
         // https://support.google.com/faqs/answer/7071387?hl=en
         // https://www.cnblogs.com/liyiran/p/7011317.html
+
         // 安全的方案是当出现了证书问题的时候，读取 asserts 中保存的的根证书，然后与服务器校验，假如通过了，继续执行 handler.proceed()，否则执行 handler.cancel()。
         // https://juejin.im/entry/57b586d35bbb50006303c7e7
         // https://mp.weixin.qq.com/s/FyxuOuTFyZ_F8D0jQ8w5bg
         // handler.proceed();
-
         // https://mickey-tang.blogspot.com/2017/03/android-webview-ssl.html
-        final Activity activity = DELEGATE.getActivity();
-        ViewUtil.activityIsLivingCanByRun(activity, new ViewUtil.AbstractActivityIsLivingCanByRunCallBack() {
-            @Override
-            public void doIt(@NonNull Activity activity) {
-                SslCertificate sslCertificate = error.getCertificate();
-                LoggerProxy.d("sslCertificate %s", sslCertificate.toString());
-                DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        switch (which) {
-                            case POSITIVE:
-                                handler.proceed();
-                                break;
-                            case NEGATIVE:
-                                handler.cancel();
-                                break;
-                            default:
+
+        // 20190215 add
+        if(AbstractWebViewInteractiveDelegate.checkAllowHostWhiteList(view.getUrl())){
+            handler.proceed();
+        } else {
+            final Activity activity = DELEGATE.getActivity();
+            ViewUtil.activityIsLivingCanByRun(activity, new ViewUtil.AbstractActivityIsLivingCanByRunCallBack() {
+                @Override
+                public void doIt(@NonNull Activity activity) {
+                    SslCertificate sslCertificate = error.getCertificate();
+                    LoggerProxy.d("sslCertificate %s", sslCertificate.toString());
+                    DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            switch (which) {
+                                case POSITIVE:
+                                    handler.proceed();
+                                    break;
+                                case NEGATIVE:
+                                    handler.cancel();
+                                    break;
+                                default:
+                            }
                         }
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
 
     }
 

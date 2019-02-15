@@ -10,6 +10,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.Map;
 
@@ -111,12 +112,6 @@ public abstract class AbstractWebViewInteractiveDelegate extends AbstractViewPlu
 
     @Override
     public void onReceivedError(WebView webView, int errorCode, String description, String failingUrl) {
-        mWebViewIsLoading = false;
-        LoggerProxy.e("TODO webview代理被调用 onReceivedError %s %s %s", errorCode, description, failingUrl);
-    }
-
-    @Override
-    public void onReceivedHttpError(WebView webView, WebResourceRequest request, int stautsCode) {
         mWebViewIsLoading = false;
     }
 
@@ -230,7 +225,7 @@ public abstract class AbstractWebViewInteractiveDelegate extends AbstractViewPlu
         if (HttpAdjectiveUtil.isEqualsHost(url, mURL)
                 || HttpAdjectiveUtil.isEqualsHost(url, ViewPlus.getConfiguration(ConfigKeys.WEB_HOST))
                 || (ViewPlus.IS_DEBUG() && URLUtil.isAssetUrl(url))
-                || _checkAllowHostWhiteList(url)) {
+                || checkAllowHostWhiteList(url)) {
             updateURL(url);
             return false;
         } else {
@@ -239,7 +234,7 @@ public abstract class AbstractWebViewInteractiveDelegate extends AbstractViewPlu
         }
     }
 
-    private boolean _checkAllowHostWhiteList(String url) {
+    public static boolean checkAllowHostWhiteList(String url) {
         final String[] whitelist = ViewPlus.getConfiguration(ConfigKeys.ALLOW_ACCESS_URL_HOSTS);
         for (String allowUrl : whitelist) {
             if (HttpAdjectiveUtil.isEqualsHost(url, allowUrl)) {

@@ -133,8 +133,8 @@ public abstract class BaseDelegate extends SwipeBackFragment {
 //                        // .fitsSystemWindows(true)
 //                        // 当白色背景状态栏遇到不能改变状态栏字体为深色的设备时，解决方案 https://github.com/Jiiiiiin/ImmersionBar
 //                        // 原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
-//                        .statusBarColor(android.R.color.white, 1f)
-//                        .statusBarDarkFont(true, 0.2f)
+                        .statusBarColor(android.R.color.white, 1f)
+                        .statusBarDarkFont(true, 0.2f)
 //                        .transparentStatusBar()
                         //解决软键盘与底部输入框冲突问题，默认为false，还有一个重载方法，可以指定软键盘mode
                         .keyboardEnable(true)

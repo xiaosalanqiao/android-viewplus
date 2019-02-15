@@ -21,8 +21,6 @@ public interface IPageLoadListener {
 
     void onReceivedError(WebView view, int errorCode, String description, String failingUrl);
 
-    void onReceivedHttpError(WebView webView, WebResourceRequest request, int stautsCode);
-
     void onProgressChanged(WebView view, int progress);
 
     /**
@@ -33,8 +31,7 @@ public interface IPageLoadListener {
     boolean onShouldOverrideUrlLoading(String url);
 
     /**
-     * 在拦截到webview加载资源出错之后，回调，如果返回true，则onReceivedError和onReceivedHttpError将会被调用
-     * 无论是否是isForMainFrame
+     * 在拦截到webview加载资源出错之后，回调，如果返回true，则onReceivedError将会被调用
      */
     boolean isHandlerOnReceivedErrorRes(Uri uri);
 
