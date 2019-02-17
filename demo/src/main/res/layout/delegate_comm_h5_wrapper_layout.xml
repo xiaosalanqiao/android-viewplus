@@ -23,7 +23,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:text="viewplus 1.0.7"
+            android:text="viewplus 1.0.8"
             android:textColor="#6a737d"
             android:textSize="12sp"
             tools:ignore="HardcodedText" />

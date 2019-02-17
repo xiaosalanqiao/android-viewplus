@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0.5"
+        versionName "1.0.6"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -81,7 +81,7 @@ publish {
     //项目名称 我们的pakgename
     artifactId="vplus-ui"
     //版本号
-    publishVersion="1.0.5"
+    publishVersion="1.0.6"
     //项目的描述
     desc="android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
     //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址

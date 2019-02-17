@@ -33,10 +33,44 @@
 
 > [Android通用框架设计与完整电商APP开发](https://coding.imooc.com/class/116.html)
 
-主要参考了**傅猿猿**老师的上诉课程，感谢感谢！
+# 使用
 
++ project build.gradle添加`maven { url "https://dl.bintray.com/vplus/android-viewplus" }`仓库(可选，已上传至jenter)
+
+```grovvy
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+       	// ...
+        maven { url "https://dl.bintray.com/vplus/android-viewplus" }
+    }
+}
+```
+
++ module build.gradle 添加库依赖
+
+```grovvy
+dependencies {
+    api 'cn.jiiiiiin:vplus-core:1.0.8'
+    api 'cn.jiiiiiin:vplus-ui:1.0.6'
+}
+```
+
+虽然是Hybrid开发库，但是**vplus-ui android-viewplus 可选、可选、可选！！！** 也集成了：
+
++ [YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation) A powerful library that manage Fragment for Android!
+
++ [CymChad/BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper) BRVAH:Powerful and flexible RecyclerAdapter <http://www.recyclerview.org/>
++ [QMUI/QMUI_Android](https://github.com/QMUI/QMUI_Android) 提高 Android UI 开发效率的 UI 库 <http://qmuiteam.com/android>
+
+ 等，故开发原生应用也是很ok的 ：）
 
 # 更新
+#### 20190215
+- 修改安卓客户端onReceivedSslError针对SSL证书错误逻辑，针对应用白名单服务如果出现错误，则放行，其他url则走旧的逻辑，提高客户体验
+- 修改安卓客户端webview针对页面加载错误的几个sdk错误处理回调钩子的逻辑，预期达到能正确捕获和处理真实的页面错误、放宽容错率
+
 #### 20190123
 - 暴露`BaseBottomDelegate.java`和`AbstractWebViewWrapperCommUIDelegate.java`持有的页面UI
 - 清理不必要的代码
@@ -63,41 +97,6 @@
 - 更新`butterknife`依赖版本到最新**9.0.0-rc1**
 - 剔除`signinfo.properties`文件的配置，让demo项目顺利运行
 
-
-
-# 使用
-
-+ project build.gradle添加`maven { url "https://dl.bintray.com/vplus/android-viewplus" }`仓库(可选，已上传至jenter)
-
-```gr
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-       	// ...
-        maven { url "https://dl.bintray.com/vplus/android-viewplus" }
-    }
-}
-
-```
-
-+ module build.gradle 添加库依赖
-
-```gr
-dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.0.7'
-    api 'cn.jiiiiiin:vplus-ui:1.0.5'
-}
-```
-
-虽然是Hybrid开发库，但是**vplus-ui android-viewplus 可选、可选、可选！！！** 也集成了：
-
-+ [YoKeyword/Fragmentation](https://github.com/YoKeyword/Fragmentation) A powerful library that manage Fragment for Android!
-
-+ [CymChad/BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper) BRVAH:Powerful and flexible RecyclerAdapter <http://www.recyclerview.org/>
-+ [QMUI/QMUI_Android](https://github.com/QMUI/QMUI_Android) 提高 Android UI 开发效率的 UI 库 <http://qmuiteam.com/android>
-
- 等，故开发原生应用也是很ok的 ：）
 
 # 示例
 

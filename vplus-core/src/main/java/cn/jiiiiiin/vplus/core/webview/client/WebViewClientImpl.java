@@ -155,7 +155,7 @@ public class WebViewClientImpl extends WebViewClient {
      *
      * 1.加载失败的url跟WebView里的url不是同一个url，排除；
      * 2.errorCode=-1，表明是ERROR_UNKNOWN的错误，为了保证不误判，排除
-     * 3.failingUrl=null&errorCode=-12，由于错误的url是空而不是ERROR_BAD_URL，排除
+     * 3.`failingUrl=null和errorCode=-12`，由于错误的url是空而不是ERROR_BAD_URL，排除
      *
      * 作者：网易考拉移动端团队
      * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
