@@ -21,3 +21,6 @@ log.log
 mobilebank/.bugtags.log
 bugtags.log
 PUBLISH.md
+
+.project
+.settings/
