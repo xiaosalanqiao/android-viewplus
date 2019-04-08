@@ -18,14 +18,40 @@ public final class LoggerProxy {
     public static final int NOTHING = 6;
     public static final String TAG = "===Log===";
 
+    private static LoggerProxyLifecycleListener loggerProxyLifecycleListener = new LoggerProxyLifecycleListener() {
+        @Override
+        public void e(String message) {
+
+        }
+
+        @Override
+        public void e(String message, Object... args) {
+
+        }
+
+        @Override
+        public void e(Throwable exception, String message, Object... args) {
+
+        }
+    };
+
     /**
      * 控制log等级
      */
     private static int LEVEL = VERBOSE;
 
+    public interface LoggerProxyLifecycleListener {
+        void e(String message);
+        void e(String message, Object... args);
+        void e(Throwable exception, String message, Object... args);
+    }
+
     public static void setLEVEL(int level) {
-        // TODO 生产需要放开
         LoggerProxy.LEVEL = level;
+    }
+
+    public static void setLoggerProxyLifecycleListener(LoggerProxyLifecycleListener loggerProxyLifecycleListener) {
+        LoggerProxy.loggerProxyLifecycleListener = loggerProxyLifecycleListener;
     }
 
     public static void v(String tag, String message) {
@@ -113,6 +139,7 @@ public final class LoggerProxy {
     public static void e(String message) {
         if (LEVEL <= ERROR) {
             try {
+                loggerProxyLifecycleListener.e(message);
                 Logger.e(message);
             } catch (Exception e) {
                 Log.e(TAG, "打印日志出错", e);
@@ -123,7 +150,7 @@ public final class LoggerProxy {
     public static void e(String message, Object... args) {
         if (LEVEL <= ERROR) {
             try {
-//                Bugtags.log("发送LoggerProxy的e日志 1-->".concat(message).concat(":::").concat(Arrays.toString(args)));
+                loggerProxyLifecycleListener.e(message, args);
                 Logger.e(message, args);
             } catch (Exception e) {
                 Log.e(TAG, "打印日志出错", e);
@@ -144,6 +171,7 @@ public final class LoggerProxy {
     public static void e(Throwable exception, String message, Object... args) {
         if (LEVEL <= ERROR) {
             try {
+                loggerProxyLifecycleListener.e(exception, message, args);
                 Logger.e(exception, message, args);
             } catch (Exception e) {
                 Log.e(TAG, "打印日志出错", e);

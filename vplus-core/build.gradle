@@ -50,27 +50,23 @@ dependencies {
     api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
 
-    // https://docs.bugtags.com/zh/start/integrate/android/maven.html
-//    debugApi 'com.bugtags.library:bugtags-lib:3.0.0'
-    //线上使用，如果不需要使用手动提交 issue，可以选择 metrics 包
-//    releaseApi 'com.bugtags.metrics:bugtags-lib:3.0.0'
-//    api 'com.bugtags.metrics:bugtags-lib:3.0.0'
-
     // https://github.com/orhanobut/hawk
     api "com.orhanobut:hawk:2.0.1"
 
     // RxPermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    // TODO 待替换
+//    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
     // JSON依赖
-    api 'com.alibaba:fastjson:1.1.68.android'
+    api 'com.alibaba:fastjson:1.1.70.android'
 
     // https://github.com/orhanobut/logger
-    implementation 'com.orhanobut:logger:2.1.1'
+    implementation 'com.orhanobut:logger:2.2.0'
 
     // Util工具类使用这个,里面没有的再考虑自己建
     // https://github.com/Blankj/AndroidUtilCode
-    api 'com.blankj:utilcode:1.23.4'
+    api 'com.blankj:utilcode:1.23.7'
 
     // 网络请求依赖
     // https://github.com/square/okhttp
@@ -83,14 +79,19 @@ dependencies {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
-    // ui: loading dialog Kaopiz/KProgressHUD
-    api 'com.kaopiz:kprogresshud:1.1.0'
+    // https://github.com/Kaopiz/KProgressHUD
+    api 'com.kaopiz:kprogresshud:1.2.0'
 
     // https://github.com/wuhenzhizao/android-titlebar
     api 'com.wuhenzhizao:titlebar:1.1.4'
 
     // https://github.com/DreaminginCodeZH/MaterialProgressBar
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+
+    // afollestad/material-dialogs
+    // https://github.com/afollestad/material-dialogs#proguard
+    // TODO 待升级
+    api 'com.afollestad.material-dialogs:core:0.9.6.0'
 
     // 图片处理
     api 'com.github.bumptech.glide:glide:4.6.1'
@@ -108,26 +109,22 @@ dependencies {
     api 'me.yokeyword:fragmentation-swipeback:1.3.6'
 
     // https://github.com/gyf-dev/ImmersionBar
-//    api 'com.gyf.barlibrary:barlibrary:2.3.0'
-    api 'com.gyf.immersionbar:immersionbar:2.3.3-beta15'
+    api 'com.gyf.immersionbar:immersionbar:2.3.3'
 
     // 字体图标 JoanZapata/android-iconify
     api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
 
     // https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-20'
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21'
     //没有使用特殊Header，可以不加这行
-    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-20'
-
-    // afollestad/material-dialogs
-    // https://github.com/afollestad/material-dialogs#proguard
-    api 'com.afollestad.material-dialogs:core:0.9.6.0'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-21'
 
     // https://github.com/LuckSiege/PictureSelector
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
     // 圆形图片
-    api 'de.hdodenhof:circleimageview:2.2.0'
+    // https://github.com/hdodenhof/CircleImageView
+    api 'de.hdodenhof:circleimageview:3.0.0'
 
     // https://github.com/orhanobut/dialogplus
     api 'com.orhanobut:dialogplus:1.11@aar'

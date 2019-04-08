@@ -78,6 +78,25 @@ public class MainApplication extends Application {
                 .withExitAppWaitTime(2000L)
                 .configure();
 
+        LoggerProxy.setLoggerProxyLifecycleListener(new LoggerProxy.LoggerProxyLifecycleListener() {
+            @Override
+            public void e(String message) {
+                Log.e("TEST", "测试LoggerProxy.setLoggerProxyLifecycleListener " + message);
+            }
+
+            @Override
+            public void e(String message, Object... args) {
+
+            }
+
+            @Override
+            public void e(Throwable exception, String message, Object... args) {
+
+            }
+        });
+
+        LoggerProxy.e("测试日志");
+
         LoggerProxy.d("全局应用配置完毕 IS_PROD: %s IS_DEBUG: %s", ViewPlus.IS_PROD(), ViewPlus.IS_DEBUG());
     }
 
