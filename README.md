@@ -70,7 +70,7 @@ dependencies {
 
 #### 20190408
 - [refactor: 升级vplus-ui模块第三方依赖](https://github.com/Jiiiiiin/android-viewplus/commit/f131d010cc473b39b023d2f73c373f0c4d08cdbd)
-- [refactor: 升级vplus-core模块第三方依赖 & 为LoggerPorxy添加代理监听(https://github.com/Jiiiiiin/android-viewplus/commit/0c81c18545e587560ab86857cb94d19fbec42158)
+- [refactor: 升级vplus-core模块第三方依赖 & 为LoggerPorxy添加代理监听](https://github.com/Jiiiiiin/android-viewplus/commit/0c81c18545e587560ab86857cb94d19fbec42158)
 
 
 #### 20190215
