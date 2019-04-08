@@ -52,8 +52,8 @@ allprojects {
 
 ```grovvy
 dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.0.8'
-    api 'cn.jiiiiiin:vplus-ui:1.0.6'
+    api 'cn.jiiiiiin:vplus-core:1.0.9'
+    api 'cn.jiiiiiin:vplus-ui:1.0.7'
 }
 ```
 
@@ -67,6 +67,12 @@ dependencies {
  等，故开发原生应用也是很ok的 ：）
 
 # 更新
+
+#### 20190408
+- [refactor: 升级vplus-ui模块第三方依赖](https://github.com/Jiiiiiin/android-viewplus/commit/f131d010cc473b39b023d2f73c373f0c4d08cdbd)
+- [refactor: 升级vplus-core模块第三方依赖 & 为LoggerPorxy添加代理监听(https://github.com/Jiiiiiin/android-viewplus/commit/0c81c18545e587560ab86857cb94d19fbec42158)
+
+
 #### 20190215
 - 修改安卓客户端onReceivedSslError针对SSL证书错误逻辑，针对应用白名单服务如果出现错误，则放行，其他url则走旧的逻辑，提高客户体验
 - 修改安卓客户端webview针对页面加载错误的几个sdk错误处理回调钩子的逻辑，预期达到能正确捕获和处理真实的页面错误、放宽容错率
