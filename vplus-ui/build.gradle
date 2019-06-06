@@ -57,7 +57,7 @@ dependencies {
 
     // RecyclerView依赖:CymChad/BaseRecyclerViewAdapterHelper
     // https://github.com/CymChad/BaseRecyclerViewAdapterHelper
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
     // https://github.com/shaohui10086/AdvancedLuban/blob/master/README_ZH.md
     // https://github.com/Curzibn/Luban
