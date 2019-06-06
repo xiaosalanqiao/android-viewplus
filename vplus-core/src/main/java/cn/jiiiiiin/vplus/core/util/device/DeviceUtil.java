@@ -262,22 +262,35 @@ public class DeviceUtil {
     /**
      * 老方法
      */
+    @SuppressLint({"MissingPermission", "HardwareIds"})
     public static String generateDeviceId(Activity context) throws ViewPlusException {
-        String id = "";
-        TelephonyManager TelephonyMgr = (TelephonyManager) context
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        @SuppressLint("MissingPermission") String szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
-        if (!"".equals(szImei)) {
-            id = szImei;
-        } else {
-            WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
-                    : wm.getConnectionInfo().getMacAddress();
-            id = m_szWLANMAC;
-        }
-
-        MessageDigest m = null;
         try {
+            String id = "";
+            TelephonyManager TelephonyMgr = (TelephonyManager) context
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+            String szImei = "";
+            /*This method was deprecated in API level 26. Use (@link getImei}
+            which returns IMEI for GSM or (@link getMeid} which returns MEID for CDMA.
+            getDeviceId()在API 26已经弃用，所以API 26以上的使用getImei()*/
+            if (null != TelephonyMgr) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
+                } else {
+                    szImei = TelephonyMgr.getImei();
+                }
+            }
+            if (!"".equals(szImei)) {
+                id = szImei;
+            } else {
+                WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                assert wm != null;
+                String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
+                        : wm.getConnectionInfo().getMacAddress();
+                id = m_szWLANMAC;
+            }
+
+            MessageDigest m = null;
+
             m = MessageDigest.getInstance("MD5");
             m.update(id.getBytes(), 0, id.length());
             // get md5 bytes
