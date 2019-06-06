@@ -24,6 +24,7 @@
     <!--读取设备信息-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE"/>
 
     <!--应用更新插件里面已经声明了-->
     <!--安装未知来源应用的权限 https://github.com/yjfnypeu/UpdatePlugin/issues/51-->
