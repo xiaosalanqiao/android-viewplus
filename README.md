@@ -52,8 +52,8 @@ allprojects {
 
 ```grovvy
 dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.0.9'
-    api 'cn.jiiiiiin:vplus-ui:1.0.7'
+    api 'cn.jiiiiiin:vplus-core:1.1.0'
+    api 'cn.jiiiiiin:vplus-ui:1.0.8'
 }
 ```
 
@@ -67,6 +67,9 @@ dependencies {
  等，故开发原生应用也是很ok的 ：）
 
 # 更新
+
+#### 20190607
+- [refactor: 修复获取设备唯一标识因为sdk升级导致的问题 && 升级依赖]()
 
 #### 20190408
 - [refactor: 升级vplus-ui模块第三方依赖](https://github.com/Jiiiiiin/android-viewplus/commit/f131d010cc473b39b023d2f73c373f0c4d08cdbd)
