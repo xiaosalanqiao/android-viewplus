@@ -58,8 +58,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
 
     // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-    compileOnly 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     implementation 'com.android.support:multidex:1.0.3'
 }

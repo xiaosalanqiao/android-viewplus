@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;

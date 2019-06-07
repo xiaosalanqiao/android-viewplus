@@ -43,10 +43,11 @@ dependencies {
     api 'com.android.support:animated-vector-drawable:' + ANDROID_SUPPORT_LIBRARY_VERSION
 
     // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-    compileOnly 'org.projectlombok:lombok:1.18.4'
-    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     // ButterKnife
+    // https://github.com/JakeWharton/butterknife/releases
     api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
     annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
 
@@ -58,17 +59,16 @@ dependencies {
     // TODO 待替换
 //    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
-    // JSON依赖
-    api 'com.alibaba:fastjson:1.1.70.android'
+    // https://github.com/alibaba/fastjson
+    api 'com.alibaba:fastjson:1.1.71.android'
 
     // https://github.com/orhanobut/logger
     implementation 'com.orhanobut:logger:2.2.0'
 
     // Util工具类使用这个,里面没有的再考虑自己建
     // https://github.com/Blankj/AndroidUtilCode
-    api 'com.blankj:utilcode:1.23.7'
+    api 'com.blankj:utilcode:1.24.2'
 
-    // 网络请求依赖
     // https://github.com/square/okhttp
     api 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
@@ -94,7 +94,7 @@ dependencies {
     api 'com.afollestad.material-dialogs:core:0.9.6.0'
 
     // 图片处理
-    api 'com.github.bumptech.glide:glide:4.6.1'
+    api 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     api 'com.github.bumptech.glide:okhttp3-integration:4.6.1', {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
@@ -140,7 +140,7 @@ publish {
     //项目名称 我们的pakgename
     artifactId = "vplus-core"
     //版本号
-    publishVersion = "1.0.9"
+    publishVersion = "1.1.0"
     //项目的描述
     desc = "android-viewplus核心库，包含jsbridge、单activity相关类"
     //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
