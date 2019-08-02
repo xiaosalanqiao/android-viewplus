@@ -1,7 +1,7 @@
 package cn.jiiiiiin.vplus.core.net;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zhy.http.okhttp.callback.FileCallBack;
@@ -15,7 +15,6 @@ import java.util.WeakHashMap;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.net.callback.IError;
 import cn.jiiiiiin.vplus.core.net.callback.IFailure;
 import cn.jiiiiiin.vplus.core.net.callback.IRequest;
@@ -23,7 +22,6 @@ import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
 import cn.jiiiiiin.vplus.core.net.callback.ISuccess;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
-import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 
 import static cn.jiiiiiin.vplus.core.net.RestOkHttpUtilsClient.FILE_NAME_SPLIT_FLAG;
 

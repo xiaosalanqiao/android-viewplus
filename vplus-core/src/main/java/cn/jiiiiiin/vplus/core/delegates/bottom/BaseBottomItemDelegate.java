@@ -1,20 +1,15 @@
 package cn.jiiiiiin.vplus.core.delegates.bottom;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
-
-import java.util.Objects;
 
 import cn.jiiiiiin.vplus.core.R;
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;
-import cn.jiiiiiin.vplus.core.util.Intent.RouterUtil;
-import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 
 
 /**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llc_root_container"
@@ -23,7 +23,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:text="由第三方提供技术支持"
+            android:text="正在跳转第三方应用页面"
             android:textColor="#6a737d"
             android:textSize="12sp"
             tools:ignore="HardcodedText" />
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content" />
 
         <!--webview容器 android:visibility="gone"-->
-        <android.support.v7.widget.ContentFrameLayout
+        <androidx.appcompat.widget.ContentFrameLayout
             android:id="@+id/h5_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -61,4 +61,4 @@
     <include layout="@layout/network_fial_error_view"
         android:visibility="gone"/>
 
-</android.support.v7.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

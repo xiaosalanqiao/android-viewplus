@@ -1,7 +1,7 @@
 package cn.jiiiiiin.vplus.core.webview.event;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -10,8 +10,6 @@ import com.blankj.utilcode.util.StringUtils;
 
 import java.util.Arrays;
 
-import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
-import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewWrapperCommUIDelegate;
 import cn.jiiiiiin.vplus.core.webview.event.model.EventParams;
 import cn.jiiiiiin.vplus.core.webview.event.model.EventResData;

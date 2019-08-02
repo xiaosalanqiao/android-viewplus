@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.ui.refresh;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.text.FieldPosition;
 import java.text.SimpleDateFormat;

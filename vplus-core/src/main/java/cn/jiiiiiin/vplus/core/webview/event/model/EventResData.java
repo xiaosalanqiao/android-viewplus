@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.core.webview.event.model;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.StringUtils;

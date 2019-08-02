@@ -1,7 +1,7 @@
 package cn.jiiiiiin.vplus.core.net.interceptors;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.RawRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.RawRes;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
 package cn.jiiiiiin.vplus.core.webview.event;
 
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;

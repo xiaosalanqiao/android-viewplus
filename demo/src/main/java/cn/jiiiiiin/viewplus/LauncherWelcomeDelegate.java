@@ -1,17 +1,16 @@
 package cn.jiiiiiin.viewplus;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.WebView;
 
+import androidx.annotation.Nullable;
 
-import com.gyf.barlibrary.ImmersionBar;
+
+import com.gyf.immersionbar.ImmersionBar;
 
 import cn.jiiiiiin.viewplus.jsbridge.AjaxEvent;
 import cn.jiiiiiin.viewplus.jsbridge.UIEvent;
-
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.delegates.BaseDelegate;

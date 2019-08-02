@@ -3,14 +3,14 @@ apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.1'
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode 1
-        versionName "1.0.9"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName "1.1.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -29,18 +29,28 @@ android {
 }
 
 ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
-ext.BUTTERKNIFE_VERSION = "9.0.0-rc1"
+ext.BUTTERKNIFE_VERSION = "10.1.0"
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
 
     // Android Support包
-    api 'com.android.support:support-v4:' + ANDROID_SUPPORT_LIBRARY_VERSION
-    api 'com.android.support:appcompat-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
-    api 'com.android.support:design:' + ANDROID_SUPPORT_LIBRARY_VERSION
-    api 'com.android.support:cardview-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
-    api 'com.android.support:preference-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
-    api 'com.android.support:animated-vector-drawable:' + ANDROID_SUPPORT_LIBRARY_VERSION
+//    api 'com.android.support:support-v4:' + ANDROID_SUPPORT_LIBRARY_VERSION
+//    api 'com.android.support:appcompat-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
+//    api 'com.android.support:design:' + ANDROID_SUPPORT_LIBRARY_VERSION
+//    api 'com.android.support:cardview-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
+//    api 'com.android.support:preference-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
+//    api 'com.android.support:animated-vector-drawable:' + ANDROID_SUPPORT_LIBRARY_VERSION
+
+    // Androidx
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'com.google.android.material:material:1.1.0-alpha09'
+    api 'androidx.cardview:cardview:1.0.0'
+    api 'androidx.cardview:cardview:1.0.0'
+    api 'androidx.preference:preference:1.0.0'
+    api 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
+
 
     // https://blog.csdn.net/sbsujjbcy/article/details/52199975
     compileOnly 'org.projectlombok:lombok:1.18.8'
@@ -55,23 +65,24 @@ dependencies {
     api "com.orhanobut:hawk:2.0.1"
 
     // RxPermissions
-    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+//    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
     // TODO 待替换
 //    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
     // https://github.com/alibaba/fastjson
-    api 'com.alibaba:fastjson:1.1.71.android'
+    api 'com.alibaba:fastjson:1.2.58'
 
     // https://github.com/orhanobut/logger
     implementation 'com.orhanobut:logger:2.2.0'
 
     // Util工具类使用这个,里面没有的再考虑自己建
     // https://github.com/Blankj/AndroidUtilCode
-    api 'com.blankj:utilcode:1.24.2'
+    api 'com.blankj:utilcode:1.24.6'
 
     // https://github.com/square/okhttp
-    api 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    api 'com.squareup.okhttp3:okhttp:4.0.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0'
 
     // https://github.com/hongyangAndroid/okhttputils
     api 'com.zhy:okhttputils:2.6.2', {
@@ -86,12 +97,13 @@ dependencies {
     api 'com.wuhenzhizao:titlebar:1.1.4'
 
     // https://github.com/DreaminginCodeZH/MaterialProgressBar
-    implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 
     // afollestad/material-dialogs
     // https://github.com/afollestad/material-dialogs#proguard
     // TODO 待升级
-    api 'com.afollestad.material-dialogs:core:0.9.6.0'
+    api 'com.afollestad.material-dialogs:core:3.1.0'
+    api 'com.afollestad.material-dialogs:input:3.1.0'
 
     // 图片处理
     api 'com.github.bumptech.glide:glide:4.8.0'
@@ -105,19 +117,19 @@ dependencies {
 
     // Fragmentation
     // https://github.com/YoKeyword/Fragmentation/releases
-    api 'me.yokeyword:fragmentation:1.3.6'
-    api 'me.yokeyword:fragmentation-swipeback:1.3.6'
+    api 'me.yokeyword:fragmentationx:1.0.1'
+    api 'me.yokeyword:fragmentationx-swipeback:1.0.1'
 
     // https://github.com/gyf-dev/ImmersionBar
-    api 'com.gyf.immersionbar:immersionbar:2.3.3'
+    api 'com.gyf.immersionbar:immersionbar:3.0.0-beta05'
 
     // 字体图标 JoanZapata/android-iconify
     api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
 
     // https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21'
+    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-14'
     //没有使用特殊Header，可以不加这行
-    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-21'
+    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-14'
 
     // https://github.com/LuckSiege/PictureSelector
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
@@ -140,7 +152,7 @@ publish {
     //项目名称 我们的pakgename
     artifactId = "vplus-core"
     //版本号
-    publishVersion = "1.1.0"
+    publishVersion = "1.1.1"
     //项目的描述
     desc = "android-viewplus核心库，包含jsbridge、单activity相关类"
     //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址

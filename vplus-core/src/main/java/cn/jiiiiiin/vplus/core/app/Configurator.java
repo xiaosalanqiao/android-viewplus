@@ -3,7 +3,7 @@ package cn.jiiiiiin.vplus.core.app;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.webkit.WebView;
 
 import com.blankj.utilcode.util.Utils;
@@ -22,7 +22,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
 import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;
-import cn.jiiiiiin.vplus.core.dict.Err;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;

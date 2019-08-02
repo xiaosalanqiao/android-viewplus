@@ -7,26 +7,16 @@ import android.net.Uri;
 import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.os.Build;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.webkit.ClientCertRequest;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.util.ImageUtils;
 
-import java.io.BufferedInputStream;
-import java.util.Arrays;
-
-import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.ui.dialog.DialogUtil;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;
@@ -34,6 +24,8 @@ import cn.jiiiiiin.vplus.core.webview.AbstractWebViewInteractiveDelegate;
 import cn.jiiiiiin.vplus.core.webview.loader.IPageLoadListener;
 import cn.jiiiiiin.vplus.core.webview.route.Router;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /**
  * WebViewClient可以拿到WebView在访问网络各个阶段的回调，包括加载前后，失败等
@@ -237,20 +229,14 @@ public class WebViewClientImpl extends WebViewClient {
                 public void doIt(@NonNull Activity activity) {
                     SslCertificate sslCertificate = error.getCertificate();
                     LoggerProxy.d("sslCertificate %s", sslCertificate.toString());
-                    DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            switch (which) {
-                                case POSITIVE:
-                                    handler.proceed();
-                                    break;
-                                case NEGATIVE:
-                                    handler.cancel();
-                                    break;
-                                default:
-                            }
-                        }
+                    DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", (positive) -> {
+                        handler.proceed();
+                        return Unit.INSTANCE;
+                    }, negative -> {
+                        handler.cancel();
+                        return Unit.INSTANCE;
                     });
+
                 }
             });
         }

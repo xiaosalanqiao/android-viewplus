@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.core.update;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.alibaba.fastjson.JSONException;
 import com.vector.update_app.HttpManager;
@@ -16,7 +16,6 @@ import java.util.Map;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import okhttp3.Call;
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by Vector

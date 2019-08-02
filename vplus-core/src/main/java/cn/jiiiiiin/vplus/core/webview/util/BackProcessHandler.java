@@ -1,15 +1,9 @@
 package cn.jiiiiiin.vplus.core.webview.util;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.webkit.WebView;
 
-import com.blankj.utilcode.util.KeyboardUtils;
-
-import java.util.Objects;
-
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;

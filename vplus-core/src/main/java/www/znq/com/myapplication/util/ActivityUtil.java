@@ -1,7 +1,7 @@
 package www.znq.com.myapplication.util;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * @author jiiiiiin

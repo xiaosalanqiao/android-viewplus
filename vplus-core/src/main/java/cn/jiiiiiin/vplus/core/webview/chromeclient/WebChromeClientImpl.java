@@ -1,7 +1,6 @@
 package cn.jiiiiiin.vplus.core.webview.chromeclient;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
@@ -12,16 +11,16 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.WhichButton;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.ui.dialog.DialogUtil;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.loader.IPageLoadListener;
+import kotlin.Unit;
 
 /**
  * @author jiiiiiin
@@ -76,12 +75,12 @@ public class WebChromeClientImpl extends WebChromeClient {
 
     @Override
     public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-        DialogUtil.confirmDialog(mActivity, message, (dialog, which) -> {
-            if (which == DialogAction.POSITIVE) {
-                result.confirm();
-            } else if (which == DialogAction.NEGATIVE) {
-                result.cancel();
-            }
+        DialogUtil.confirmDialog(mActivity, message, (positive) -> {
+            result.confirm();
+            return Unit.INSTANCE;
+        }, negative -> {
+            result.cancel();
+            return Unit.INSTANCE;
         });
         return true;
     }
@@ -91,6 +90,7 @@ public class WebChromeClientImpl extends WebChromeClient {
         DialogUtil.promptDialog(mActivity, message, "", defaultValue, (dialog, input) -> {
             result.confirm(String.valueOf(input));
             dialog.dismiss();
+            return Unit.INSTANCE;
         });
         return true;
     }

@@ -2,7 +2,7 @@ package cn.jiiiiiin.vplus.core.net.callback;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

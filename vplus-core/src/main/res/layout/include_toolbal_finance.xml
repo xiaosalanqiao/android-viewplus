@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/finance_toolbar_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/finance_toolbar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -27,7 +27,7 @@
                 android:textSize="22sp"
                  />
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/finance_scan"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -41,9 +41,9 @@
                     android:text="{icon-scan}"
                     android:textColor="#60A7FC"
                     android:textSize="18sp" />
-            </android.support.v7.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/finance_service"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -59,9 +59,9 @@
                     android:text="@string/login"
                     android:textColor="#60A7FC"
                     android:textSize="14sp" />
-            </android.support.v7.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-</android.support.v7.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

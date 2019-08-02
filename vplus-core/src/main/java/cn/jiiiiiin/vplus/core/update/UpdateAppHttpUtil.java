@@ -1,7 +1,6 @@
 package cn.jiiiiiin.vplus.core.update;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.alibaba.fastjson.JSONException;
 import com.vector.update_app.HttpManager;

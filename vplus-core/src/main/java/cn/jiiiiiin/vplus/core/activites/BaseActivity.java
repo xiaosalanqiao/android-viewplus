@@ -3,12 +3,11 @@ package cn.jiiiiiin.vplus.core.activites;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.ContentFrameLayout;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 
-import com.gyf.barlibrary.ImmersionBar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.ContentFrameLayout;
+
+import com.gyf.immersionbar.ImmersionBar;
 
 import cn.jiiiiiin.vplus.core.R;
 import cn.jiiiiiin.vplus.core.delegates.AbstractViewPlusDelegate;
@@ -88,11 +87,12 @@ public abstract class BaseActivity extends SupportActivity {
      */
     protected void destroyImmersionBar() {
         //必须调用该方法，防止内存泄漏
-        try {
-            ImmersionBar.with(this).destroy();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //升级新版后不需要再调用destroy()
+//        try {
+//            ImmersionBar.with(this).destroy();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**

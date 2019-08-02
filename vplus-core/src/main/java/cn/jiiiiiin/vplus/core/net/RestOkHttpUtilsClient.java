@@ -1,9 +1,8 @@
 package cn.jiiiiiin.vplus.core.net;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.ToastUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zhy.http.okhttp.OkHttpUtils;

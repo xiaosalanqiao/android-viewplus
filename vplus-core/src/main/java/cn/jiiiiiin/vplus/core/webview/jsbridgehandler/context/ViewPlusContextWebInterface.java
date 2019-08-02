@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.core.webview.jsbridgehandler.context;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -9,7 +9,6 @@ import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;
 import cn.jiiiiiin.vplus.core.webview.event.AbstractEvent;
-import cn.jiiiiiin.vplus.core.webview.event.IEventManager;
 import cn.jiiiiiin.vplus.core.webview.event.model.EventParams;
 import cn.jiiiiiin.vplus.core.webview.event.model.EventResData;
 import cn.jiiiiiin.vplus.core.webview.jsbridgehandler.JsBridgeCommHandler;

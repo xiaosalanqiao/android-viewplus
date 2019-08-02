@@ -1,7 +1,7 @@
 package www.znq.com.myapplication.proxy;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import www.znq.com.myapplication.util.ActivityUtil;

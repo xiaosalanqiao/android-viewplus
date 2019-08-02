@@ -3,8 +3,8 @@ package cn.jiiiiiin.vplus.core.util.Intent;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 /**
  * @author jiiiiiin

@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.core.webview.route;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 
@@ -9,7 +9,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import java.util.Map;
 
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.util.Intent.RouterUtil;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;

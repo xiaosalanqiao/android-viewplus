@@ -2,21 +2,20 @@ package cn.jiiiiiin.vplus.core.delegates;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+
 import com.blankj.utilcode.util.KeyboardUtils;
-import com.gyf.barlibrary.ImmersionBar;
+import com.gyf.immersionbar.ImmersionBar;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.jiiiiiin.vplus.core.activites.BaseActivity;
-import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
@@ -130,7 +129,7 @@ public abstract class BaseDelegate extends SwipeBackFragment {
                 mImmersionBar = ImmersionBar.with(this);
                 mImmersionBar
                         // 字体状态栏颜色由应用自己控制
-//                        // .fitsSystemWindows(true)
+                         .fitsSystemWindows(false)
 //                        // 当白色背景状态栏遇到不能改变状态栏字体为深色的设备时，解决方案 https://github.com/Jiiiiiin/ImmersionBar
 //                        // 原理：如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色，如果当前设备不支持状态栏字体变色，会使当前状态栏加上透明度，否则不执行透明度
                         .statusBarColor(android.R.color.white, 1f)
@@ -187,13 +186,14 @@ public abstract class BaseDelegate extends SwipeBackFragment {
     }
 
     private void _destroyImmersionBar() {
-        if (mImmersionBar != null) {
-            try {
-                mImmersionBar.destroy();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        //升级新版后不需要再调用destroy()
+//        if (mImmersionBar != null) {
+//            try {
+//                mImmersionBar.destroy();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     @Override

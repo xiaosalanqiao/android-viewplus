@@ -1,7 +1,7 @@
 package cn.jiiiiiin.viewplus;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -25,7 +25,7 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
     @Override
     public AbstractViewPlusDelegate setRootDelegate() {
         // 2.设置根Delegate
-        return LauncherWelcomeDelegate.newInstance();
+        return TestDialogDelegate.newInstance();
     }
 
     private void _initVPAgain() {

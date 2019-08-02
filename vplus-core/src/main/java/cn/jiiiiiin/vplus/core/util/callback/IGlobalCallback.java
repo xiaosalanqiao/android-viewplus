@@ -1,6 +1,6 @@
 package cn.jiiiiiin.vplus.core.util.callback;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Created by jiiiiiin

@@ -1,8 +1,8 @@
 package www.znq.com.myapplication.proxy;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;

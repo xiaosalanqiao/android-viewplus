@@ -6,14 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
+import androidx.loader.content.CursorLoader;
 import android.util.Base64;
 
 import com.blankj.utilcode.util.EncodeUtils;
 
 import java.io.ByteArrayOutputStream;
 
-import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 
 /**

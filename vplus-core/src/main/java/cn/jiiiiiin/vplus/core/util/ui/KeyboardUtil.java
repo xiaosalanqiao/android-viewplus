@@ -1,7 +1,7 @@
 package cn.jiiiiiin.vplus.core.util.ui;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 

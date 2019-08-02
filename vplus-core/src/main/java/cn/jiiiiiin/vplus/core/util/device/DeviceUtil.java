@@ -8,7 +8,10 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import com.blankj.utilcode.util.StringUtils;
@@ -80,7 +83,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions(activity);
+                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                     rxPermissions.request(Manifest.permission.RECORD_AUDIO)
                             .subscribe(callBack::setPermissions);
                 });
@@ -98,7 +101,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions(activity);
+                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                     rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
                             .subscribe(callBack::setLocation);
                 });
@@ -116,7 +119,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions(activity);
+                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                     rxPermissions.request(Manifest.permission.READ_CONTACTS,
                             Manifest.permission.WRITE_CONTACTS)
                             .subscribe(callBack::setPhone);
@@ -135,7 +138,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions(activity);
+                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                     rxPermissions.request(Manifest.permission.READ_SMS)
                             .subscribe(callBack::setReadSms);
                 });
@@ -150,7 +153,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions(activity);
+                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                     rxPermissions.request(Manifest.permission.CAMERA).subscribe(callback::setPhoto);
                 });
             }
@@ -166,7 +169,7 @@ public class DeviceUtil {
                 HANDLER.post(() -> {
                     // https://work.bugtags.com/apps/1598731013063315/issues/1603332308217894/tags/1603332308233675?types=3&versions=1600310568035606&page=2
                     try {
-                        RxPermissions rxPermissions = new RxPermissions(activity);
+                        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                         rxPermissions.request(WRITE_EXTERNAL_STORAGE).subscribe(onNext);
                     } catch (Exception e) {
                         LoggerProxy.e(e, "generateWriteExternalStorage err");
@@ -187,7 +190,7 @@ public class DeviceUtil {
                 HANDLER.post(() -> {
                     // https://work.bugtags.com/apps/1598731013063315/issues/1603332308217894/tags/1603332308233675?types=3&versions=1600310568035606&page=2
                     try {
-                        RxPermissions rxPermissions = new RxPermissions(activity);
+                        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                         rxPermissions.request(READ_EXTERNAL_STORAGE).subscribe(onNext);
                     } catch (Exception e) {
                         LoggerProxy.e(e, "generateWriteExternalStorage err");
@@ -207,7 +210,7 @@ public class DeviceUtil {
     public static void generateDeviceId(Activity activity, IGenerateDeviceIdCallBack generateDeviceIdCallBack) {
         activity.runOnUiThread(() -> {
             // ！需要动态权限
-            RxPermissions rxPermissions = new RxPermissions(activity);
+            RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
             rxPermissions
                     .request(Manifest.permission.READ_PHONE_STATE)
                     .subscribe(granted -> {
@@ -252,7 +255,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions(activity);
+                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
                     rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(callback::setDeviceState);
                 });
             }
@@ -280,14 +283,21 @@ public class DeviceUtil {
                     szImei = TelephonyMgr.getImei();
                 }
             }
-            if (!"".equals(szImei)) {
+            if (null != szImei && !"".equals(szImei)) {
                 id = szImei;
             } else {
-                WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                assert wm != null;
-                String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
-                        : wm.getConnectionInfo().getMacAddress();
-                id = m_szWLANMAC;
+                //原来的逻辑是IMEI获取不到就获取MAC地址，但是在6.0之后MAC地址和蓝牙地址获取不到
+                //WifiInfo.getMacAddress() 方法和 BluetoothAdapter.getAddress() 方法现在会返回常量值 02:00:00:00:00:00
+                //所以这里修改为6.0之后获取ANDROID_ID
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                    assert wm != null;
+                    String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
+                            : wm.getConnectionInfo().getMacAddress();
+                    id = m_szWLANMAC;
+                } else {
+                    id = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                }
             }
 
             MessageDigest m = null;
