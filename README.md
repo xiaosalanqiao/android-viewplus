@@ -69,7 +69,7 @@ dependencies {
 # 更新
 
 #### 20190607
-- [refactor: 修复获取设备唯一标识因为sdk升级导致的问题 && 升级依赖]()
+- [refactor: 修复获取设备唯一标识因为sdk升级导致的问题 && 升级依赖](https://github.com/Jiiiiiin/android-viewplus/commit/f584e627feb8c7ba2c577228beeb1c1987c457d9)
 
 #### 20190408
 - [refactor: 升级vplus-ui模块第三方依赖](https://github.com/Jiiiiiin/android-viewplus/commit/f131d010cc473b39b023d2f73c373f0c4d08cdbd)
