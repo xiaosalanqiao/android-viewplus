@@ -24,6 +24,7 @@ import cn.jiiiiiin.vplus.core.net.callback.IRequest;
 import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
 import cn.jiiiiiin.vplus.core.net.callback.ISuccess;
 import cn.jiiiiiin.vplus.core.net.callback.RestOkHttpUtilsCallbacks;
+import cn.jiiiiiin.vplus.core.net.utils.RestOkHttpUtilsCreatorNew;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.util.network.HttpAdjectiveUtil;
 import okhttp3.MediaType;
@@ -65,6 +66,10 @@ public final class RestOkHttpUtilsClient {
      */
     private RequestCall CALL;
     private String JSON_PARAMS;
+    /**
+     * 是否初始化了OkHttpUtils，确保只初始化一次，如果需要重新初始化，请参考 {@link RestOkHttpUtilsCreatorNew#reinitOkHttpUtils()}
+     */
+    private boolean initedOkHttpUtils = false;
 
     RestOkHttpUtilsClient(String url,
                           WeakHashMap<String, String> params,
@@ -124,7 +129,11 @@ public final class RestOkHttpUtilsClient {
         try {
             // https://work.bugtags.com/apps/1598731013063315/issues/1603343192427029/tags/1603343192430857?types=3&versions=1600310568035606&page=2
             // TODO 换库解决
-            RestOkHttpUtilsCreator.getOkHttpUtils();
+            if (!initedOkHttpUtils) {
+                // RestOkHttpUtilsCreator.getOkHttpUtils();
+                RestOkHttpUtilsCreatorNew.getOkHttpUtils();
+                initedOkHttpUtils = true;
+            }
             RequestCall call = null;
             switch (method) {
                 case GET:
