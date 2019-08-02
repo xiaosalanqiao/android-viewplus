@@ -106,7 +106,7 @@ public class RestOkHttpUtilsCreator {
 //     * @return
 //     */
 //    public static List<Cookie> getCookies(HttpUrl uri) {
-//        final CookieJar cookieJar = OkHttpHolder.OK_HTTP_CLIENT.cookieJar();
+//        final CookieJar cookieJar = OkHttpInitBuild.okHttpClient.cookieJar();
 //        if (cookieJar == null) {
 //            ViewPlusException.illegalArgument("you should invoked okHttpClientBuilder.COOKIE_JAR() to set a COOKIE_JAR.");
 //        }
