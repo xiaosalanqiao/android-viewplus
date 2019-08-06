@@ -4,7 +4,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '29.0.1'
+    buildToolsVersion '29.0.3'
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 29
@@ -65,8 +65,7 @@ dependencies {
     api "com.orhanobut:hawk:2.0.1"
 
     // RxPermissions
-//    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     // TODO 待替换
 //    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
@@ -85,10 +84,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0'
 
     // https://github.com/hongyangAndroid/okhttputils
-    api 'com.zhy:okhttputils:2.6.2', {
-        exclude group: 'com.squareup.okio', module: 'okio'
-        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
-    }
+//    api 'com.zhy:okhttputils:2.6.2', {
+//        exclude group: 'com.squareup.okio', module: 'okio'
+//        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+//    }
+
+    api project(':okhttputils')
 
     // https://github.com/Kaopiz/KProgressHUD
     api 'com.kaopiz:kprogresshud:1.2.0'

@@ -152,7 +152,7 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
         // 处理特殊的异常
         if (e instanceof SSLHandshakeException && e.getMessage().contains("java.security.cert.CertPathValidatorException")) {
             // 在进行预埋证书检测过期 / 应用被使用代理抓包（在正常模式下）
-            ToastUtils.showLong("发起请求前进行SSL检测失败，请联系客服检测当前是否是最新版本客户端");
+            LoggerProxy.e("发起请求前进行SSL检测失败，请联系客服检测当前是否是最新版本客户端");
         } else if (!_callErrorFunc(e.getMessage())) {
             switch (e.getClass().getName()) {
                 case "java.net.UnknownHostException":

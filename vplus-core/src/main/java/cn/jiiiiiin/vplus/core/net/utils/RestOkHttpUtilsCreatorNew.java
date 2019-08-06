@@ -38,6 +38,10 @@ public class RestOkHttpUtilsCreatorNew {
     @Accessors(chain = true)
     public static final class OkHttpInitBuild {
 
+        public void setOkHttpClient(OkHttpClient okHttpClient) {
+            OkHttpInitBuild.okHttpClient = okHttpClient;
+        }
+
         private static class Holder {
             private static final OkHttpInitBuild INSTANCE = new OkHttpInitBuild();
 
@@ -58,7 +62,7 @@ public class RestOkHttpUtilsCreatorNew {
         private long apiConnectTimeOut = ViewPlus.getConfiguration(ConfigKeys.API_CONNECT_TIME_OUT);
         private long apiReadTimeOut = ViewPlus.getConfiguration(ConfigKeys.API_READ_TIME_OUT);
         // 默认的client
-        OkHttpClient okHttpClient = OkHttpInitBuild.getInstance().init().build();
+        static OkHttpClient okHttpClient = OkHttpInitBuild.getInstance().init().build();
 
         private OkHttpClient.Builder addInterceptor() {
             if (builder.interceptors() != null) {
@@ -116,7 +120,7 @@ public class RestOkHttpUtilsCreatorNew {
     }
 
     private static final class OkHttpUtilsHolder {
-        private static final OkHttpUtils OK_HTTP_UTILS = OkHttpUtils.initClient(OkHttpInitBuild.getInstance().okHttpClient);
+        private static final OkHttpUtils OK_HTTP_UTILS = OkHttpUtils.initClient(OkHttpInitBuild.okHttpClient);
     }
 
     /**
@@ -125,7 +129,7 @@ public class RestOkHttpUtilsCreatorNew {
      * final X509TrustManager trustManager = ViewPlus.getConfiguration(ConfigKeys.SSL_TRUST_MANAGER);
      * final HostnameVerifier hostnameVerifier = ViewPlus.getConfiguration(ConfigKeys.SSL_HOSTNAME_VERIFIER);
      */
-    public void reinitOkHttpUtils() {
+    public static void reinitOkHttpUtils() {
         final OkHttpClient okHttpClient = OkHttpInitBuild.getInstance()
                 .setBuilder(new OkHttpClient.Builder())
                 .setApiConnectTimeOut(ViewPlus.getConfiguration(ConfigKeys.API_CONNECT_TIME_OUT))
@@ -133,7 +137,8 @@ public class RestOkHttpUtilsCreatorNew {
                 .init()
                 .build();
         OkHttpInitBuild.getInstance().setOkHttpClient(okHttpClient);
-        OkHttpUtils.initClient(OkHttpInitBuild.getInstance().okHttpClient);
+        OkHttpUtils.resetClient(OkHttpInitBuild.okHttpClient);
+
     }
 
 //    /**

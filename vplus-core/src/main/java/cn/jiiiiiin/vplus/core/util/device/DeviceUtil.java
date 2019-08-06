@@ -83,7 +83,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                    RxPermissions rxPermissions = new RxPermissions(activity);
                     rxPermissions.request(Manifest.permission.RECORD_AUDIO)
                             .subscribe(callBack::setPermissions);
                 });
@@ -101,7 +101,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                    RxPermissions rxPermissions = new RxPermissions( activity);
                     rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
                             .subscribe(callBack::setLocation);
                 });
@@ -119,7 +119,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                    RxPermissions rxPermissions = new RxPermissions( activity);
                     rxPermissions.request(Manifest.permission.READ_CONTACTS,
                             Manifest.permission.WRITE_CONTACTS)
                             .subscribe(callBack::setPhone);
@@ -138,7 +138,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                    RxPermissions rxPermissions = new RxPermissions( activity);
                     rxPermissions.request(Manifest.permission.READ_SMS)
                             .subscribe(callBack::setReadSms);
                 });
@@ -153,7 +153,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                    RxPermissions rxPermissions = new RxPermissions( activity);
                     rxPermissions.request(Manifest.permission.CAMERA).subscribe(callback::setPhoto);
                 });
             }
@@ -169,7 +169,7 @@ public class DeviceUtil {
                 HANDLER.post(() -> {
                     // https://work.bugtags.com/apps/1598731013063315/issues/1603332308217894/tags/1603332308233675?types=3&versions=1600310568035606&page=2
                     try {
-                        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                        RxPermissions rxPermissions = new RxPermissions( activity);
                         rxPermissions.request(WRITE_EXTERNAL_STORAGE).subscribe(onNext);
                     } catch (Exception e) {
                         LoggerProxy.e(e, "generateWriteExternalStorage err");
@@ -190,7 +190,7 @@ public class DeviceUtil {
                 HANDLER.post(() -> {
                     // https://work.bugtags.com/apps/1598731013063315/issues/1603332308217894/tags/1603332308233675?types=3&versions=1600310568035606&page=2
                     try {
-                        RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                        RxPermissions rxPermissions = new RxPermissions( activity);
                         rxPermissions.request(READ_EXTERNAL_STORAGE).subscribe(onNext);
                     } catch (Exception e) {
                         LoggerProxy.e(e, "generateWriteExternalStorage err");
@@ -210,7 +210,7 @@ public class DeviceUtil {
     public static void generateDeviceId(Activity activity, IGenerateDeviceIdCallBack generateDeviceIdCallBack) {
         activity.runOnUiThread(() -> {
             // ！需要动态权限
-            RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+            RxPermissions rxPermissions = new RxPermissions( activity);
             rxPermissions
                     .request(Manifest.permission.READ_PHONE_STATE)
                     .subscribe(granted -> {
@@ -255,7 +255,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+                    RxPermissions rxPermissions = new RxPermissions( activity);
                     rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(callback::setDeviceState);
                 });
             }

@@ -25,7 +25,7 @@ public class MainActivity extends AbstractOnTouchMngProxyActivity {
     @Override
     public AbstractViewPlusDelegate setRootDelegate() {
         // 2.设置根Delegate
-        return TestDialogDelegate.newInstance();
+        return LauncherWelcomeDelegate.newInstance();
     }
 
     private void _initVPAgain() {

@@ -1,6 +1,8 @@
 package cn.jiiiiiin.vplus.core.net;
 
 import android.app.Activity;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -69,7 +71,7 @@ public final class RestOkHttpUtilsClient {
     /**
      * 是否初始化了OkHttpUtils，确保只初始化一次，如果需要重新初始化，请参考 {@link RestOkHttpUtilsCreatorNew#reinitOkHttpUtils()}
      */
-    private boolean initedOkHttpUtils = false;
+    private static boolean initedOkHttpUtils = false;
 
     RestOkHttpUtilsClient(String url,
                           WeakHashMap<String, String> params,
@@ -183,6 +185,7 @@ public final class RestOkHttpUtilsClient {
             }
 
             LoggerProxy.i("准备发送[%s] [%s]请求 %s", method, URL, PARAMS.isEmpty() ? "" : "请求参数: \n".concat(PARAMS.toString()));
+            Log.e("请求参数 ", "准备发送" + method + " " + URL + "请求, 参数: " + (PARAMS.isEmpty() ? "" : "请求参数: \n".concat(PARAMS.toString())));
 
             if (call != null && !method.equals(DOWNLOAD)) {
                 this.CALL = call;
