@@ -68,6 +68,14 @@ dependencies {
 
 # 更新
 
+### 20190807
+- 将项目迁移至AndroidX(https://developer.android.google.cn/jetpack/androidx/migrate)
+- 升级targetSdkVersion至29
+- 升级gradle版本
+- 升级vplus-ui模块第三方依赖（DialogUtil中的方法参数变动较大）
+- 升级vplus-core模块第三方依赖
+- 引入okhttputils，可以重新创建OkHttpUtils实例
+
 #### 20190607
 - [refactor: 修复获取设备唯一标识因为sdk升级导致的问题 && 升级依赖](https://github.com/Jiiiiiin/android-viewplus/commit/f584e627feb8c7ba2c577228beeb1c1987c457d9)
 
