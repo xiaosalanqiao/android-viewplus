@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'//添加
+apply plugin: 'com.novoda.bintray-release'//添加
 
 
 android {
@@ -47,20 +47,20 @@ dependencies {
 }
 
 //添加
-//publish {
-//    repoName = "android-viewplus"
-//    userOrg = 'vplus'//bintray.com用户名
-//    groupId = 'cn.jiiiiiin'//jcenter上的路径
-//    artifactId = 'vplus-okhttputils'//项目名称
-//    publishVersion = '2.6.4'//版本号
-//    desc = '接手维护hongyangAndroid/okhttputils'
-//    website = 'https://github.com/Jiiiiiin/android-viewplus'
-//
-////    userOrg = 'hongyangandroid'//bintray.com用户名
-////    groupId = 'com.zhy'//jcenter上的路径
-////    artifactId = 'okhttputils'//项目名称
-////    publishVersion = '2.6.2'//版本号
-////    desc = 'Oh hi, this is a nice description for a project, right?'
-////    website = 'https://github.com/hongyangAndroid/okhttp-utils'
-//}
+publish {
+    repoName = "android-viewplus"
+    userOrg = 'vplus'//bintray.com用户名
+    groupId = 'com.zhy'//jcenter上的路径
+    artifactId = 'vplus-okhttputils'//项目名称
+    publishVersion = '2.6.5'//版本号
+    desc = '接手维护hongyangAndroid/okhttputils'
+    website = 'https://github.com/Jiiiiiin/android-viewplus'
+
+//    userOrg = 'hongyangandroid'//bintray.com用户名
+//    groupId = 'com.zhy'//jcenter上的路径
+//    artifactId = 'okhttputils'//项目名称
+//    publishVersion = '2.6.2'//版本号
+//    desc = 'Oh hi, this is a nice description for a project, right?'
+//    website = 'https://github.com/hongyangAndroid/okhttp-utils'
+}
 
