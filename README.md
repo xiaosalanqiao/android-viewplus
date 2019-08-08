@@ -52,8 +52,9 @@ allprojects {
 
 ```grovvy
 dependencies {
-    api 'cn.jiiiiiin:vplus-core:1.1.0'
-    api 'cn.jiiiiiin:vplus-ui:1.0.8'
+    api 'cn.jiiiiiin:vplus-okhttputils:2.6.4'
+    api 'cn.jiiiiiin:vplus-core:1.1.1'
+    api 'cn.jiiiiiin:vplus-ui:1.0.9'
 }
 ```
 
@@ -67,6 +68,10 @@ dependencies {
  等，故开发原生应用也是很ok的 ：）
 
 # 更新
+
+### 20190808
+- 接手[hongyangAndroid/okhttputils](https://github.com/hongyangAndroid/okhttputils/)，欢迎pr，新的库依赖信息：[vplus-okhttputils](https://bintray.com/vplus/android-viewplus)
+- 针对20190807更新，将vplus-core、vplus-ui递增版本发布到bintray
 
 ### 20190807
 - 将项目迁移至AndroidX(https://developer.android.google.cn/jetpack/androidx/migrate)

@@ -220,26 +220,30 @@ public class WebViewClientImpl extends WebViewClient {
         // https://mickey-tang.blogspot.com/2017/03/android-webview-ssl.html
 
         // 20190215 add
-        if(AbstractWebViewInteractiveDelegate.checkAllowHostWhiteList(view.getUrl())){
-            handler.proceed();
-        } else {
-            final Activity activity = DELEGATE.getActivity();
-            ViewUtil.activityIsLivingCanByRun(activity, new ViewUtil.AbstractActivityIsLivingCanByRunCallBack() {
-                @Override
-                public void doIt(@NonNull Activity activity) {
-                    SslCertificate sslCertificate = error.getCertificate();
-                    LoggerProxy.d("sslCertificate %s", sslCertificate.toString());
-                    DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", (positive) -> {
-                        handler.proceed();
-                        return Unit.INSTANCE;
-                    }, negative -> {
-                        handler.cancel();
-                        return Unit.INSTANCE;
-                    });
+//        if(AbstractWebViewInteractiveDelegate.checkAllowHostWhiteList(view.getUrl())){
+//            handler.proceed();
+//        } else {
+//            final Activity activity = DELEGATE.getActivity();
+//            ViewUtil.activityIsLivingCanByRun(activity, new ViewUtil.AbstractActivityIsLivingCanByRunCallBack() {
+//                @Override
+//                public void doIt(@NonNull Activity activity) {
+//                    SslCertificate sslCertificate = error.getCertificate();
+//                    LoggerProxy.d("sslCertificate %s", sslCertificate.toString());
+//                    DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", (positive) -> {
+//                        handler.proceed();
+//                        return Unit.INSTANCE;
+//                    }, negative -> {
+//                        handler.cancel();
+//                        return Unit.INSTANCE;
+//                    });
+//
+//                }
+//            });
+//        }
 
-                }
-            });
-        }
+        // 防止和甲方解释不清
+        // 出现这个错误，一般是服务器端证书到期所致
+        handler.proceed();
 
     }
 

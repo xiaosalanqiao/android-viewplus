@@ -37,6 +37,9 @@ android {
 //            force 'com.android.support:support-annotations:27.1.1'
 //        }
 //    }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
