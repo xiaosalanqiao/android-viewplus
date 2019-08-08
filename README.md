@@ -53,7 +53,7 @@ allprojects {
 
 ```grovvy
 dependencies {
-    api 'cn.jiiiiiin:vplus-okhttputils:2.6.4'
+    api 'cn.jiiiiiin:vplus-okhttputils:2.6.5'
     api 'cn.jiiiiiin:vplus-core:1.1.1'
     api 'cn.jiiiiiin:vplus-ui:1.0.9'
 }
