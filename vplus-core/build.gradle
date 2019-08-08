@@ -94,7 +94,7 @@ dependencies {
 //        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
 //    }
 
-    api project(':okhttputils')
+    api project(':vplus-okhttputils')
 
     // https://github.com/Kaopiz/KProgressHUD
     api 'com.kaopiz:kprogresshud:1.2.0'

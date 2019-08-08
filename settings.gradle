@@ -1,1 +1,1 @@
-include ':demo', ':vplus-core', ':vplus-ui', ':okhttputils'
+include ':demo', ':vplus-core', ':vplus-ui', ':vplus-okhttputils'
