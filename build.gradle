@@ -10,7 +10,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         // ButterKnife https://github.com/JakeWharton/butterknife/issues/963
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
         // https://www.jianshu.com/p/4cdabe4d605a

@@ -229,6 +229,7 @@ public class DeviceUtil {
 //                            temp = generateDeviceId(activity);
 //                        }
                             String temp = Hawk.get(HawkKey.HAWK_KEY_DEVICEID, null);
+                            LoggerProxy.e("temp device id : " + temp);
                             try {
                                 if (StringUtils.isTrimEmpty(temp)) {
                                     temp = generateDeviceId(activity);
@@ -278,9 +279,18 @@ public class DeviceUtil {
             getDeviceId()在API 26已经弃用，所以API 26以上的使用getImei()*/
             if (null != TelephonyMgr) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    //SDK<26,使用TelephonyMgr.getDeviceId()获取IMEI
                     szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
-                } else {
+                    LoggerProxy.e("old %s", szImei);
+                } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ){
+                    //Android Q（Android 10，SDK 29）获取不到IMEI，使用TelephonyMgr.getImei()不会返回null，会抛出异常
+                    //getImeiForSlot: The user 10130 does not meet the requirements to access device identifiers.
+                    szImei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    LoggerProxy.e("sdk_int >= 29 %s", szImei);
+                }else {
+                    //sdk 版本26到28采用TelephonyMgr.getImei()获取IMEI
                     szImei = TelephonyMgr.getImei();
+                    LoggerProxy.e("new  %s", szImei);
                 }
             }
             if (null != szImei && !"".equals(szImei)) {
@@ -295,17 +305,21 @@ public class DeviceUtil {
                     String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
                             : wm.getConnectionInfo().getMacAddress();
                     id = m_szWLANMAC;
+                    LoggerProxy.e("wlanmac  %s", id);
                 } else {
-                    id = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    LoggerProxy.e("android id  %s", id);
                 }
             }
 
             MessageDigest m = null;
-
+            if (null == id) {
+                id = "";
+            }
             m = MessageDigest.getInstance("MD5");
             m.update(id.getBytes(), 0, id.length());
             // get md5 bytes
-            byte p_md5Data[] = m.digest();
+            byte[] p_md5Data = m.digest();
             // create a hex string
             String m_szUniqueID = new String();
             for (int i = 0; i < p_md5Data.length; i++) {
@@ -322,6 +336,7 @@ public class DeviceUtil {
             m_szUniqueID = m_szUniqueID.toUpperCase();
             return m_szUniqueID;
         } catch (Exception e) {
+            LoggerProxy.e("error:" + e.getMessage());
             throw new ViewPlusException(String.format("获取设备唯一标示错误[%s]", e.getMessage()));
         }
     }

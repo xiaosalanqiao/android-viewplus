@@ -24,18 +24,20 @@ public final class ReqHeadersSetInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request original = chain.request();
         Request.Builder builder = original.newBuilder();
-        try {
-            // #166 java.util.ConcurrentModificationException 应用重新进入前台
-            Map<String, String> customHeaders = ViewPlus.getConfiguration(ConfigKeys.CUSTOM_HEADERS);
-            if (customHeaders != null) {
-                for (Map.Entry<String, String> item : customHeaders.entrySet()) {
-                    final String name = item.getKey();
-                    final String value = item.getValue();
-                    builder.header(name, value);
+        if (null == original.headers() || original.headers().size() == 0) {
+            try {
+                // #166 java.util.ConcurrentModificationException 应用重新进入前台
+                Map<String, String> customHeaders = ViewPlus.getConfiguration(ConfigKeys.CUSTOM_HEADERS);
+                if (customHeaders != null) {
+                    for (Map.Entry<String, String> item : customHeaders.entrySet()) {
+                        final String name = item.getKey();
+                        final String value = item.getValue();
+                        builder.header(name, value);
+                    }
                 }
+            } catch (Exception e) {
+                LoggerProxy.e(e, "设置后端通用请求头出错");
             }
-        } catch (Exception e) {
-            LoggerProxy.e(e, "设置后端通用请求头出错");
         }
         Request request = builder
                 .method(original.method(), original.body())

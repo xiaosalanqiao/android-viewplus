@@ -24,15 +24,19 @@ public class CommonParamsInterceptor implements Interceptor {
         Request original = chain.request();
         Request.Builder builder = original.newBuilder();
         HttpUrl.Builder httpUrlBuilder = original.url().newBuilder();
-        try {
-            final Map<String, String> commParams = ViewPlus.getConfiguration(ConfigKeys.COMMON_PARAMS);
-            if(commParams != null){
-                for(Map.Entry<String,String> entry : commParams.entrySet()){
-                    httpUrlBuilder.addEncodedQueryParameter(entry.getKey(), entry.getValue());
+        if (!original.url().toString().contains("BankId")
+                && !original.url().toString().contains("LoginType")
+                && !original.url().toString().contains("_locale")) {
+            try {
+                final Map<String, String> commParams = ViewPlus.getConfiguration(ConfigKeys.COMMON_PARAMS);
+                if (commParams != null) {
+                    for (Map.Entry<String, String> entry : commParams.entrySet()) {
+                        httpUrlBuilder.addEncodedQueryParameter(entry.getKey(), entry.getValue());
+                    }
                 }
+            } catch (Exception e) {
+                LoggerProxy.e(e, "CommonParamsInterceptor SET COMMON_PARAMS 2 REQ ERR!");
             }
-        } catch (Exception e) {
-            LoggerProxy.e(e, "CommonParamsInterceptor SET COMMON_PARAMS 2 REQ ERR!");
         }
         HttpUrl httpUrl = httpUrlBuilder.build();
         Request request = builder

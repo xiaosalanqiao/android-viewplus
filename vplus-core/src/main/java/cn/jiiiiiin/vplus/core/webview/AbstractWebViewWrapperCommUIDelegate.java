@@ -419,25 +419,27 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
      * @param errContainerVisible
      */
     protected void isErrContainerVisible(boolean errContainerVisible) {
-        mSmartRefreshLayout.finishRefresh();
+        if (null != mSmartRefreshLayout) {
+            mSmartRefreshLayout.finishRefresh();
+        }
         hideProgressBar();
         if (mPlaceholderContainer != null && isOpenH5PlaceholderPage() == View.VISIBLE) {
             mPlaceholderContainer.setVisibility(View.GONE);
         }
         if (errContainerVisible) {
             isShowErrorLocalPage = true;
-            if (mSmartRefreshLayout.getVisibility() == View.VISIBLE) {
+            if (null != mSmartRefreshLayout && mSmartRefreshLayout.getVisibility() == View.VISIBLE) {
                 mSmartRefreshLayout.setVisibility(View.GONE);
             }
-            if (mErrContainer.getVisibility() == View.GONE) {
+            if (null != mErrContainer && mErrContainer.getVisibility() == View.GONE) {
                 mErrContainer.setVisibility(View.VISIBLE);
             }
         } else {
             isShowErrorLocalPage = false;
-            if (mErrContainer.getVisibility() == View.VISIBLE) {
+            if (null != mErrContainer && mErrContainer.getVisibility() == View.VISIBLE) {
                 mErrContainer.setVisibility(View.GONE);
             }
-            if (mSmartRefreshLayout.getVisibility() == View.GONE) {
+            if (null != mSmartRefreshLayout && mSmartRefreshLayout.getVisibility() == View.GONE) {
                 mSmartRefreshLayout.setVisibility(View.VISIBLE);
             }
         }

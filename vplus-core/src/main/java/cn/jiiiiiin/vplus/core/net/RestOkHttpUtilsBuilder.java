@@ -15,6 +15,7 @@ import java.util.WeakHashMap;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
+import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.net.callback.IError;
 import cn.jiiiiiin.vplus.core.net.callback.IFailure;
 import cn.jiiiiiin.vplus.core.net.callback.IRequest;
@@ -22,6 +23,7 @@ import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
 import cn.jiiiiiin.vplus.core.net.callback.ISuccess;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
+import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 
 import static cn.jiiiiiin.vplus.core.net.RestOkHttpUtilsClient.FILE_NAME_SPLIT_FLAG;
 
@@ -60,6 +62,7 @@ public final class RestOkHttpUtilsBuilder {
     private IRespStateHandler mRespStateHandler = null;
     private String mLoaderTxt = LoaderCreatorProxy.DEFAULT_LABEL;
     private String mJsonParams;
+    private final WeakHashMap<String, String> mHeaders = new WeakHashMap<>();
 
     /**
      * @param activity
@@ -105,6 +108,13 @@ public final class RestOkHttpUtilsBuilder {
             mParams.put(key, value);
         } else {
             LoggerProxy.w("设置请求参数%s字段的值为空，将被省略！", key);
+        }
+        return this;
+    }
+
+    public final RestOkHttpUtilsBuilder headers(WeakHashMap<String, String> headers){
+        if (null != headers && !headers.isEmpty()) {
+            mHeaders.putAll(headers);
         }
         return this;
     }
@@ -197,7 +207,8 @@ public final class RestOkHttpUtilsBuilder {
                 mIgnoreCommonCheck,
                 mFiles,
                 mFileCallBack,
-                mRespStateHandler);
+                mRespStateHandler,
+                mHeaders);
     }
 
 }
