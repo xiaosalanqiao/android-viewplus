@@ -2,11 +2,14 @@ package cn.jiiiiiin.vplus.core.net.interceptors;
 
 import androidx.annotation.NonNull;
 
+import com.orhanobut.hawk.Hawk;
+
 import java.io.IOException;
 import java.util.Map;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
+import cn.jiiiiiin.vplus.core.dict.HawkKey;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -24,7 +27,7 @@ public final class ReqHeadersSetInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request original = chain.request();
         Request.Builder builder = original.newBuilder();
-        if (null == original.headers() || original.headers().size() == 0) {
+        if (!Hawk.get(HawkKey.HAWK_KEY_HAVE_REQ_HEADERS, false)) {
             try {
                 // #166 java.util.ConcurrentModificationException 应用重新进入前台
                 Map<String, String> customHeaders = ViewPlus.getConfiguration(ConfigKeys.CUSTOM_HEADERS);
