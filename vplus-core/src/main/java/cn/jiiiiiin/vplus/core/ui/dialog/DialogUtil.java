@@ -12,8 +12,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.WhichButton;
 import com.afollestad.materialdialogs.actions.DialogActionExtKt;
 import com.afollestad.materialdialogs.input.DialogInputExtKt;
+import com.afollestad.materialdialogs.list.DialogListExtKt;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+
+import java.util.List;
 
 import cn.jiiiiiin.vplus.core.R;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
@@ -22,6 +25,7 @@ import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 import kotlin.jvm.functions.Function2;
+import kotlin.jvm.functions.Function3;
 
 /**
  * @author jiiiiiin
@@ -247,5 +251,13 @@ public class DialogUtil {
         } catch (Exception e) {
             LoggerProxy.e(e, "showMaterialDialog 弹窗出错");
         }
+    }
+
+    public static void listMaterialDialog(Activity activity, List<String> items, Function3<? super MaterialDialog, Integer, String,Unit> selection){
+        MaterialDialog materialDialog = getMaterialDialog(activity);
+        DialogListExtKt.listItems(materialDialog, null, items,
+                null, true, selection);
+        materialDialog.title(null, "请选择")
+                .show();
     }
 }

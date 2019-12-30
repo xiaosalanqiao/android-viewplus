@@ -9,6 +9,7 @@ import android.util.Base64;
 
 import java.security.MessageDigest;
 
+import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 
 /**
@@ -28,7 +29,9 @@ public final class ApkSignatureUtils {
                 final String currentSignature = Base64.encodeToString(md.digest(), Base64.DEFAULT);
                 // 上面得到的会多一个/n，故要做截取
                 final boolean res = realSignature.equals(currentSignature.substring(0, currentSignature.length()-1));
-                LoggerProxy.d("Include this string as a value for SIGNATURE:%s %s %s", currentSignature, realSignature, res);
+                if (ViewPlus.IS_DEBUG()) {
+                    LoggerProxy.d("Include this string as a value for SIGNATURE:%s %s %s", currentSignature, realSignature, res);
+                }
                 // compare signatures
                 return res;
             }

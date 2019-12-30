@@ -47,7 +47,9 @@ public class ProtocolBridgeHandler {
             final WebView webView = webDelegate.getWebViewOrNullllll();
             JsBridgeCommHandler.callJs(webView, callBack, resData, value -> {
                 // 一般js调用客户端客户端通知其回调函数，这个回调函数都不会再有返回值，如果出现这种情况，那就是特例目前不予处理！
-                LoggerProxy.w("调用 %s 得到的返回值：%s", callBack, value);
+                if (ViewPlus.IS_DEBUG()) {
+                    LoggerProxy.w("调用 %s 得到的返回值：%s", callBack, value);
+                }
             });
         }
     }

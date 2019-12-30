@@ -25,9 +25,15 @@ public final class ReqHeadersSetInterceptor implements Interceptor {
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
+        LoggerProxy.i("ReqHeadersSetInterceptor#intercept call");
         Request original = chain.request();
+        String reqFlag = original.headers().get(HawkKey.HAWK_KEY_HAVE_REQ_HEADERS);
+        LoggerProxy.i("ReqHeadersSetInterceptor flag %s", reqFlag);
         Request.Builder builder = original.newBuilder();
-        if (!Hawk.get(HawkKey.HAWK_KEY_HAVE_REQ_HEADERS, false)) {
+        //reqFlag为true标示不需要添加请求头，处理完后移除标志
+        if ("true".equals(reqFlag)) {
+            builder.removeHeader(HawkKey.HAWK_KEY_HAVE_REQ_HEADERS);
+        } else {
             try {
                 // #166 java.util.ConcurrentModificationException 应用重新进入前台
                 Map<String, String> customHeaders = ViewPlus.getConfiguration(ConfigKeys.CUSTOM_HEADERS);
@@ -38,13 +44,16 @@ public final class ReqHeadersSetInterceptor implements Interceptor {
                         builder.header(name, value);
                     }
                 }
+                builder.removeHeader(HawkKey.HAWK_KEY_HAVE_REQ_HEADERS);
             } catch (Exception e) {
                 LoggerProxy.e(e, "设置后端通用请求头出错");
             }
         }
+
         Request request = builder
                 .method(original.method(), original.body())
                 .build();
+//        LoggerProxy.i("request: " + request.toString());
         return chain.proceed(request);
     }
 }

@@ -42,18 +42,18 @@ public class LoginSessionHandlerInterceptor implements Interceptor {
                     if (transCode.equals(TRANSCODE_LOGIN)) {
                         // 针对登录进行处理
                         final List<String> cookies = resp.headers("Set-Cookie");
-                        LoggerProxy.w("拦截到登录成功之后的 Cookie %s", cookies);
+//                        LoggerProxy.i("拦截到登录成功之后的 Cookie %s", cookies);
                         if (cookies != null && cookies.size() > 0) {
                             int index = cookies.size() - 1;
                             final String temp = cookies.get(index);
                             if (!StringUtils.isEmpty(temp)) {
-                                LoggerProxy.w("设置到登录成功之后的 Cookie %s", temp);
+//                                LoggerProxy.i("设置到登录成功之后的 Cookie %s", temp);
                                 ViewPlus.getConfigurator().withCookie(temp);
                             }
                         }
                     } else if (transCode.equals(TRANSCODE_LOGIN_OUT)) {
                         // ！退出登录清空 ViewPlus Cookie
-                        LoggerProxy.w("退出登录清空 ViewPlus Cookie");
+                        LoggerProxy.i("退出登录清空 ViewPlus Cookie");
                         ViewPlus.getConfigurator().withCookie(null);
                     }
                 }

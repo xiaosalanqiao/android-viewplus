@@ -13,6 +13,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.Map;
 
+import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import okhttp3.Call;
 import okhttp3.Request;
@@ -50,7 +51,7 @@ public class UpdateAppHttpUtilBck implements HttpManager {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        LoggerProxy.e("onResponse %s", response);
+//                        LoggerProxy.e("onResponse %s", response);
                         callBack.onResponse(response);
                     }
                 });
@@ -82,7 +83,9 @@ public class UpdateAppHttpUtilBck implements HttpManager {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        LoggerProxy.e("onResponse %s", response);
+                        if (ViewPlus.IS_DEBUG()) {
+                            LoggerProxy.e("onResponse %s", response);
+                        }
                         callBack.onResponse(response);
                     }
                 });
@@ -105,7 +108,9 @@ public class UpdateAppHttpUtilBck implements HttpManager {
                 .execute(new FileCallBack(path, fileName) {
                     @Override
                     public void inProgress(float progress, long total, int id) {
-                        LoggerProxy.e("inProgress %s", progress / total);
+                        if (ViewPlus.IS_DEBUG()) {
+                            LoggerProxy.e("inProgress %s", progress / total);
+                        }
                         callback.onProgress(progress, total);
                     }
 
@@ -121,14 +126,18 @@ public class UpdateAppHttpUtilBck implements HttpManager {
 
                     @Override
                     public void onResponse(File response, int id) {
-                        LoggerProxy.e("onResponse %s", response);
+                        if (ViewPlus.IS_DEBUG()) {
+                            LoggerProxy.e("onResponse %s", response);
+                        }
                         callback.onResponse(response);
 
                     }
 
                     @Override
                     public void onBefore(Request request, int id) {
-                        LoggerProxy.e("onBefore %s", request.url());
+                        if (ViewPlus.IS_DEBUG()) {
+                            LoggerProxy.e("onBefore %s", request.url());
+                        }
                         super.onBefore(request, id);
                         callback.onBefore();
                     }

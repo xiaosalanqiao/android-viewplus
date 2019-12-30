@@ -1,12 +1,13 @@
 package cn.jiiiiiin.vplus.core.webview;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
@@ -15,19 +16,17 @@ import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.chromeclient.WebChromeClientImpl;
-import cn.jiiiiiin.vplus.core.webview.client.WebViewClientImpl;
+import cn.jiiiiiin.vplus.core.webview.client.IgnoreWhiteURLWebViewClientImpl;
 import cn.jiiiiiin.vplus.core.webview.loader.IPageLoadListener;
 import cn.jiiiiiin.vplus.core.webview.route.RouteKeys;
 import cn.jiiiiiin.vplus.core.webview.route.Router;
 import cn.jiiiiiin.vplus.core.webview.util.WebViewUtil;
 
-
 /**
- * @author Created by jiiiiiin
+ * created by YLG on 2019/11/8
  */
 
-public class WebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
-
+public class IgnoreWhiteURLWebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
     private IPageLoadListener mIPageLoadListener = null;
     private boolean isSyncCookied = false;
 
@@ -113,7 +112,7 @@ public class WebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
 
     @Override
     public WebViewClient initWebViewClient() {
-        return new WebViewClientImpl(this, mIPageLoadListener);
+        return new IgnoreWhiteURLWebViewClientImpl(this, mIPageLoadListener);
     }
 
     @Override

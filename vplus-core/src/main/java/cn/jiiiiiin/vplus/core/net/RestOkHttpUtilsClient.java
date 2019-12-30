@@ -160,7 +160,8 @@ public final class RestOkHttpUtilsClient {
                 case POST_FILE:
                     final PostFormBuilder postFormBuilder = OkHttpUtils.post()
                             .url(URL)
-                            .params(PARAMS);
+                            .params(PARAMS)
+                            .headers(HEADERS);
                     if (FILES != null && !FILES.isEmpty()) {
                         for (Map<String, File> item : FILES) {
                             final String key = item.keySet().iterator().next();
@@ -174,6 +175,7 @@ public final class RestOkHttpUtilsClient {
                     call = OkHttpUtils
                             .postString()
                             .url(URL)
+                            .headers(HEADERS)
                             .content(JSON_PARAMS)
                             .mediaType(MediaType.parse("application/json; charset=utf-8"))
                             .build();
@@ -183,14 +185,16 @@ public final class RestOkHttpUtilsClient {
                     OkHttpUtils
                             .get()
                             .url(URL)
+                            .headers(HEADERS)
                             .build()
                             .execute(FILE_CALL_BACK);
                     break;
                 default:
             }
 
-            LoggerProxy.i("准备发送[%s] [%s]请求 %s", method, URL, PARAMS.isEmpty() ? "" : "请求参数: \n".concat(PARAMS.toString()));
-            Log.e("请求参数 ", "准备发送" + method + " " + URL + "请求, 参数: " + (PARAMS.isEmpty() ? "" : "请求参数: \n".concat(PARAMS.toString())));
+            if (ViewPlus.IS_DEBUG()) {
+                LoggerProxy.i("准备发送[%s] [%s]请求 %s", method, URL, PARAMS.isEmpty() ? "" : "请求参数: \n".concat(PARAMS.toString()));
+            }
 
             if (call != null && !method.equals(DOWNLOAD)) {
                 this.CALL = call;

@@ -65,14 +65,16 @@ public class RestOkHttpUtilsCreatorNew {
         static OkHttpClient okHttpClient = OkHttpInitBuild.getInstance().init().build();
 
         private OkHttpClient.Builder addInterceptor() {
-            if (builder.interceptors() != null) {
-                builder.interceptors().clear();
-            }
+
+            LoggerProxy.d("RestOkHttpUtilsCreatorNew#addInterceptor " + ViewPlus.getConfiguration(ConfigKeys.INTERCEPTOR));
+
+            builder.interceptors().clear();
             if (interceptors != null && !interceptors.isEmpty()) {
                 for (Interceptor interceptor : interceptors) {
                     builder.addInterceptor(interceptor);
                 }
             }
+
             if (ViewPlus.IS_DEBUG()) {
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor(message -> Log.d(TAG, message));
                 // ! 如果需要自己调试更多信息使用下面这个级别

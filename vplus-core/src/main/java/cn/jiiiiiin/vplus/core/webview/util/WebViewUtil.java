@@ -136,7 +136,9 @@ public final class WebViewUtil {
             // 为指定的url设置一个Cookie
             // 参数value使用"Set-Cookie"响应头格式，参考：https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Set-Cookie
             // 如果没有特殊需求，这里只需要将session id以"key=value"形式作为cookie即可
-            LoggerProxy.d("同步的 url %s cookie %s", url, cookie);
+            if (ViewPlus.IS_DEBUG()) {
+                LoggerProxy.d("同步的 url %s cookie %s", url, cookie);
+            }
             cookieManager.setCookie(url, cookie);
             // 获取指定url关联的所有Cookie
             // 返回值使用"Cookie"请求头格式："name=value; name2=value2; name3=value3"

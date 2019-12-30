@@ -25,10 +25,16 @@ public class CommonParamsInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+        LoggerProxy.i("CommonParamsInterceptor#intercept call");
         Request original = chain.request();
         Request.Builder builder = original.newBuilder();
+        String paramFlag = original.headers().get(HawkKey.HAWK_KEY_HAVE_COMMON_PARAMS);
+        LoggerProxy.i("CommonParamsInterceptor flag %s", paramFlag);
         HttpUrl.Builder httpUrlBuilder = original.url().newBuilder();
-        if (!Hawk.get(HawkKey.HAWK_KEY_HAVE_COMMON_PARAMS, false)) {
+        //paramFlag为true标示不需要添加公共请求参数，处理完后移除标志
+        if ("true".equals(paramFlag)) {
+            builder.removeHeader(HawkKey.HAWK_KEY_HAVE_COMMON_PARAMS);
+        }else {
             try {
                 final Map<String, String> commParams = ViewPlus.getConfiguration(ConfigKeys.COMMON_PARAMS);
                 if (commParams != null) {
@@ -36,6 +42,7 @@ public class CommonParamsInterceptor implements Interceptor {
                         httpUrlBuilder.addEncodedQueryParameter(entry.getKey(), entry.getValue());
                     }
                 }
+                builder.removeHeader(HawkKey.HAWK_KEY_HAVE_COMMON_PARAMS);
             } catch (Exception e) {
                 LoggerProxy.e(e, "CommonParamsInterceptor SET COMMON_PARAMS 2 REQ ERR!");
             }
@@ -45,6 +52,9 @@ public class CommonParamsInterceptor implements Interceptor {
                 .url(httpUrl)
                 .method(original.method(), original.body())
                 .build();
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.i("CommonParamsInterceptor#intercept: " + request.toString());
+        }
         return chain.proceed(request);
     }
 }

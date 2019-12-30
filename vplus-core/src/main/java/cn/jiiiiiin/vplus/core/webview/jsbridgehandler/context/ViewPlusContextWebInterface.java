@@ -5,6 +5,7 @@ import android.webkit.JavascriptInterface;
 
 import com.blankj.utilcode.util.StringUtils;
 
+import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;
@@ -52,7 +53,9 @@ public final class ViewPlusContextWebInterface {
      */
     @JavascriptInterface
     public String event(String params) {
-        LoggerProxy.i("客户端收到js[context]调用消息 -> %s %s", params, DELEGATE != null ? DELEGATE.getTopDelegate() : "DELEGATE 为null！！！！");
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.i("客户端收到js[context]调用消息 -> %s %s", params, DELEGATE != null ? DELEGATE.getTopDelegate() : "DELEGATE 为null！！！！");
+        }
         String res, event = "", action = "";
         EventParams eventParams = null;
         try {
@@ -85,7 +88,9 @@ public final class ViewPlusContextWebInterface {
             LoggerProxy.e(e, "桥接调用出现意料之外的错误！");
             res = JSBRIDGE_RES_HANDLER.onRespH5(EventResData.error("def_un_catch_error", String.format("处理本次请求出现错误[%s]", e.getMessage())), eventParams);
         }
-        LoggerProxy.i("客户端返回js[context]处理消息 -> %s return: %s", event + "-" + action, res);
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.i("客户端返回js[context]处理消息 -> %s return: %s", event + "-" + action, res);
+        }
         return res;
     }
 

@@ -1,13 +1,10 @@
 package cn.jiiiiiin.vplus.core.webview.client;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.os.Build;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.webkit.ClientCertRequest;
 import android.webkit.HttpAuthHandler;
@@ -15,40 +12,21 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
-import cn.jiiiiiin.vplus.core.ui.dialog.DialogUtil;
-import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
+import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.webview.AbstractWebViewDelegate;
-import cn.jiiiiiin.vplus.core.webview.AbstractWebViewInteractiveDelegate;
 import cn.jiiiiiin.vplus.core.webview.loader.IPageLoadListener;
 import cn.jiiiiiin.vplus.core.webview.route.Router;
-import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
 
 /**
- * WebViewClient可以拿到WebView在访问网络各个阶段的回调，包括加载前后，失败等
- *
- * https://juejin.im/post/5a94fb046fb9a0635865a2d6
- *
- * TODO WebViewClient.shouldInterceptRequest(webview, request)，无论是普通的页面请求(使用GET/POST)，还是页面中的异步请求，或者页面中的资源请求，都会回调这个方法，给开发一次拦截请求的机会。在这个方法中，我们可以进行静态资源的拦截并使用缓存数据代替，也可以拦截页面，使用自己的网络框架来请求数据。包括后面介绍的WebView免流方案，也和此方法有关。
- *
- * 作者：网易考拉移动端团队
- * 链接：https://juejin.im/post/5a94fb046fb9a0635865a2d6
- * 来源：掘金
- *
- *
- * @author Created by jiiiiiin
+ * created by YLG on 2019/11/8
  */
 
-public class WebViewClientImpl extends WebViewClient {
-
+public class IgnoreWhiteURLWebViewClientImpl extends WebViewClient {
     private final AbstractWebViewDelegate DELEGATE;
     private IPageLoadListener mIPageLoadListener = null;
     private long mStart = 0;
 
-    public WebViewClientImpl(AbstractWebViewDelegate delegate, IPageLoadListener listener) {
+    public IgnoreWhiteURLWebViewClientImpl(AbstractWebViewDelegate delegate, IPageLoadListener listener) {
         this.DELEGATE = delegate;
         this.mIPageLoadListener = listener;
     }
@@ -59,6 +37,7 @@ public class WebViewClientImpl extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
+        LoggerProxy.i("=== onPageStarted %s", url);
         mStart = System.currentTimeMillis();
         if (mIPageLoadListener != null) {
             mIPageLoadListener.onLoadStart(view);
@@ -90,8 +69,7 @@ public class WebViewClientImpl extends WebViewClient {
     @SuppressWarnings("AliDeprecation")
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        LoggerProxy.w("===shouldOverrideUrlLoading %s", url);
-        return Router.getInstance().handleWebViewUrlReq(DELEGATE, view, url, mIPageLoadListener);
+        return false;
     }
 
     @Override
@@ -265,6 +243,4 @@ public class WebViewClientImpl extends WebViewClient {
 //    @Override
 //    public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
 //    }
-
-
 }

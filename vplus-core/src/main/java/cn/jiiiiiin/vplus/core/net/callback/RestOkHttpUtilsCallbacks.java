@@ -1,5 +1,6 @@
 package cn.jiiiiiin.vplus.core.net.callback;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Handler;
 import androidx.annotation.NonNull;
@@ -10,15 +11,19 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.IOException;
+
 import javax.net.ssl.SSLHandshakeException;
 
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusException;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
+import cn.jiiiiiin.vplus.core.util.intercept.InteceptTools;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import okhttp3.Call;
 import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * @author jiiiiiin
@@ -69,7 +74,9 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
 
     @Override
     public void onResponse(String response, int id) {
-        LoggerProxy.d("==== 服务端响应[%s]请求: \n%s\n===", URL, response);
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.d("==== 服务端响应[%s]请求: \n%s\n===", URL, response);
+        }
         if (IGNORE_RESP_STATE_HANDLER) {
             try {
                 JSONObject jsonObject = getJsonObject(response);
@@ -147,38 +154,100 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
         _checkLoaderSetAndCloseIt();
     }
 
+    @SuppressLint("DefaultLocale")
     @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "AlibabaAvoidStartWithDollarAndUnderLineNaming"})
     private void _handlerFailureErr(@NonNull Exception e) {
+//        LoggerProxy.e("Exception %s", e.getMessage());
         // 处理特殊的异常
         if (e instanceof SSLHandshakeException && e.getMessage().contains("java.security.cert.CertPathValidatorException")) {
             // 在进行预埋证书检测过期 / 应用被使用代理抓包（在正常模式下）
             LoggerProxy.e("发起请求前进行SSL检测失败，请联系客服检测当前是否是最新版本客户端");
-        } else if (!_callErrorFunc(e.getMessage())) {
-            switch (e.getClass().getName()) {
-                case "java.net.UnknownHostException":
-                case "java.net.ConnectException":
-                    ToastUtils.showLong("请求失败，请检查当前网络环境是否流畅");
-                    break;
-                case "java.net.SocketTimeoutException":
-                    ToastUtils.showLong("链接服务器超时，请检查当前网络环境是否流畅");
-                    break;
-                case "java.io.IOException": {
-                    final String msg = e.getMessage();
-                    if (msg.contains("404")) {
-                        ToastUtils.showLong("请求的资源不存在，请稍后尝试");
-                    } else {
-                        ToastUtils.showLong("链接服务器失败，请稍后尝试");
+        } else if (!_callErrorFunc(formatErrorMessage(e.getMessage()))) {
+//            switch (e.getClass().getName()) {
+//                case "java.net.UnknownHostException":
+//                case "java.net.ConnectException":
+//                    ToastUtils.showLong("请求失败，请检查当前网络环境是否流畅");
+//                    break;
+//                case "java.net.SocketTimeoutException":
+//                    ToastUtils.showLong("网络信号弱，请检查当前网络环境是否流畅");
+//                    break;
+//                case "java.io.IOException": {
+//                    final String msg = e.getMessage();
+//                    if (msg.contains("404")) {
+//                        ToastUtils.showLong("请求的资源不存在，请稍后尝试");
+//                    } else {
+//                        ToastUtils.showLong("网络信号弱，请稍后尝试");
+//                    }
+//                    break;
+//                }
+//                case "cn.jiiiiiin.vplus.core.exception.ViewPlusException":
+//                    ToastUtils.showLong(e.getMessage());
+//                    break;
+//                default:
+//                    ToastUtils.showLong(String.format("网络信号弱，请稍后尝试[%s]", URL));
+//            }
+            String msg = e.getMessage();
+            if (null != msg && msg.contains("reponse's code is :")) {
+                String[] temp = msg.split(":");
+                if (temp.length == 2) {
+                    try {
+                        int code = Integer.parseInt(temp[1]);
+                        if (code >= 300 && code < 400) {
+                            ToastUtils.showLong(String.format("重定向错误！[%d]", code));
+                        } else if (code >= 400 && code < 500) {
+                            ToastUtils.showLong(String.format("网络信号差，请稍后重试！[%d]", code));
+                        } else if (code >= 500 && code < 600) {
+                            ToastUtils.showLong(String.format("服务器繁忙，请稍后重试！[%d]", code));
+                        } else {
+                            ToastUtils.showLong(String.format("网络信号差，请稍后重试！[%s]", msg));
+                        }
+                    } catch (NumberFormatException ex) {
+                        ex.printStackTrace();
+                        ToastUtils.showLong(String.format("网络信号差，请稍后重试！[%s]", msg));
                     }
-                    break;
+                } else {
+                    ToastUtils.showLong(String.format("网络信号差，请稍后重试！[%s]", msg));
                 }
-                case "cn.jiiiiiin.vplus.core.exception.ViewPlusException":
-                    ToastUtils.showLong(e.getMessage());
-                    break;
-                default:
-                    ToastUtils.showLong(String.format("当前请求链接服务器失败，请稍后尝试[%s]", URL));
+            } else {
+                ToastUtils.showLong(String.format("网络信号差，请稍后重试！[%s]", msg));
             }
         }
 
+    }
+
+    @SuppressLint("DefaultLocale")
+    private String formatErrorMessage(String msg){
+        final String end = "[客户端]";
+        String result = msg;
+        if (null != msg && msg.contains("reponse's code is :")) {
+            String[] temp = msg.split(":");
+            if (temp.length == 2) {
+                try {
+                    int code = Integer.parseInt(temp[1]);
+                    if (code >= 300 && code < 400) {
+                        result = String.format("重定向错误！[%d]", code);
+                    } else if (code >= 400 && code < 500) {
+                        result = String.format("网络信号差，请稍后重试！[%d]", code);
+                    } else if (code >= 500 && code < 600) {
+                        result = String.format("服务器繁忙，请稍后重试！[%d]", code);
+                    }
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                    result = msg;
+                }
+            }
+        }
+        if (!result.endsWith(end)) {
+            result = result.concat(end);
+        }
+        return result;
+    }
+
+    @Override
+    public String parseNetworkResponse(Response response, int id) throws IOException {
+//        LoggerProxy.i("parseNetworkResponse");
+//        InteceptTools.inteceptCookies(response, URL);
+        return super.parseNetworkResponse(response, id);
     }
 
 }

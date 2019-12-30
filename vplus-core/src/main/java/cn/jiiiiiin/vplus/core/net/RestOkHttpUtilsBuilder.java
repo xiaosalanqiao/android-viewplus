@@ -1,6 +1,8 @@
 package cn.jiiiiiin.vplus.core.net;
 
 import android.app.Activity;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -22,6 +24,7 @@ import cn.jiiiiiin.vplus.core.net.callback.IRequest;
 import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
 import cn.jiiiiiin.vplus.core.net.callback.ISuccess;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
+import cn.jiiiiiin.vplus.core.util.intercept.InteceptTools;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 

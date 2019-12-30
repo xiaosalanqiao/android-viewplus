@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.novoda.bintray-release'//添加
 
 
@@ -43,7 +45,9 @@ makeJar.dependsOn(clearJar, build)
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.squareup.okhttp3:okhttp:4.0.0'
+    api 'com.squareup.okhttp3:okhttp:3.12.6'
+    compile "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 //添加
@@ -62,5 +66,8 @@ publish {
 //    publishVersion = '2.6.2'//版本号
 //    desc = 'Oh hi, this is a nice description for a project, right?'
 //    website = 'https://github.com/hongyangAndroid/okhttp-utils'
+}
+repositories {
+    mavenCentral()
 }
 

@@ -160,7 +160,9 @@ public abstract class AbstractWebViewInteractiveDelegate extends AbstractViewPlu
     public void safetyCallH5(String listener, String params) {
         if (!StringUtils.isTrimEmpty(listener)) {
             safetyUseWebView(webView -> {
-                LoggerProxy.d("通知前端 listener [%s] params %s", listener, params);
+                if (ViewPlus.IS_DEBUG()) {
+                    LoggerProxy.d("通知前端 listener [%s] params %s", listener, params);
+                }
                 JsBridgeCommHandler.callJs(webView, listener.trim(), params);
             });
         } else {

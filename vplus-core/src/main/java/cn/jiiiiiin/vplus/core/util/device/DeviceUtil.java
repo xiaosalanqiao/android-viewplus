@@ -298,18 +298,33 @@ public class DeviceUtil {
             getDeviceId()在API 26已经弃用，所以API 26以上的使用getImei()*/
             if (null != TelephonyMgr) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                    //SDK<26,使用TelephonyMgr.getDeviceId()获取IMEI
-                    szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
+                    try {
+                        //SDK<26,使用TelephonyMgr.getDeviceId()获取IMEI
+                        szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
 //                    LoggerProxy.e("old %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    //Android Q（Android 10，SDK 29）获取不到IMEI，使用TelephonyMgr.getImei()不会返回null，会抛出异常
-                    //getImeiForSlot: The user 10130 does not meet the requirements to access device identifiers.
-                    szImei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    try {
+                        //Android Q（Android 10，SDK 29）获取不到IMEI，使用TelephonyMgr.getImei()不会返回null，会抛出异常
+                        //getImeiForSlot: The user 10130 does not meet the requirements to access device identifiers.
+                        szImei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 //                    LoggerProxy.e("sdk_int >= 29 %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
                 } else {
-                    //sdk 版本26到28采用TelephonyMgr.getImei()获取IMEI
-                    szImei = TelephonyMgr.getImei();
+                    try {
+                        //sdk 版本26到28采用TelephonyMgr.getImei()获取IMEI
+                        szImei = TelephonyMgr.getImei();
 //                    LoggerProxy.e("new  %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
                 }
             }
             if (null != szImei && !"".equals(szImei)) {
@@ -319,15 +334,25 @@ public class DeviceUtil {
                 //WifiInfo.getMacAddress() 方法和 BluetoothAdapter.getAddress() 方法现在会返回常量值 02:00:00:00:00:00
                 //所以这里修改为6.0之后获取ANDROID_ID
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                    WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    assert wm != null;
-                    String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
-                            : wm.getConnectionInfo().getMacAddress();
-                    id = m_szWLANMAC;
+                    try {
+                        WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                        assert wm != null;
+                        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
+                                : wm.getConnectionInfo().getMacAddress();
+                        id = m_szWLANMAC;
 //                    LoggerProxy.e("wlanmac  %s", id);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        id = null;
+                    }
                 } else {
-                    id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    try {
+                        id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 //                    LoggerProxy.e("android id  %s", id);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        id = null;
+                    }
                 }
             }
             MessageDigest m = null;
