@@ -186,6 +186,7 @@ public final class RestOkHttpUtilsClient {
                             .get()
                             .url(URL)
                             .headers(HEADERS)
+                            .addHeader("Accept-Encoding", "identity")
                             .build()
                             .execute(FILE_CALL_BACK);
                     break;
