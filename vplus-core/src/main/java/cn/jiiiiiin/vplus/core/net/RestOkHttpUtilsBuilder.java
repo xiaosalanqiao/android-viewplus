@@ -1,7 +1,6 @@
 package cn.jiiiiiin.vplus.core.net;
 
 import android.app.Activity;
-import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +16,6 @@ import java.util.WeakHashMap;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.net.callback.IError;
 import cn.jiiiiiin.vplus.core.net.callback.IFailure;
 import cn.jiiiiiin.vplus.core.net.callback.IRequest;
@@ -26,7 +24,6 @@ import cn.jiiiiiin.vplus.core.net.callback.ISuccess;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
 import cn.jiiiiiin.vplus.core.util.intercept.InteceptTools;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
-import cn.jiiiiiin.vplus.core.util.ui.ViewUtil;
 
 import static cn.jiiiiiin.vplus.core.net.RestOkHttpUtilsClient.FILE_NAME_SPLIT_FLAG;
 
@@ -66,6 +63,8 @@ public final class RestOkHttpUtilsBuilder {
     private String mLoaderTxt = LoaderCreatorProxy.DEFAULT_LABEL;
     private String mJsonParams;
     private final WeakHashMap<String, String> mHeaders = new WeakHashMap<>();
+    private boolean mIsNeedReqHead = true;
+    private boolean mIsNeedCommPara = true;
 
     /**
      * @param activity
@@ -119,6 +118,16 @@ public final class RestOkHttpUtilsBuilder {
         if (null != headers && !headers.isEmpty()) {
             mHeaders.putAll(headers);
         }
+        return this;
+    }
+
+    public final RestOkHttpUtilsBuilder reqHeadFlag(boolean flag){
+        mIsNeedReqHead = flag;
+        return this;
+    }
+
+    public final RestOkHttpUtilsBuilder commParaFlag(boolean flag){
+        mIsNeedCommPara = flag;
         return this;
     }
 
@@ -196,6 +205,12 @@ public final class RestOkHttpUtilsBuilder {
         if (!mIgnoreCommonCheck && mRespStateHandler == null) {
             // !如果不是忽略检测，那么必须存在mRespStateHandler，如果没有配置就使用全局的
             mRespStateHandler = ViewPlus.getConfiguration(ConfigKeys.RESP_STATE_HANDLER);
+        }
+        if (mIsNeedCommPara) {
+            mUrl = InteceptTools.addCommonParams(mUrl);
+        }
+        if (mIsNeedReqHead) {
+            InteceptTools.addReqHead(mHeaders);
         }
         return new RestOkHttpUtilsClient(mUrl,
                 mParams,

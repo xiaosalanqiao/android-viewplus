@@ -362,7 +362,7 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
         LoggerProxy.d("webview代理被调用 onReceivedError %s %s %s", mURL, errorCode, failingUrl);
         // TODO 根据不同errorCode 渲染不同的错误UI
 
-        String hintTxt = String.format("网络异常，请稍后尝试访问 %s [%s]", failingUrl, errorCode);
+        String hintTxt = String.format("网络异常，请稍后尝试访问 [%s]", failingUrl, errorCode);
         // WebViewClient.ERROR_BAD_URL & ERROR_BAD_URL 在代理类已经被明确排除
         if (errorCode == WebViewClient.ERROR_HOST_LOOKUP
                 || errorCode == WebViewClient.ERROR_UNSUPPORTED_AUTH_SCHEME
@@ -370,21 +370,21 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
                 || errorCode == WebViewClient.ERROR_IO
                 || errorCode == WebViewClient.ERROR_BAD_URL
                 ) {
-            hintTxt = String.format("与服务器连接发生异常，请稍后再试 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("与服务器连接发生异常，请稍后再试 [%s] ", errorCode);
         } else if (errorCode == WebViewClient.ERROR_AUTHENTICATION || errorCode == WebViewClient.ERROR_PROXY_AUTHENTICATION) {
-            hintTxt = String.format("你没有权限访问 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("你没有权限访问 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_TIMEOUT) {
-            hintTxt = String.format("访问超时，请稍后再试 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问超时，请稍后再试 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_REDIRECT_LOOP || errorCode == WebViewClient.ERROR_TOO_MANY_REQUESTS) {
-            hintTxt = String.format("访问资源出现重复多次重定向或太多请求发送错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问资源出现重复多次重定向或太多请求发送错误 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_UNSUPPORTED_SCHEME) {
-            hintTxt = String.format("访问不安全的协议资源错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问不安全的协议资源错误 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_FAILED_SSL_HANDSHAKE || errorCode == WebViewClient.ERROR_UNSAFE_RESOURCE) {
-            hintTxt = String.format("访问不安全的SSL协议资源错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问不安全的SSL协议资源错误 [%s]", errorCode);
         } else if (errorCode == 404) {
-            hintTxt = String.format("待访问的资源不存在 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("待访问的资源不存在 [%s]", errorCode);
         } else if (errorCode == 500) {
-            hintTxt = String.format("待访问的资源发送服务器端错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("待访问的资源发送服务器端错误 [%s]", errorCode);
         }
         onLoadPageErr(webView, hintTxt);
     }

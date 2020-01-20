@@ -246,7 +246,7 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
     @Override
     public String parseNetworkResponse(Response response, int id) throws IOException {
 //        LoggerProxy.i("parseNetworkResponse");
-//        InteceptTools.inteceptCookies(response, URL);
+        InteceptTools.inteceptCookies(response, URL);
         return super.parseNetworkResponse(response, id);
     }
 
