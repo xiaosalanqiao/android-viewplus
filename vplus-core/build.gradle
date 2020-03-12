@@ -170,6 +170,3 @@ dependencies {
 //    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
 //    website = "https://github.com/Jiiiiiin/android-viewplus"
 //}
-repositories {
-    mavenCentral()
-}

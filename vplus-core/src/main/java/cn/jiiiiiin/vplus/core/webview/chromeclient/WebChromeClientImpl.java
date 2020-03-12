@@ -19,6 +19,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.ui.dialog.DialogUtil;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
+import cn.jiiiiiin.vplus.core.webview.IWebViewConsoleMessage;
 import cn.jiiiiiin.vplus.core.webview.loader.IPageLoadListener;
 import kotlin.Unit;
 
@@ -35,10 +36,12 @@ public class WebChromeClientImpl extends WebChromeClient {
     private boolean mIsNotifyOnprogresschangedI00 = false;
     public static ValueCallback<Uri> uploadMessage;
     public static ValueCallback<Uri[]> uploadMessageAboveL;
+    private IWebViewConsoleMessage mWebViewConsoleMessage;
 
-    public WebChromeClientImpl(Activity activity, IPageLoadListener pageLoadListener) {
+    public WebChromeClientImpl(Activity activity, IPageLoadListener pageLoadListener, IWebViewConsoleMessage webViewConsoleMessage) {
         this.mActivity = activity;
         this.mPageLoadListener = pageLoadListener;
+        this.mWebViewConsoleMessage = webViewConsoleMessage;
     }
 
     /**
@@ -177,6 +180,9 @@ public class WebChromeClientImpl extends WebChromeClient {
     public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
         if (ViewPlus.IS_DEBUG()) {
             LoggerProxy.w("前端console信息 %s %s %s", consoleMessage.message(), consoleMessage.lineNumber(), consoleMessage.sourceId());
+        }
+        if (null != mWebViewConsoleMessage) {
+            mWebViewConsoleMessage.onConsoleMessage(consoleMessage);
         }
         return super.onConsoleMessage(consoleMessage);
     }

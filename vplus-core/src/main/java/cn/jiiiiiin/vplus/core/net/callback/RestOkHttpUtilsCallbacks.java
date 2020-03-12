@@ -191,7 +191,7 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
                 String[] temp = msg.split(":");
                 if (temp.length == 2) {
                     try {
-                        int code = Integer.parseInt(temp[1]);
+                        int code = Integer.parseInt(temp[1].trim());
                         if (code >= 300 && code < 400) {
                             ToastUtils.showLong(String.format("重定向错误！[%d]", code));
                         } else if (code >= 400 && code < 500) {
@@ -223,7 +223,7 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
             String[] temp = msg.split(":");
             if (temp.length == 2) {
                 try {
-                    int code = Integer.parseInt(temp[1]);
+                    int code = Integer.parseInt(temp[1].trim());
                     if (code >= 300 && code < 400) {
                         result = String.format("重定向错误！[%d]", code);
                     } else if (code >= 400 && code < 500) {
@@ -237,7 +237,7 @@ public final class RestOkHttpUtilsCallbacks extends StringCallback {
                 }
             }
         }
-        if (!result.endsWith(end)) {
+        if (null != result && !result.endsWith(end)) {
             result = result.concat(end);
         }
         return result;

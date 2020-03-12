@@ -91,6 +91,10 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_TV_LAYOUT_PARAMS = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_ICON_LAYOUT_PARAMS = new LinearLayout.LayoutParams(45, 45);
     protected int mTitleBarBtnColor = Color.BLUE;
+    /**
+     * 标识是否要忽略白名单
+     */
+    protected boolean mIgnoreWhiteURL = false;
 
     @OnClick(R2.id.toolbar_back)
     public void onToolBarBackContainerClick() {
@@ -267,6 +271,11 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
         } else {
             mIsCloseContainerVisibleVal = visible ? View.VISIBLE : View.GONE;
         }
+        return this;
+    }
+
+    public AbstractWebViewWrapperCommUIDelegate setIgnoreWhiteURL(boolean isIgnoreWhiteURL){
+        this.mIgnoreWhiteURL = isIgnoreWhiteURL;
         return this;
     }
 

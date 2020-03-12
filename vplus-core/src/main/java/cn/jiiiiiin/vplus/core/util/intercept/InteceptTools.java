@@ -3,7 +3,6 @@ package cn.jiiiiiin.vplus.core.util.intercept;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.StringUtils;
-import com.orhanobut.hawk.Hawk;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.WeakHashMap;
 
 import cn.jiiiiiin.vplus.core.app.ConfigKeys;
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
-import cn.jiiiiiin.vplus.core.dict.HawkKey;
 import cn.jiiiiiin.vplus.core.exception.ViewPlusRuntimeException;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 import okhttp3.HttpUrl;
@@ -26,6 +24,10 @@ public class InteceptTools {
     private static final String TRANSCODE_LOGIN = "login.do";
     private static final String TRANSCODE_LOGIN_OUT = "logout.do";
 
+    /**
+     * 添加请求头
+     * @param headers 请求头的map
+     */
     public static void addReqHead(WeakHashMap<String, String> headers) {
         if (headers != null) {
             try {
@@ -36,8 +38,8 @@ public class InteceptTools {
                         final String name = item.getKey();
                         final Object value = item.getValue();
                         headers.put(name, String.valueOf(value));
-                        setCookie(headers);
                     }
+                    setCookie(headers);
                 }
             } catch (Exception e) {
                 LoggerProxy.e(e, "设置后端通用请求头出错");
@@ -50,6 +52,11 @@ public class InteceptTools {
     }
 
 
+    /**
+     * 添加通用请求参数
+     * @param url URL
+     * @return 返回添加参数之后的URL
+     */
     public static String addCommonParams(String url) {
         try {
             final Map<String, String> commParams = ViewPlus.getConfiguration(ConfigKeys.COMMON_PARAMS);
@@ -76,6 +83,11 @@ public class InteceptTools {
         return url;
     }
 
+    /**
+     * 获取cookie
+     * @param resp
+     * @param url
+     */
     public static void inteceptCookies(Response resp, String url) {
         HttpUrl httpUrl = HttpUrl.parse(url);
         URL = HttpUrl.parse((String) ViewPlus.getConfiguration(ConfigKeys.API_HOST));
@@ -106,6 +118,10 @@ public class InteceptTools {
         }
     }
 
+    /**
+     * 设置cookie到请求头map
+     * @param headers
+     */
     public static void setCookie(WeakHashMap<String, String> headers) {
         if (null != headers) {
             try {

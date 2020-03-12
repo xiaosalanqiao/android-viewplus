@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
+import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -113,12 +114,12 @@ public class WebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
 
     @Override
     public WebViewClient initWebViewClient() {
-        return new WebViewClientImpl(this, mIPageLoadListener);
+        return new WebViewClientImpl(this, mIPageLoadListener, mIgnoreWhiteURL);
     }
 
     @Override
     public WebChromeClient initWebChromeClient() {
-        return new WebChromeClientImpl(_mActivity, mIPageLoadListener);
+        return new WebChromeClientImpl(_mActivity, mIPageLoadListener, mWebViewConsoleMessage);
     }
 
     // 依赖wrapper完成pop

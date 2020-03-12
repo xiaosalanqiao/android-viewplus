@@ -54,6 +54,11 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
     protected Map<String, String> mUrlParams = null;
     private boolean mNeedSwipeBack = true;
     protected boolean mNeedSyncCookie = false;
+    /**
+     * 标识是否要忽略白名单
+     */
+    protected boolean mIgnoreWhiteURL = false;
+    protected IWebViewConsoleMessage mWebViewConsoleMessage = null;
 
     public interface OnScrollChangeListener {
         void onScrollChanged(int l, int t, int oldl, int oldt);
@@ -337,5 +342,15 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
             // 应该是
             LoggerProxy.w("refresh() webView is null err!");
         }
+    }
+
+    public AbstractWebViewDelegate setWebViewConsoleMessage(IWebViewConsoleMessage webViewConsoleMessage){
+        this.mWebViewConsoleMessage = webViewConsoleMessage;
+        return this;
+    }
+
+    public AbstractWebViewDelegate setIgnoreWhiteURL(boolean isIgnoreWhiteURL){
+        this.mIgnoreWhiteURL = isIgnoreWhiteURL;
+        return this;
     }
 }
