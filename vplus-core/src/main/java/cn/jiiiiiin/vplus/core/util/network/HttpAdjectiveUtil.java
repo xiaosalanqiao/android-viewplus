@@ -54,8 +54,10 @@ public final class HttpAdjectiveUtil {
         }else {
             proxyAddress = android.net.Proxy.getHost(activity);
             proxyPort = android.net.Proxy.getPort(activity);
-            LoggerProxy.e("address = ", proxyAddress + "~");
-            LoggerProxy.e("port = ", proxyPort + "~");
+            if (ViewPlus.IS_DEBUG()) {
+                LoggerProxy.e("address = ", proxyAddress + "~");
+                LoggerProxy.e("port = ", proxyPort + "~");
+            }
         }
         return (!TextUtils.isEmpty(proxyAddress)) && (proxyPort != -1);
     }

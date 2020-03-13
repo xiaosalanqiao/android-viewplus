@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.view.View;
+import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -82,7 +83,9 @@ public class WebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
         if (mNeedSyncCookie) {
             try {
                 final String cookie = ViewPlus.getConfiguration(ConfigKeys.SESSION_ID);
-                LoggerProxy.w("webview 的delegate 同步全局配置中的cookie %s", cookie);
+                if (ViewPlus.IS_DEBUG()) {
+                    LoggerProxy.w("webview 的delegate 同步全局配置中的cookie %s", cookie);
+                }
                 if (cookie != null && url != null) {
                     isSyncCookied = WebViewUtil.syncCookie(url, cookie);
                 }
@@ -92,7 +95,9 @@ public class WebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
             }
         }
         // 用原生的方式模拟Web跳转并进行页面加载
-        LoggerProxy.d("加载页面 %s %s %s", url, mHeaderParams, mUrlParams);
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.d("加载页面 %s %s %s", url, mHeaderParams, mUrlParams);
+        }
         ViewPlus.getConfigurator().withWebViewCurrentLoadUrl(url);
         Router.getInstance().loadPage(mWebView, url, mHeaderParams, mUrlParams);
     }
@@ -109,12 +114,12 @@ public class WebViewDelegateImpl extends WebViewLongClickHandlerDelegate {
 
     @Override
     public WebViewClient initWebViewClient() {
-        return new WebViewClientImpl(this, mIPageLoadListener);
+        return new WebViewClientImpl(this, mIPageLoadListener, mIgnoreWhiteURL);
     }
 
     @Override
     public WebChromeClient initWebChromeClient() {
-        return new WebChromeClientImpl(_mActivity, mIPageLoadListener);
+        return new WebChromeClientImpl(_mActivity, mIPageLoadListener, mWebViewConsoleMessage);
     }
 
     // 依赖wrapper完成pop

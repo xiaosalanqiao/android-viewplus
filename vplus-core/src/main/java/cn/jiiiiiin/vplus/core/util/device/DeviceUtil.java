@@ -5,11 +5,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.preference.PreferenceManager;
 
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -19,7 +22,14 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.orhanobut.hawk.Hawk;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.UUID;
 
 import cn.jiiiiiin.vplus.core.app.ViewPlus;
 import cn.jiiiiiin.vplus.core.dict.HawkKey;
@@ -40,6 +50,15 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class DeviceUtil {
 
     private static final Handler HANDLER = ViewPlus.getHandler();
+    /**
+     * 存储路径（在取不到设备id时存储自己生成的id路径）
+     */
+    private static final String DIR_PATH = "/sdcard/.Android/";
+    /**
+     * 文件名
+     */
+    private static final String ID_FILE_NAME = "deviceId";
+
 
     public interface IGenerateDeviceIdCallBack {
         void setDeviceId(String id);
@@ -101,7 +120,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions( activity);
+                    RxPermissions rxPermissions = new RxPermissions(activity);
                     rxPermissions.request(Manifest.permission.ACCESS_FINE_LOCATION)
                             .subscribe(callBack::setLocation);
                 });
@@ -119,7 +138,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions( activity);
+                    RxPermissions rxPermissions = new RxPermissions(activity);
                     rxPermissions.request(Manifest.permission.READ_CONTACTS,
                             Manifest.permission.WRITE_CONTACTS)
                             .subscribe(callBack::setPhone);
@@ -138,7 +157,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions( activity);
+                    RxPermissions rxPermissions = new RxPermissions(activity);
                     rxPermissions.request(Manifest.permission.READ_SMS)
                             .subscribe(callBack::setReadSms);
                 });
@@ -153,7 +172,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions( activity);
+                    RxPermissions rxPermissions = new RxPermissions(activity);
                     rxPermissions.request(Manifest.permission.CAMERA).subscribe(callback::setPhoto);
                 });
             }
@@ -169,7 +188,7 @@ public class DeviceUtil {
                 HANDLER.post(() -> {
                     // https://work.bugtags.com/apps/1598731013063315/issues/1603332308217894/tags/1603332308233675?types=3&versions=1600310568035606&page=2
                     try {
-                        RxPermissions rxPermissions = new RxPermissions( activity);
+                        RxPermissions rxPermissions = new RxPermissions(activity);
                         rxPermissions.request(WRITE_EXTERNAL_STORAGE).subscribe(onNext);
                     } catch (Exception e) {
                         LoggerProxy.e(e, "generateWriteExternalStorage err");
@@ -190,7 +209,7 @@ public class DeviceUtil {
                 HANDLER.post(() -> {
                     // https://work.bugtags.com/apps/1598731013063315/issues/1603332308217894/tags/1603332308233675?types=3&versions=1600310568035606&page=2
                     try {
-                        RxPermissions rxPermissions = new RxPermissions( activity);
+                        RxPermissions rxPermissions = new RxPermissions(activity);
                         rxPermissions.request(READ_EXTERNAL_STORAGE).subscribe(onNext);
                     } catch (Exception e) {
                         LoggerProxy.e(e, "generateWriteExternalStorage err");
@@ -210,7 +229,7 @@ public class DeviceUtil {
     public static void generateDeviceId(Activity activity, IGenerateDeviceIdCallBack generateDeviceIdCallBack) {
         activity.runOnUiThread(() -> {
             // ！需要动态权限
-            RxPermissions rxPermissions = new RxPermissions( activity);
+            RxPermissions rxPermissions = new RxPermissions(activity);
             rxPermissions
                     .request(Manifest.permission.READ_PHONE_STATE)
                     .subscribe(granted -> {
@@ -229,6 +248,7 @@ public class DeviceUtil {
 //                            temp = generateDeviceId(activity);
 //                        }
                             String temp = Hawk.get(HawkKey.HAWK_KEY_DEVICEID, null);
+//                            LoggerProxy.e("temp device id : " + temp);
                             try {
                                 if (StringUtils.isTrimEmpty(temp)) {
                                     temp = generateDeviceId(activity);
@@ -255,7 +275,7 @@ public class DeviceUtil {
             @Override
             public void doIt(@NonNull Activity activity) {
                 HANDLER.post(() -> {
-                    RxPermissions rxPermissions = new RxPermissions( activity);
+                    RxPermissions rxPermissions = new RxPermissions(activity);
                     rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe(callback::setDeviceState);
                 });
             }
@@ -278,9 +298,33 @@ public class DeviceUtil {
             getDeviceId()在API 26已经弃用，所以API 26以上的使用getImei()*/
             if (null != TelephonyMgr) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                    szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
+                    try {
+                        //SDK<26,使用TelephonyMgr.getDeviceId()获取IMEI
+                        szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
+//                    LoggerProxy.e("old %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    try {
+                        //Android Q（Android 10，SDK 29）获取不到IMEI，使用TelephonyMgr.getImei()不会返回null，会抛出异常
+                        //getImeiForSlot: The user 10130 does not meet the requirements to access device identifiers.
+                        szImei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    LoggerProxy.e("sdk_int >= 29 %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
                 } else {
-                    szImei = TelephonyMgr.getImei();
+                    try {
+                        //sdk 版本26到28采用TelephonyMgr.getImei()获取IMEI
+                        szImei = TelephonyMgr.getImei();
+//                    LoggerProxy.e("new  %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
                 }
             }
             if (null != szImei && !"".equals(szImei)) {
@@ -290,22 +334,35 @@ public class DeviceUtil {
                 //WifiInfo.getMacAddress() 方法和 BluetoothAdapter.getAddress() 方法现在会返回常量值 02:00:00:00:00:00
                 //所以这里修改为6.0之后获取ANDROID_ID
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                    WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    assert wm != null;
-                    String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
-                            : wm.getConnectionInfo().getMacAddress();
-                    id = m_szWLANMAC;
+                    try {
+                        WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                        assert wm != null;
+                        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
+                                : wm.getConnectionInfo().getMacAddress();
+                        id = m_szWLANMAC;
+//                    LoggerProxy.e("wlanmac  %s", id);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        id = null;
+                    }
                 } else {
-                    id = Settings.System.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+                    try {
+                        id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    LoggerProxy.e("android id  %s", id);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        id = null;
+                    }
                 }
             }
-
             MessageDigest m = null;
-
+            if (null == id) {
+                id = getIdentity(context);
+            }
             m = MessageDigest.getInstance("MD5");
             m.update(id.getBytes(), 0, id.length());
             // get md5 bytes
-            byte p_md5Data[] = m.digest();
+            byte[] p_md5Data = m.digest();
             // create a hex string
             String m_szUniqueID = new String();
             for (int i = 0; i < p_md5Data.length; i++) {
@@ -322,8 +379,77 @@ public class DeviceUtil {
             m_szUniqueID = m_szUniqueID.toUpperCase();
             return m_szUniqueID;
         } catch (Exception e) {
+            LoggerProxy.e("error:" + e.getMessage());
             throw new ViewPlusException(String.format("获取设备唯一标示错误[%s]", e.getMessage()));
         }
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private static String getIdentity(Context context) {
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(context);
+        String identity = preference.getString("identity", "");
+        if ("".equals(identity)) {
+            identity = readIdFromFile();
+            if ("".equals(identity)) {
+                identity = UUID.randomUUID().toString();
+                preference.edit().putString("identity", identity);
+                writeIdToFile(identity);
+            }
+            preference.edit().putString("identity", identity);
+        }
+//        LoggerProxy.e("test identity %s", identity);
+        return identity;
+    }
+
+    private static void writeIdToFile(String identity) {
+        File path = new File(DIR_PATH);
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+        File file = new File(path, ID_FILE_NAME);
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file, false);
+            out.write(identity.getBytes(), 0, identity.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != out) {
+                try {
+                    out.flush();
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static String readIdFromFile() {
+        String id = "";
+        File file = new File(DIR_PATH, ID_FILE_NAME);
+        if (file.exists()) {
+            FileInputStream in = null;
+            try {
+                in = new FileInputStream(file);
+                byte[] bytes = new byte[1024];
+                int ret = in.read(bytes, 0, 1024);
+                if (ret != -1) {
+                    id = Arrays.toString(bytes).trim();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (null != in) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return id;
     }
 
     // TODO ！！！ 上线必须注释掉

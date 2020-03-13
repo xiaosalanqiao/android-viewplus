@@ -13,7 +13,7 @@
     <dimen name="include_bottom_item_delegate_headerbar_padding_left">10dp</dimen>
 
     <dimen name="empty_page_image_wh">100dp</dimen>
-    <dimen name="empty_page_hint_txt">12sp</dimen>
+    <dimen name="empty_page_hint_txt">14sp</dimen>
     <dimen name="empty_page_link_txt">12sp</dimen>
     <dimen name="tv_empty_page_err_txt_margin_top_2_img">20dp</dimen>
 

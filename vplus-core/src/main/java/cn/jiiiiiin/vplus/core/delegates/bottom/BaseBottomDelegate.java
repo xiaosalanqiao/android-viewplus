@@ -218,6 +218,9 @@ public abstract class BaseBottomDelegate extends AbstractViewPlusDelegate implem
     }
 
     public void setBottomMenusVisible(int visible) {
-        mBottomBar.setVisibility(visible);
+        // #26140 java.lang.NullPointerException
+        if (null != mBottomBar) {
+            mBottomBar.setVisibility(visible);
+        }
     }
 }

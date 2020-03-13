@@ -91,6 +91,10 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_TV_LAYOUT_PARAMS = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private static final LinearLayout.LayoutParams TITLE_BAR_RIGHT_ICON_LAYOUT_PARAMS = new LinearLayout.LayoutParams(45, 45);
     protected int mTitleBarBtnColor = Color.BLUE;
+    /**
+     * 标识是否要忽略白名单
+     */
+    protected boolean mIgnoreWhiteURL = false;
 
     @OnClick(R2.id.toolbar_back)
     public void onToolBarBackContainerClick() {
@@ -270,6 +274,11 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
         return this;
     }
 
+    public AbstractWebViewWrapperCommUIDelegate setIgnoreWhiteURL(boolean isIgnoreWhiteURL){
+        this.mIgnoreWhiteURL = isIgnoreWhiteURL;
+        return this;
+    }
+
     public void addTitleBarRightMenus(JSONArray finalRightMenusConfig) {
         ViewPlus.getHandler().post(() -> safetyUseWebView(webView -> {
             final int idx = finalRightMenusConfig.size();
@@ -362,7 +371,7 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
         LoggerProxy.d("webview代理被调用 onReceivedError %s %s %s", mURL, errorCode, failingUrl);
         // TODO 根据不同errorCode 渲染不同的错误UI
 
-        String hintTxt = String.format("网络异常，请稍后尝试访问 %s [%s]", failingUrl, errorCode);
+        String hintTxt = String.format("网络异常，请稍后尝试访问 [%s]", failingUrl, errorCode);
         // WebViewClient.ERROR_BAD_URL & ERROR_BAD_URL 在代理类已经被明确排除
         if (errorCode == WebViewClient.ERROR_HOST_LOOKUP
                 || errorCode == WebViewClient.ERROR_UNSUPPORTED_AUTH_SCHEME
@@ -370,21 +379,21 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
                 || errorCode == WebViewClient.ERROR_IO
                 || errorCode == WebViewClient.ERROR_BAD_URL
                 ) {
-            hintTxt = String.format("与服务器连接发生异常，请稍后再试 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("与服务器连接发生异常，请稍后再试 [%s] ", errorCode);
         } else if (errorCode == WebViewClient.ERROR_AUTHENTICATION || errorCode == WebViewClient.ERROR_PROXY_AUTHENTICATION) {
-            hintTxt = String.format("你没有权限访问 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("你没有权限访问 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_TIMEOUT) {
-            hintTxt = String.format("访问超时，请稍后再试 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问超时，请稍后再试 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_REDIRECT_LOOP || errorCode == WebViewClient.ERROR_TOO_MANY_REQUESTS) {
-            hintTxt = String.format("访问资源出现重复多次重定向或太多请求发送错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问资源出现重复多次重定向或太多请求发送错误 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_UNSUPPORTED_SCHEME) {
-            hintTxt = String.format("访问不安全的协议资源错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问不安全的协议资源错误 [%s]", errorCode);
         } else if (errorCode == WebViewClient.ERROR_FAILED_SSL_HANDSHAKE || errorCode == WebViewClient.ERROR_UNSAFE_RESOURCE) {
-            hintTxt = String.format("访问不安全的SSL协议资源错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("访问不安全的SSL协议资源错误 [%s]", errorCode);
         } else if (errorCode == 404) {
-            hintTxt = String.format("待访问的资源不存在 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("待访问的资源不存在 [%s]", errorCode);
         } else if (errorCode == 500) {
-            hintTxt = String.format("待访问的资源发送服务器端错误 [%s] \n\n失败的地址 [%s] ", errorCode, failingUrl);
+            hintTxt = String.format("待访问的资源发送服务器端错误 [%s]", errorCode);
         }
         onLoadPageErr(webView, hintTxt);
     }
@@ -419,25 +428,27 @@ public abstract class AbstractWebViewWrapperCommUIDelegate extends AbstractWebVi
      * @param errContainerVisible
      */
     protected void isErrContainerVisible(boolean errContainerVisible) {
-        mSmartRefreshLayout.finishRefresh();
+        if (null != mSmartRefreshLayout) {
+            mSmartRefreshLayout.finishRefresh();
+        }
         hideProgressBar();
         if (mPlaceholderContainer != null && isOpenH5PlaceholderPage() == View.VISIBLE) {
             mPlaceholderContainer.setVisibility(View.GONE);
         }
         if (errContainerVisible) {
             isShowErrorLocalPage = true;
-            if (mSmartRefreshLayout.getVisibility() == View.VISIBLE) {
+            if (null != mSmartRefreshLayout && mSmartRefreshLayout.getVisibility() == View.VISIBLE) {
                 mSmartRefreshLayout.setVisibility(View.GONE);
             }
-            if (mErrContainer.getVisibility() == View.GONE) {
+            if (null != mErrContainer && mErrContainer.getVisibility() == View.GONE) {
                 mErrContainer.setVisibility(View.VISIBLE);
             }
         } else {
             isShowErrorLocalPage = false;
-            if (mErrContainer.getVisibility() == View.VISIBLE) {
+            if (null != mErrContainer && mErrContainer.getVisibility() == View.VISIBLE) {
                 mErrContainer.setVisibility(View.GONE);
             }
-            if (mSmartRefreshLayout.getVisibility() == View.GONE) {
+            if (null != mSmartRefreshLayout && mSmartRefreshLayout.getVisibility() == View.GONE) {
                 mSmartRefreshLayout.setVisibility(View.VISIBLE);
             }
         }

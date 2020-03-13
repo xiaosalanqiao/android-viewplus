@@ -85,7 +85,9 @@ public final class JsBridgeCommHandler {
         } else if (webView == null) {
             LoggerProxy.e("callJs调用警告，webView为null，funcName: %s params: %s \n这种情况只出现在当前的webview delegate被销毁，那么是不需要再执行其注册的一些监听函数", funcName, params);
         } else {
-            LoggerProxy.d("调用网页中的js -> funcName: %s , params: %s", funcName, params);
+            if (ViewPlus.IS_DEBUG()) {
+                LoggerProxy.d("调用网页中的js -> funcName: %s , params: %s", funcName, params);
+            }
             try {
                 HANDLER.post(() -> webView.evaluateJavascript(funcName + "('" + params + "');", resultCallback));
             } catch (Exception e){

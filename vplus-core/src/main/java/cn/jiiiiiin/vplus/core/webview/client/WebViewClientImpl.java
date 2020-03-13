@@ -47,10 +47,15 @@ public class WebViewClientImpl extends WebViewClient {
     private final AbstractWebViewDelegate DELEGATE;
     private IPageLoadListener mIPageLoadListener = null;
     private long mStart = 0;
+    /**
+     * 标识是否要忽略白名单
+     */
+    private boolean mIgnoreWhiteURL = false;
 
-    public WebViewClientImpl(AbstractWebViewDelegate delegate, IPageLoadListener listener) {
+    public WebViewClientImpl(AbstractWebViewDelegate delegate, IPageLoadListener listener, boolean isIgnoreWhiteURL) {
         this.DELEGATE = delegate;
         this.mIPageLoadListener = listener;
+        this.mIgnoreWhiteURL = isIgnoreWhiteURL;
     }
 
     /**
@@ -91,7 +96,13 @@ public class WebViewClientImpl extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         LoggerProxy.w("===shouldOverrideUrlLoading %s", url);
-        return Router.getInstance().handleWebViewUrlReq(DELEGATE, view, url, mIPageLoadListener);
+        if (!mIgnoreWhiteURL) {
+            //校验白名单
+            return Router.getInstance().handleWebViewUrlReq(DELEGATE, view, url, mIPageLoadListener);
+        } else {
+            //忽略白名单
+            return false;
+        }
     }
 
     @Override
@@ -229,6 +240,7 @@ public class WebViewClientImpl extends WebViewClient {
 //                public void doIt(@NonNull Activity activity) {
 //                    SslCertificate sslCertificate = error.getCertificate();
 //                    LoggerProxy.d("sslCertificate %s", sslCertificate.toString());
+//                    handler.proceed();
 //                    DialogUtil.confirmDialog(activity, "SSL 认证错误", "无法验证服务器SSL证书。\n是否继续访问？", "继续", "取消", (positive) -> {
 //                        handler.proceed();
 //                        return Unit.INSTANCE;

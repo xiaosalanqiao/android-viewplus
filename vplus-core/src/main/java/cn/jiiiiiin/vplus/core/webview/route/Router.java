@@ -57,7 +57,9 @@ public class Router {
     public final boolean handleWebViewUrlReq(AbstractWebViewDelegate delegate, WebView webView, String url, IPageLoadListener pageLoadListener) {
         boolean res;
         final UriInfo uriInfo = new UriInfo(url);
-        LoggerProxy.e("handleWebViewUrlReq %s %s", url, uriInfo);
+        if (ViewPlus.IS_DEBUG()) {
+            LoggerProxy.e("handleWebViewUrlReq %s %s", url, uriInfo);
+        }
         final String scheme = uriInfo.getScheme();
         switch (scheme) {
             case PROTOCOL_BS:

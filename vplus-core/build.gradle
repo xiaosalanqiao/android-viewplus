@@ -1,10 +1,12 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'com.jakewharton.butterknife'
 //apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    buildToolsVersion '29.0.2'
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 29
@@ -50,12 +52,12 @@ dependencies {
 
     // Androidx
     api 'androidx.legacy:legacy-support-v4:1.0.0'
-    api 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.google.android.material:material:1.1.0-alpha09'
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'com.google.android.material:material:1.1.0-beta01'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.cardview:cardview:1.0.0'
-    api 'androidx.preference:preference:1.0.0'
-    api 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
+    api 'androidx.preference:preference:1.1.0'
+    api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
 
 
     // https://blog.csdn.net/sbsujjbcy/article/details/52199975
@@ -86,8 +88,9 @@ dependencies {
     api 'com.blankj:utilcode:1.24.6'
 
     // https://github.com/square/okhttp
-    api 'com.squareup.okhttp3:okhttp:4.0.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0'
+    //4.2.2不支持android 4.4，会导致崩溃 #29798 java.lang.ExceptionInInitializerError
+    api 'com.squareup.okhttp3:okhttp:3.12.6'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.6'
 
     // https://github.com/hongyangAndroid/okhttputils
 //    api 'com.zhy:okhttputils:2.6.2', {
@@ -113,9 +116,9 @@ dependencies {
     api 'com.afollestad.material-dialogs:input:3.1.0'
 
     // 图片处理
-    api 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    api 'com.github.bumptech.glide:okhttp3-integration:4.6.1', {
+    api 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    api 'com.github.bumptech.glide:okhttp3-integration:4.10.0', {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
@@ -139,7 +142,7 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-14'
 
     // https://github.com/LuckSiege/PictureSelector
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.5'
 
     // 圆形图片
     // https://github.com/hdodenhof/CircleImageView
@@ -147,6 +150,8 @@ dependencies {
 
     // https://github.com/orhanobut/dialogplus
     api 'com.orhanobut:dialogplus:1.11@aar'
+    api "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
 

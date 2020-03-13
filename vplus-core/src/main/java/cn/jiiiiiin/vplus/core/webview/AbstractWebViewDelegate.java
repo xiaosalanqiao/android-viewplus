@@ -1,6 +1,9 @@
 package cn.jiiiiiin.vplus.core.webview;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +54,11 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
     protected Map<String, String> mUrlParams = null;
     private boolean mNeedSwipeBack = true;
     protected boolean mNeedSyncCookie = false;
+    /**
+     * 标识是否要忽略白名单
+     */
+    protected boolean mIgnoreWhiteURL = false;
+    protected IWebViewConsoleMessage mWebViewConsoleMessage = null;
 
     public interface OnScrollChangeListener {
         void onScrollChanged(int l, int t, int oldl, int oldt);
@@ -109,7 +117,7 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
             WeakReference<WebView> webViewWeakReference = null;
             // 直接 new WebView 并传入 application context 代替在 XML 里面声明以防止 activity 引用被滥用，能解决90+%的 WebView 内存泄漏。
             if (mOnScrollChangeListener != null) {
-                webViewWeakReference = new WeakReference<>(new WebView(getContext()) {
+                webViewWeakReference = new WeakReference<>(new WebView(getFixedContext()) {
                     @Override
                     public void onScrollChanged(int l, int t, int oldl, int oldt) {
                         super.onScrollChanged(l, t, oldl, oldt);
@@ -119,7 +127,7 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
                     }
                 }, WEB_VIEW_QUEUE);
             } else {
-                webViewWeakReference = new WeakReference<>(new WebView(getContext()));
+                webViewWeakReference = new WeakReference<>(new WebView(getFixedContext()));
             }
             mWebView = webViewWeakReference.get();
             // 初始化
@@ -141,6 +149,19 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
         } else {
             throw new NullPointerException("WEBVIEW_INITIALIZER_IS_NULL");
         }
+    }
+
+    /**
+     * 根据sdk版本返回不同的Context
+     * 在5.x版本上，会有崩溃的问题
+     * #29487 android.content.res.Resources$NotFoundException
+     * @return
+     */
+    private Context getFixedContext() {
+        if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 23){ // Android Lollipop 5.0 & 5.1
+            return this.getContext().createConfigurationContext(new Configuration());
+        }
+        return this.getContext();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -321,5 +342,15 @@ public abstract class AbstractWebViewDelegate extends AbstractViewPlusDelegate i
             // 应该是
             LoggerProxy.w("refresh() webView is null err!");
         }
+    }
+
+    public AbstractWebViewDelegate setWebViewConsoleMessage(IWebViewConsoleMessage webViewConsoleMessage){
+        this.mWebViewConsoleMessage = webViewConsoleMessage;
+        return this;
+    }
+
+    public AbstractWebViewDelegate setIgnoreWhiteURL(boolean isIgnoreWhiteURL){
+        this.mIgnoreWhiteURL = isIgnoreWhiteURL;
+        return this;
     }
 }

@@ -4,7 +4,7 @@ apply plugin: 'com.novoda.bintray-release'//添加
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '29.0.2'
 
     defaultConfig {
         minSdkVersion 19
@@ -43,7 +43,7 @@ makeJar.dependsOn(clearJar, build)
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.squareup.okhttp3:okhttp:4.0.0'
+    api 'com.squareup.okhttp3:okhttp:3.12.6'
 }
 
 //添加

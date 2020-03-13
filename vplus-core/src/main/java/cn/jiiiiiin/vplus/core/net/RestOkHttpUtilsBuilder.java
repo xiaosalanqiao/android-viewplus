@@ -1,6 +1,7 @@
 package cn.jiiiiiin.vplus.core.net;
 
 import android.app.Activity;
+
 import androidx.annotation.NonNull;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -21,6 +22,7 @@ import cn.jiiiiiin.vplus.core.net.callback.IRequest;
 import cn.jiiiiiin.vplus.core.net.callback.IRespStateHandler;
 import cn.jiiiiiin.vplus.core.net.callback.ISuccess;
 import cn.jiiiiiin.vplus.core.ui.loader.LoaderCreatorProxy;
+import cn.jiiiiiin.vplus.core.util.intercept.InteceptTools;
 import cn.jiiiiiin.vplus.core.util.log.LoggerProxy;
 
 import static cn.jiiiiiin.vplus.core.net.RestOkHttpUtilsClient.FILE_NAME_SPLIT_FLAG;
@@ -60,6 +62,9 @@ public final class RestOkHttpUtilsBuilder {
     private IRespStateHandler mRespStateHandler = null;
     private String mLoaderTxt = LoaderCreatorProxy.DEFAULT_LABEL;
     private String mJsonParams;
+    private final WeakHashMap<String, String> mHeaders = new WeakHashMap<>();
+    private boolean mIsNeedReqHead = true;
+    private boolean mIsNeedCommPara = true;
 
     /**
      * @param activity
@@ -106,6 +111,23 @@ public final class RestOkHttpUtilsBuilder {
         } else {
             LoggerProxy.w("设置请求参数%s字段的值为空，将被省略！", key);
         }
+        return this;
+    }
+
+    public final RestOkHttpUtilsBuilder headers(WeakHashMap<String, String> headers){
+        if (null != headers && !headers.isEmpty()) {
+            mHeaders.putAll(headers);
+        }
+        return this;
+    }
+
+    public final RestOkHttpUtilsBuilder reqHeadFlag(boolean flag){
+        mIsNeedReqHead = flag;
+        return this;
+    }
+
+    public final RestOkHttpUtilsBuilder commParaFlag(boolean flag){
+        mIsNeedCommPara = flag;
         return this;
     }
 
@@ -184,6 +206,12 @@ public final class RestOkHttpUtilsBuilder {
             // !如果不是忽略检测，那么必须存在mRespStateHandler，如果没有配置就使用全局的
             mRespStateHandler = ViewPlus.getConfiguration(ConfigKeys.RESP_STATE_HANDLER);
         }
+        if (mIsNeedCommPara) {
+            mUrl = InteceptTools.addCommonParams(mUrl);
+        }
+        if (mIsNeedReqHead) {
+            InteceptTools.addReqHead(mHeaders);
+        }
         return new RestOkHttpUtilsClient(mUrl,
                 mParams,
                 mJsonParams,
@@ -197,7 +225,8 @@ public final class RestOkHttpUtilsBuilder {
                 mIgnoreCommonCheck,
                 mFiles,
                 mFileCallBack,
-                mRespStateHandler);
+                mRespStateHandler,
+                mHeaders);
     }
 
 }
