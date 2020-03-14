@@ -46,10 +46,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
     // 源码测试
-    api project(':vplus-ui')
+    implementation project(':vplus-ui')
     // 依赖测试
 //    api 'cn.jiiiiiin:vplus-ui:1.0.1'
 
@@ -57,10 +59,6 @@ dependencies {
     // https://github.com/JakeWharton/butterknife/releases
     implementation "com.jakewharton:butterknife:${versions.butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
-
-    // https://projectlombok.org/setup/android
-//    compileOnly "org.projectlombok:lombok:${versions.lombok}"
-//    annotationProcessor "org.projectlombok:${versions.lombok}"
 
     //implementation 'androidx.multidex:multidex:2.0.1'
 }
