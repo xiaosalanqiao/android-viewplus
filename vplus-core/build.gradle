@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jakewharton.butterknife'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 29
@@ -36,46 +36,39 @@ android {
     }
 }
 
-ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
-ext.BUTTERKNIFE_VERSION = "10.1.0"
+ext.versions = [
+        'butterknife': '10.2.1',
+        'lombok'     : '1.18.12'
+]
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
 
-    // Android Support包
-//    api 'com.android.support:support-v4:' + ANDROID_SUPPORT_LIBRARY_VERSION
-//    api 'com.android.support:appcompat-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
-//    api 'com.android.support:design:' + ANDROID_SUPPORT_LIBRARY_VERSION
-//    api 'com.android.support:cardview-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
-//    api 'com.android.support:preference-v7:' + ANDROID_SUPPORT_LIBRARY_VERSION
-//    api 'com.android.support:animated-vector-drawable:' + ANDROID_SUPPORT_LIBRARY_VERSION
-
     // Androidx
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'androidx.appcompat:appcompat:1.1.0'
-    api 'com.google.android.material:material:1.1.0-beta01'
+    api 'com.google.android.material:material:1.2.0-alpha05'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.preference:preference:1.1.0'
     api 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
 
-
-    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    // https://projectlombok.org/setup/android
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
     // ButterKnife
     // https://github.com/JakeWharton/butterknife/releases
-    api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+    implementation "com.jakewharton:butterknife:${versions.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
+
+    api project(':vplus-okhttputils')
 
     // https://github.com/orhanobut/hawk
     api "com.orhanobut:hawk:2.0.1"
 
     // RxPermissions
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-    // TODO 待替换
-//    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
     // https://github.com/alibaba/fastjson
     api 'com.alibaba:fastjson:1.2.58'
@@ -87,18 +80,6 @@ dependencies {
     // https://github.com/Blankj/AndroidUtilCode
     api 'com.blankj:utilcode:1.24.6'
 
-    // https://github.com/square/okhttp
-    //4.2.2不支持android 4.4，会导致崩溃 #29798 java.lang.ExceptionInInitializerError
-    api 'com.squareup.okhttp3:okhttp:3.12.6'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.6'
-
-    // https://github.com/hongyangAndroid/okhttputils
-//    api 'com.zhy:okhttputils:2.6.2', {
-//        exclude group: 'com.squareup.okio', module: 'okio'
-//        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
-//    }
-
-     api project(':vplus-okhttputils')
 
     // https://github.com/Kaopiz/KProgressHUD
     api 'com.kaopiz:kprogresshud:1.2.0'
@@ -111,7 +92,6 @@ dependencies {
 
     // afollestad/material-dialogs
     // https://github.com/afollestad/material-dialogs#proguard
-    // TODO 待升级
     api 'com.afollestad.material-dialogs:core:3.1.0'
     api 'com.afollestad.material-dialogs:input:3.1.0'
 
@@ -155,18 +135,18 @@ dependencies {
 
 }
 
-//publish {
-//    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
-//    repoName = "android-viewplus"
-//    userOrg = "vplus"
-//    // jcenter上的路径 一般是自己公司域名反转
-//    groupId = "cn.jiiiiiin"
-//    //项目名称 我们的pakgename
-//    artifactId = "vplus-core"
-//    //版本号
-//    publishVersion = "1.1.1"
-//    //项目的描述
-//    desc = "android-viewplus核心库，包含jsbridge、单activity相关类"
-//    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
-//    website = "https://github.com/Jiiiiiin/android-viewplus"
-//}
+publish {
+    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
+    repoName = "android-viewplus"
+    userOrg = "vplus"
+    // jcenter上的路径 一般是自己公司域名反转
+    groupId = "cn.jiiiiiin"
+    //项目名称 我们的pakgename
+    artifactId = "vplus-core"
+    //版本号
+    publishVersion = "2.0.0"
+    //项目的描述
+    desc = "android-viewplus核心库，包含jsbridge、单activity相关类"
+    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
+    website = "https://github.com/Jiiiiiin/android-viewplus"
+}

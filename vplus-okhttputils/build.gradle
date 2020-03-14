@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'//添加
-
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 29
@@ -18,7 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions{
+    lintOptions {
         abortOnError false
         warning 'InvalidPackage'
     }
@@ -34,16 +33,18 @@ task makeJar(type: Copy) {
     from('build/intermediates/bundles/release/')
     into('build/outputs/')
     include('classes.jar')
-    rename ('classes.jar', 'okhttputils-2_6_2.jar')
+    rename('classes.jar', 'okhttputils-2_6_2.jar')
 }
 
 makeJar.dependsOn(clearJar, build)
 
-
-
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+
+    // https://github.com/square/okhttp
+    // 4.2.2不支持android 4.4，会导致崩溃 #29798 java.lang.ExceptionInInitializerError
     api 'com.squareup.okhttp3:okhttp:3.12.6'
+    api 'com.squareup.okhttp3:logging-interceptor:3.12.6'
 }
 
 //添加
@@ -52,15 +53,8 @@ publish {
     userOrg = 'vplus'//bintray.com用户名
     groupId = 'com.zhy'//jcenter上的路径
     artifactId = 'vplus-okhttputils'//项目名称
-    publishVersion = '2.6.5'//版本号
+    publishVersion = '3.0.0'//版本号
     desc = '接手维护hongyangAndroid/okhttputils'
     website = 'https://github.com/Jiiiiiin/android-viewplus'
-
-//    userOrg = 'hongyangandroid'//bintray.com用户名
-//    groupId = 'com.zhy'//jcenter上的路径
-//    artifactId = 'okhttputils'//项目名称
-//    publishVersion = '2.6.2'//版本号
-//    desc = 'Oh hi, this is a nice description for a project, right?'
-//    website = 'https://github.com/hongyangAndroid/okhttp-utils'
 }
 

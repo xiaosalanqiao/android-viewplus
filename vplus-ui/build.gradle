@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 29
@@ -34,20 +34,26 @@ android {
     }
 }
 
-ext.BUTTERKNIFE_VERSION = "10.1.0"
+ext.versions = [
+        'butterknife': '10.1.0',
+        'lombok'     : '1.18.12'
+]
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation 'junit:junit:4.12'
-
-     api project(':vplus-core')
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    api project(':vplus-core')
 
     // ButterKnife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+    // https://github.com/JakeWharton/butterknife/releases
+    api "com.jakewharton:butterknife:${versions.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
 
-    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    // https://projectlombok.org/setup/android
+//    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+//    annotationProcessor "org.projectlombok:${versions.lombok}"
 
     // http://qmuiteam.com/android/get-started/
     api 'com.qmuiteam:qmui:1.2.0'
@@ -70,18 +76,18 @@ dependencies {
 
 }
 
-//publish {
-//    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
-//    repoName="android-viewplus"
-//    userOrg="vplus"
-//    // jcenter上的路径 一般是自己公司域名反转
-//    groupId="cn.jiiiiiin"
-//    //项目名称 我们的pakgename
-//    artifactId="vplus-ui"
-//    //版本号
-//    publishVersion="1.0.9"
-//    //项目的描述
-//    desc="android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
-//    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
-//    website="https://github.com/Jiiiiiin/android-viewplus"
-//}
+publish {
+    //远程仓库名字,不指明，默认是上传到maven， 我们开始创建的仓库名字就是maven所以这一步可要可不要
+    repoName = "android-viewplus"
+    userOrg = "vplus"
+    // jcenter上的路径 一般是自己公司域名反转
+    groupId = "cn.jiiiiiin"
+    //项目名称 我们的pakgename
+    artifactId = "vplus-ui"
+    //版本号
+    publishVersion = "2.0.0"
+    //项目的描述
+    desc = "android-viewplus UI库，包含Recycler View、九宫格手势、指纹等控件的支持库"
+    //项目相关的地址，没有可以不填一般我们会在github上开源 所以一般填GitHub相对应的项目地址
+    website = "https://github.com/Jiiiiiin/android-viewplus"
+}

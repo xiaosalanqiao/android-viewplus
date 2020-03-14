@@ -29,21 +29,16 @@ android {
         jumboMode true
         javaMaxHeapSize "4g"
     }
-//    configurations.all {
-//        resolutionStrategy {
-//            force 'com.android.support:appcompat-v7:27.1.1'
-//            force 'com.android.support:support-compat:27.1.1'
-//            force 'com.android.support:support-v4:27.1.1'
-//            force 'com.android.support:support-annotations:27.1.1'
-//        }
-//    }
+
     lintOptions {
         abortOnError false
     }
 }
 
-ext.ANDROID_SUPPORT_LIBRARY_VERSION = "27.1.1"
-ext.BUTTERKNIFE_VERSION = "10.1.0"
+ext.versions = [
+        'butterknife': '10.2.1',
+        'lombok'     : '1.18.12'
+]
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -51,18 +46,21 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
     // 源码测试
     api project(':vplus-ui')
     // 依赖测试
 //    api 'cn.jiiiiiin:vplus-ui:1.0.1'
 
-    api 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + BUTTERKNIFE_VERSION
+    // ButterKnife
+    // https://github.com/JakeWharton/butterknife/releases
+    implementation "com.jakewharton:butterknife:${versions.butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterknife}"
 
-    // https://blog.csdn.net/sbsujjbcy/article/details/52199975
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    // https://projectlombok.org/setup/android
+//    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+//    annotationProcessor "org.projectlombok:${versions.lombok}"
 
-    implementation 'androidx.multidex:multidex:2.0.1'
+    //implementation 'androidx.multidex:multidex:2.0.1'
 }
