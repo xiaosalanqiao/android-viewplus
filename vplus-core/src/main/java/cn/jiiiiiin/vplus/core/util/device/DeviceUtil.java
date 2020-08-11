@@ -270,6 +270,44 @@ public class DeviceUtil {
         });
     }
 
+    /**
+     * 涉及到动态权限，id必须异步获取，回调得到的可能为空
+     *
+     * @param activity
+     * @param generateDeviceIdCallBack
+     */
+    @SuppressLint({"MissingPermission", "CheckResult"})
+    public static void generateRealDeviceId(Activity activity, IGenerateDeviceIdCallBack generateDeviceIdCallBack) {
+        activity.runOnUiThread(() -> {
+            // ！需要动态权限
+            RxPermissions rxPermissions = new RxPermissions(activity);
+            rxPermissions
+                .request(Manifest.permission.READ_PHONE_STATE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        String temp = Hawk.get(HawkKey.HAWK_KEY_REAL_DEVICEID, null);
+//                            LoggerProxy.e("temp device id : " + temp);
+                        try {
+                            if (StringUtils.isTrimEmpty(temp)) {
+                                temp = generateRealDeviceId(activity);
+                                // 缓存
+                                Hawk.put(HawkKey.HAWK_KEY_REAL_DEVICEID, temp);
+                            }
+                            if (StringUtils.isEmpty(temp)) {
+                                generateDeviceIdCallBack.generateDeviceIdFail("获取不到设备唯一标示");
+                            } else {
+                                generateDeviceIdCallBack.setDeviceId(temp);
+                            }
+                        } catch (ViewPlusException e) {
+                            generateDeviceIdCallBack.generateDeviceIdFail(e.getMessage());
+                        }
+                    } else {
+                        generateDeviceIdCallBack.userNoGranted();
+                    }
+                });
+        });
+    }
+
     public static void generateDevice(Activity activity, IGenerateDeviceStateCallBack callback) {
         ViewUtil.activityIsLivingCanByRun(activity, new ViewUtil.AbstractActivityIsLivingCanByRunCallBack() {
             @Override
@@ -378,6 +416,86 @@ public class DeviceUtil {
             // hex string to uppercase
             m_szUniqueID = m_szUniqueID.toUpperCase();
             return m_szUniqueID;
+        } catch (Exception e) {
+            LoggerProxy.e("error:" + e.getMessage());
+            throw new ViewPlusException(String.format("获取设备唯一标示错误[%s]", e.getMessage()));
+        }
+    }
+
+    @SuppressLint({"MissingPermission", "HardwareIds"})
+    public static String generateRealDeviceId(Activity context) throws ViewPlusException {
+        try {
+            String id = "";
+            TelephonyManager TelephonyMgr = (TelephonyManager) context
+                .getSystemService(Context.TELEPHONY_SERVICE);
+            String szImei = "";
+            /*This method was deprecated in API level 26. Use (@link getImei}
+            which returns IMEI for GSM or (@link getMeid} which returns MEID for CDMA.
+            getDeviceId()在API 26已经弃用，所以API 26以上的使用getImei()*/
+            if (null != TelephonyMgr) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                    try {
+                        //SDK<26,使用TelephonyMgr.getDeviceId()获取IMEI
+                        szImei = TelephonyMgr.getDeviceId() == null ? "" : TelephonyMgr.getDeviceId();
+//                    LoggerProxy.e("old %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    try {
+                        //Android Q（Android 10，SDK 29）获取不到IMEI，使用TelephonyMgr.getImei()不会返回null，会抛出异常
+                        //getImeiForSlot: The user 10130 does not meet the requirements to access device identifiers.
+                        szImei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    LoggerProxy.e("sdk_int >= 29 %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
+                } else {
+                    try {
+                        //sdk 版本26到28采用TelephonyMgr.getImei()获取IMEI
+                        szImei = TelephonyMgr.getImei();
+//                    LoggerProxy.e("new  %s", szImei);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        szImei = null;
+                    }
+                }
+            }
+            if (null != szImei && !"".equals(szImei)) {
+                id = szImei;
+            } else {
+                //原来的逻辑是IMEI获取不到就获取MAC地址，但是在6.0之后MAC地址和蓝牙地址获取不到
+                //WifiInfo.getMacAddress() 方法和 BluetoothAdapter.getAddress() 方法现在会返回常量值 02:00:00:00:00:00
+                //所以这里修改为6.0之后获取ANDROID_ID
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    try {
+                        WifiManager wm = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                        assert wm != null;
+                        String m_szWLANMAC = wm.getConnectionInfo().getMacAddress() == null ? ""
+                            : wm.getConnectionInfo().getMacAddress();
+                        id = m_szWLANMAC;
+//                    LoggerProxy.e("wlanmac  %s", id);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        id = null;
+                    }
+                } else {
+                    try {
+                        id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    LoggerProxy.e("android id  %s", id);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        id = null;
+                    }
+                }
+            }
+            if (null == id) {
+                id = getIdentity(context);
+            }
+
+            return id;
         } catch (Exception e) {
             LoggerProxy.e("error:" + e.getMessage());
             throw new ViewPlusException(String.format("获取设备唯一标示错误[%s]", e.getMessage()));

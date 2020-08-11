@@ -37,17 +37,18 @@ public class InteceptTools {
                     for (Map.Entry<String, String> item : customHeaders.entrySet()) {
                         final String name = item.getKey();
                         final Object value = item.getValue();
+                        if (ViewPlus.IS_DEBUG()) {
+                            LoggerProxy.i("test %s,%s", name, String.valueOf(value));
+                        }
                         headers.put(name, String.valueOf(value));
                     }
-                    setCookie(headers);
+                    //3.24版本上线需要去掉cookie
+//                    setCookie(headers);
                 }
             } catch (Exception e) {
                 LoggerProxy.e(e, "设置后端通用请求头出错");
             }
 
-        }
-        if (ViewPlus.IS_DEBUG()) {
-            LoggerProxy.i("InteceptTools addReqHead headers %d", headers.size());
         }
     }
 

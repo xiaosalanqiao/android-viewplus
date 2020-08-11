@@ -9,6 +9,7 @@ public class HawkKey {
      * 设备唯一标示
      */
     public static final String HAWK_KEY_DEVICEID = "HAWK_KEY_DEVICEID";
+    public static final String HAWK_KEY_REAL_DEVICEID = "HAWK_KEY_REAL_DEVICEID";
     /**
      * 标识是否已经有COMMON_PARAMS
      */

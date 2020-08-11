@@ -375,9 +375,9 @@ public class Configurator {
         final Object value = VP_CONFIGS.get(key);
         if (value == null) {
             LoggerProxy.w("待获取的[%s]配置不存在！", key);
-            if (ViewPlus.IS_DEBUG()) {
-                throw new ViewPlusRuntimeException("待获取的配置不存在");
-            }
+//            if (ViewPlus.IS_DEBUG()) {
+//                throw new ViewPlusRuntimeException("待获取的配置不存在");
+//            }
         }
         return (T) value;
     }
