@@ -42,6 +42,7 @@ public class InteceptTools {
                         }
                         headers.put(name, String.valueOf(value));
                     }
+                    //3.24版本上线需要去掉cookie
 //                    setCookie(headers);
                 }
             } catch (Exception e) {
