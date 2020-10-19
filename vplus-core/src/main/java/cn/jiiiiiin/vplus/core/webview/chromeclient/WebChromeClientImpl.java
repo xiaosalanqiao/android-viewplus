@@ -172,7 +172,7 @@ public class WebChromeClientImpl extends WebChromeClient {
                 .isCamera(true)
                 .isGif(false)
                 .compress(true)
-                .synOrAsy(false)
+                .synOrAsy(true)
                 .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
