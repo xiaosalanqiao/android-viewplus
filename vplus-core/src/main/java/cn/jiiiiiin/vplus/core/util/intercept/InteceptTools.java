@@ -42,8 +42,8 @@ public class InteceptTools {
                         }
                         headers.put(name, String.valueOf(value));
                     }
-                    //3.24版本上线需要去掉cookie
-//                    setCookie(headers);
+                    //解决会话超时问题
+                    setCookie(headers);
                 }
             } catch (Exception e) {
                 LoggerProxy.e(e, "设置后端通用请求头出错");
